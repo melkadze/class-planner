@@ -1,0 +1,61 @@
+{
+    "oneA": [
+    {
+        "__comment": "Ignore this first list",
+        "name": "First Period",
+        "subject": "Calculus AB",
+        "timeStart": "8:00",
+        "timeEnd": "8:41"
+    },
+    {
+        "name": "First Passing",
+        "subject": "Calculus AB",
+        "timeStart": "8:41",
+        "timeEnd": "8:45"
+    },
+    {
+        "name": "Second Period",
+        "subject": "Calculus AB",
+        "timeStart": "8:45",
+        "timeEnd": "9:26"
+    }
+],
+    "sample": [
+        {
+            "period": "1",
+            "name": "Calculus AB"
+        },
+        {
+            "period": "2",
+            "name": "Calculus AB"
+        },
+        {
+            "period": "3",
+            "name": "AP Literature"
+        },
+        {
+            "period": "4",
+            "name": "Lunch"
+        },
+        {
+            "period": "5",
+            "name": "AP Computer Science"
+        },
+        {
+            "period": "6",
+            "name": "AP Government"
+        },
+        {
+            "period": "7",
+            "name": "Russian Business"
+        },
+        {
+            "period": "8",
+            "name": "Volleyball Gym"
+        },
+        {
+            "period": "9",
+            "name": "Cybersecurity"
+        }
+    ]
+}
