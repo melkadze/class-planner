@@ -1,4 +1,4 @@
-import * as sampledb from "./sampledb.json"
+//import * as sampledb from "./sampledb.json"
 const moment = require('moment')
 
 const express = require("express");
@@ -68,3 +68,6 @@ i--
 console.log(Number((sampledb.sample[i].period)))
 console.log((sampledb.sample[i].name))
 */
+
+const env = require("dev.env")
+console.log(env)
