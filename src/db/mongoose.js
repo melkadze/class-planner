@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
+const env = require("../env")
 mongoose.connect(
-  "mongodb+srv://admin:brianjiang@cluster0-6cpgv.mongodb.net/test?retryWrites=true&w=majority",
+  env.mongooseAuth,
   {
     useNewUrlParser: true,
     useCreateIndex: true,
@@ -8,3 +9,4 @@ mongoose.connect(
     useFindAndModify: true
   }
 );
+console.log(env.mongooseAuth)
