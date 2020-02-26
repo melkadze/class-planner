@@ -1,5 +1,5 @@
-import * as sampledb from "./sampledb.json"
-const moment = require('moment')
+import * as sampledb from "./sampledb.json";
+const moment = require("moment");
 
 const express = require("express");
 require("./db/mongoose"); //ensures mongoose runs and connects to our database
@@ -56,7 +56,6 @@ const main = async() => {
 
 main();
 */
-
 
 /*
 function howLongUntil() {
