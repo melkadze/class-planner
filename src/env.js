@@ -1,5 +1,3 @@
-const env = {
-    mongoosePassword: 'obeysudo_class-planner'
-}
+const mongoosePassword = 'obeysudo_class-planner'
 
-module.exports = { env }
+exports.mongoosePassword = mongoosePassword
