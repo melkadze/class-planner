@@ -6,6 +6,11 @@ const app = express();
 
 app.set('view engine', 'ejs');
 
+const authRouter = require('./routers/auth')
+app.use('/auth', authRouter)
+
+const passportSetup = require('./config/passport-setup')
+
 const movieRouter = require("./routers/movies");
 const userRouter = require("./routers/user");
 const reviewRouter = require("./routers/review");
@@ -78,21 +83,3 @@ i--
 console.log(Number((sampledb.sample[i].period)))
 console.log((sampledb.sample[i].name))
 */
-
-
-//below is testing for passport
-
-const passport = require('passport')
-const GoogleStrategy = require('passport-google-oauth20')
-const env = require('./env')
-
-passport.use(
-  new GoogleStrategy({
-    //options for google strat
-    callbackURL: '/auth/google/redirect',
-    clientID: env.oAuthID,
-    clientSecret: env.oAuthPassword
-  }, () => {
-    //passport callback funct
-  })
-)
