@@ -104,4 +104,4 @@ dist
 .tern-port
 
 # Team passwords file
-src/env.js
+env.js
