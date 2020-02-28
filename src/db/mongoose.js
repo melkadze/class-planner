@@ -9,6 +9,6 @@ mongoose.connect(
     useUnifiedTopology: true,
     useFindAndModify: true
   }, () => {
-    console.log('Connected to MongoDB')
+    console.log('Connected to MongoDB...')
   }
 );
