@@ -6,10 +6,11 @@ const app = express();
 
 app.set('view engine', 'ejs');
 
-const authRouter = require('./routers/auth')
-app.use('/auth', authRouter)
-
 const passportSetup = require('./config/passport-setup')
+const passport = require('passport')
+
+const cookieSession = require('cookie-session')
+const env = require('./env')
 
 const movieRouter = require("./routers/movies");
 const userRouter = require("./routers/user");
@@ -19,6 +20,14 @@ app.use(movieRouter);
 app.use(userRouter);
 app.use(reviewRouter);
 
+app.use(cookieSession({
+  maxAge: 24 * 60 * 60 * 1000, //in ms
+  keys: [env.cookieKey]
+}))
+
+// init passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 //const moment = require('moment')
 
@@ -26,9 +35,14 @@ app.listen(3000, () => {
   console.log("Server up on 3000");
 });
 
+const authRouter = require('./routers/auth')
+app.use('/auth', authRouter)
+const profileRouter = require('./routers/profile')
+app.use('/profile', profileRouter)
+
 //put this in routes later
 app.get('/', (req, res) => {
-  res.render('home');
+  res.render('home', {user: req.user});
 })
 
 //bcrypt hashing will occur as middleware during requests

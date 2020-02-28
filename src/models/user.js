@@ -4,6 +4,23 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const userSchema = new mongoose.Schema({
+  username: {
+    type: String
+  },
+  googleID: {
+    type: String
+  },
+  email: {
+    type: String
+  },
+  //consider storing the image on mongo
+  thumbnailURL: {
+    type: String
+  }
+});
+
+/*
+const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -90,5 +107,10 @@ userSchema.statics.findByCredentials = async (email, password) => {
   }
   return user;
 };
+*/
+
+
+
+
 const User = mongoose.model("User", userSchema);
 module.exports = User;
