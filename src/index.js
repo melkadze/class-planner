@@ -1,7 +1,7 @@
 ///visit this project at github.com/melkadze/class-planner
-//modules in use: cookie-session, ejs, express, mongodb, mongoose, passport, passport-google-oauth20, path
+//modules in use: cookie-session, ejs, express, mongodb, mongoose, passport, passport-google-oauth20, path, validator
 //modules not in use: luxon, moment
-//modules uninstalled: babel, bcryptjs, eslint, jsonwebtoken, multer, validator
+//modules uninstalled: babel, bcryptjs, eslint, jsonwebtoken, multer
 
 //framework dependencies
 const express = require("express");
@@ -42,6 +42,6 @@ app.use('/auth', authRouter)
 app.use('/profile', profileRouter)
 
 //finally, open the server
-app.listen(3000, () => {
-  console.log("Server up on port 3000...");
+app.listen(env.port, () => {
+  console.log(`Server up on port ${env.port}...`);
 });

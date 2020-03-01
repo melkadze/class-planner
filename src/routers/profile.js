@@ -11,4 +11,15 @@ router.get('/', authCheck, (req, res) => {
     }
 })
 
+//upload a class
+/*
+router.post('/class', authCheck, (req, res) => {
+    try{
+        
+    } catch(err) {
+        functions.error(res, 500, err);
+    }
+})
+*/
+
 module.exports = router;
