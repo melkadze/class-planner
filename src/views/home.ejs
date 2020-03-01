@@ -36,10 +36,11 @@
             padding: 0 10px;
             color: #333;
         }
-        input {
-            width: 15%;
+        button, input {
+            width: 40%;
             height: 5%;
             font-size: 30px;
+            margin: 1%
         }
     </style>
 </head>
@@ -56,14 +57,16 @@
         </ul>
     </nav>
     <header>
-        <h1>Homepage</h1>
+        <h1>Developer Hub</h1>
     </header>
     <main>
-        <p>Bottom text</p>
-        <form action="/profile/test" method="post">
-            <input type="submit" value="Test" />
-        </form>
-        <button id="helpMe"></button>
+        <p>Welcome to Postman 2.0</p>
+        <input type="text" id="testURL" value="/schedule/class"></input>
+        <br>
+        <input type="text" id="testContent" value="{&quot;name&quot;: &quot;test&quot;}"></input>
+        <br>
+        <button id="testBtn">Send POST Data</button>
     </main>
 </body>
+<script type="text/javascript" src="index.js"></script>
 </html>

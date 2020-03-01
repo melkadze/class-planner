@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
+const validator = require("validator")
 
-const classSchema = new mongoose.Schema({
+const courseSchema = new mongoose.Schema({
   period: {
     type: Number,
     required: true
@@ -8,6 +9,7 @@ const classSchema = new mongoose.Schema({
   name: {
       type: String,
       trim: true,
+      unique: true,
       validate(value) {
         if (!validator.isLength(value, {
             min: 1,
@@ -17,11 +19,15 @@ const classSchema = new mongoose.Schema({
         }
       }
   },
+  forSchedule: {
+      type: String,
+      trim: true
+  },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Schedule"
   }
 });
 
-const Class = mongoose.model("Class", classSchema);
-module.exports = Class;
+const Course = mongoose.model("Course", courseSchema);
+module.exports = Course;

@@ -13,7 +13,7 @@ router.get('/', authCheck, (req, res) => {
 
 router.post('/test', authCheck, (req, res) => {
     try{
-        console.log('heyyy')
+        console.log('Front-end test OK!')
     } catch(err) {
         functions.error(res, 500, err);
     }
