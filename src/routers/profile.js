@@ -11,6 +11,14 @@ router.get('/', authCheck, (req, res) => {
     }
 })
 
+router.post('/test', authCheck, (req, res) => {
+    try{
+        console.log('heyyy')
+    } catch(err) {
+        functions.error(res, 500, err);
+    }
+})
+
 //upload a class
 /*
 router.post('/class', authCheck, (req, res) => {
