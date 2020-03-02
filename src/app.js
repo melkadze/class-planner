@@ -1,7 +1,7 @@
 ///visit this project at github.com/melkadze/class-planner
-//modules in use: cookie-session, ejs, express, mongodb, mongoose, passport, passport-google-oauth20, path
+//modules in use: cookie-session, ejs, express, mongodb, mongoose, passport, passport-google-oauth20, path, validator
 //modules not in use: luxon, moment
-//modules uninstalled: babel, bcryptjs, eslint, jsonwebtoken, multer, validator
+//modules uninstalled: babel, bcryptjs, eslint, jsonwebtoken, multer
 
 //framework dependencies
 const express = require("express");
@@ -13,6 +13,7 @@ require("./db/mongoose"); //ensures mongoose runs
 app.set('views', path.join(__dirname, './views')); //redefine views path
 app.set('view engine', 'ejs'); //use ejs
 app.use(express.json());
+app.use(express.static(__dirname + "/public")); //export public folder
 
 //other dependencies
 const passport = require('passport')
@@ -35,13 +36,17 @@ app.use(passport.session());
 const rootRouter = require('./routers/root')
 const authRouter = require('./routers/auth')
 const profileRouter = require('./routers/profile')
+const scheduleRouter = require('./routers/schedule')
+const courseRouter = require('./routers/course')
 
 //router setup
 app.use('/', rootRouter)
 app.use('/auth', authRouter)
 app.use('/profile', profileRouter)
+app.use('/schedule', scheduleRouter)
+app.use('/course', courseRouter)
 
 //finally, open the server
-app.listen(3000, () => {
-  console.log("Server up on port 3000...");
+app.listen(env.port, () => {
+  console.log(`Server up on port ${env.port}...`);
 });
