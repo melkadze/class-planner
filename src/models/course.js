@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const validator = require("validator")
 
 const courseSchema = new mongoose.Schema({
+  //add timestart, timeend
   period: {
     type: Number,
     required: true
