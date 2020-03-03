@@ -19,6 +19,7 @@ const courseSchema = new mongoose.Schema({
         }
       }
   },
+  //workaround for virtuals
   forSchedule: {
       type: String,
       trim: true
