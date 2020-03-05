@@ -8,7 +8,7 @@ If you wish to utilize this project for yourself, you must create an env.js file
 1. Make a new file titled env.js in the /src/ directory
 2. Add the following lines, replacing the `<enclosed text>` with its corresponding keys
 
-  module.exports = {
+    module.exports = {
     mongooseString: '<your MongoDB connection string>',
 
     oAuthID: '<your Google oAuth ID>',
@@ -19,4 +19,4 @@ If you wish to utilize this project for yourself, you must create an env.js file
     email: '<your support email>',
 
     port: <the port you wish to open your server on; 3000 is recommended>
-  }
+    }
