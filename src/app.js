@@ -50,20 +50,3 @@ app.use('/course', courseRouter)
 app.listen(env.port, () => {
   console.log(`Server up on port ${env.port}...`);
 });
-
-const validator = require("validator")
-
-function testValidate(input) {
-  if (validator.contains(input, "+")) {
-    inputSplitArray = input.split("+")
-    if (inputSplitArray.length !== 2) {
-      console.log("extra false")
-    } else {
-      console.log("extra true")
-    }
-  } else {
-    console.log("false")
-  }
-}
-
-testValidate("test+sdijdsij")
