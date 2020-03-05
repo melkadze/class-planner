@@ -9,7 +9,7 @@ If you wish to utilize this project for yourself, you must create an env.js file
 2. Add the following lines, replacing the `<enclosed text>` with its corresponding keys
 
   module.exports = {
-    mongooseString: '<your MongoDB connection string>',
+    mongooseString: `'<your MongoDB connection string>'`,
 
     oAuthID: '<your Google oAuth ID>',
     oAuthSecret: '<your Google oAuth secret>',
