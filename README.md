@@ -7,6 +7,7 @@ If you wish to utilize this project for yourself, you must create an env.js file
 ### Creating an env.js file
 > Make a new file titled env.js in the /src/ directory
 > Add the following lines, replacing the <enclosed text> with its corresponding keys
+  
   module.exports = {
     mongooseString: '<your MongoDB connection string>',
 
