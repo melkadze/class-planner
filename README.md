@@ -7,7 +7,7 @@ If you wish to utilize this project for yourself, you must create an env.js file
 ### Creating an env.js file
 1. Make a new file titled env.js in the /src/ directory
 2. Add the following lines, replacing the `<enclosed text>` with its corresponding keys
-
+``
     module.exports = {
     mongooseString: '<your MongoDB connection string>',
 
@@ -20,3 +20,4 @@ If you wish to utilize this project for yourself, you must create an env.js file
 
     port: <the port you wish to open your server on; 3000 is recommended>
     }
+``
