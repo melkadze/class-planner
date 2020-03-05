@@ -6,14 +6,7 @@ const scheduleSchema = new mongoose.Schema({
     required: true,
     unique: true,
     validate(value) {
-      try {
-        
-      } catch (err) {
-
-      }
-
-
-
+      //check if name is above 32 char
       if (
         !validator.isLength(value, {
           min: 1,
@@ -21,6 +14,15 @@ const scheduleSchema = new mongoose.Schema({
         })
       ) {
         throw new Error("Class name cannot exceed 32 characters");
+      }
+      //check if the reference system with +s is maintained (just one +)
+      if (validator.contains(value, "+")) {
+        valueSplitArray = value.split("+")
+        if (valueSplitArray.length !== 2) {
+          throw new Error("Class name cannot exceed 32 characters");
+        }
+      } else {
+        console.log("false")
       }
     }
   },
