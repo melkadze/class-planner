@@ -25,4 +25,5 @@ Note that this doesn't include Node.js itself, which is required to run the comm
 ```
 ### NPM Scripts
 `install`: Installs the project's dependencies.
+
 `dev`: Launches a live development server on the port specified in the `env.js` file.
