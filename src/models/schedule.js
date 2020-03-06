@@ -1,10 +1,11 @@
 const mongoose = require("mongoose");
+const validator = require("validator");
 
 const scheduleSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    unique: true,
+    //unique: true,
     validate(value) {
       //check if name is above 32 char
       if (
@@ -16,13 +17,15 @@ const scheduleSchema = new mongoose.Schema({
         throw new Error("Class name cannot exceed 32 characters");
       }
       //check if the reference system with %s is maintained (userID%className)
-      //this must be done as we need names to be unique per owner, but not globally
+      //this should be done as we need names to be unique per owner, but not globally
+      /*
       if (validator.contains(value, "%")) {
         valueSplitArray = value.split("%")
         if (valueSplitArray.length !== 2) {
           throw new Error(`Reference system error; did you have a number of "%"s =/= 1?`);
         }
       }
+      */
     }
   },
   owner: {

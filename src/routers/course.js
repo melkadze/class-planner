@@ -15,7 +15,6 @@ router.post('/upload', authCheck, async (req, res) => {
     try{
         await course.save();
         res.send(course)
-        console.log('Sent COURSE')
     } catch(err) {
         functions.error(res, 500, err);
     }
