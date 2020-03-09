@@ -13,7 +13,7 @@ router.post('/upload', authCheck, async (req, res) => {
     try{
         await schedule.save();
         res.send(schedule)
-        console.log('Sent SCHEDULE')
+        console.log(`Sent SCHEDULE: ${schedule}`)
     } catch(err) {
         functions.error(res, 500, err);
     }

@@ -29,7 +29,8 @@ const scheduleSchema = new mongoose.Schema({
     }
   },
   owner: {
-    type: mongoose.Schema.Types.ObjectId
+    type: mongoose.Schema.Types.ObjectId,
+    required: true
   }
 });
 
