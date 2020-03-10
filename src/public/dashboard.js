@@ -62,3 +62,14 @@ date.subtract(time);
 let x = $('#MomentRocks').text(date.format())
 
 console.log(`${x.minutes()} minutes left`);
+
+
+// subtracting time !!! pleaassseeee !!!
+var m = moment().format();
+var time = m.utc(); 
+
+var currentTime = moment.utc(startTime, "HH:mm");
+var end = moment.utc(endTime, "HH:mm");
+
+var d = moment.duration(end.diff(currentTime));
+console.log(`${d} minutes left`); 
