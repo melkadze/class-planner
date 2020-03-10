@@ -1,0 +1,22 @@
+@mixin grid {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+}
+@mixin col-12 {
+  grid-template-columns: repeat(12, 1fr);
+  grid-column-gap: 24px;
+}
+@mixin row-2 {
+  grid-template-rows: 40px 1fr 40px 1fr;
+}
+@mixin space-between {
+  &::after {
+    content: "";
+    width: 100%;
+    display: inline-block;
+  }
+}
+@mixin start-col-12 {
+  grid-column-start: 12;
+}

@@ -1,0 +1,37 @@
+@use "color";
+@use "grid";
+@use "typography";
+
+.nav {
+  @include grid.grid();
+  @include grid.col-12();
+  height: 80px;
+  margin: 0 7.5vw;
+}
+.nav__logo-container {
+  grid-column-start: 1;
+  grid-column-end: span 2;
+}
+.nav__text-container {
+  @include grid.space-between();
+  width: 100%;
+  grid-column-start: 3;
+  grid-column-end: span 5;
+  text-align: justify;
+}
+.nav__icon-container {
+  grid-column-start: 11;
+  grid-column-end: span 1;
+}
+.nav__icon-container--col-12 {
+  @include grid.start-col-12();
+}
+.nav__text {
+  @include typography.headline-6();
+  text-decoration: none;
+  color: color.$black;
+}
+.nav__icon {
+  height: 60%;
+  width: 60%;
+}
