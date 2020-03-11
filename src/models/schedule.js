@@ -29,10 +29,17 @@ scheduleSchema.virtual("course", {
   foreignField: "owner"
 })
 
+scheduleSchema.virtual("period", {
+  ref: "Period",
+  localField: "_id",
+  foreignField: "owner"
+})
+
 //force schedule names to be unique per user, but not per db
 scheduleSchema.index(
-  {owner: 1, name: 1}, {unique: true}
+  {name: 1, owner: 1}, {unique: true}
 )
 
 const Schedule = mongoose.model("Schedule", scheduleSchema);
+Schedule.ensureIndexes(); //makes sure compound indexes are applied
 module.exports = Schedule;
