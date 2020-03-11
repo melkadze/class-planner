@@ -68,8 +68,27 @@ console.log(`${x.minutes()} minutes left`);
 var m = moment().format();
 var time = m.utc(); 
 
-var currentTime = moment.utc(startTime, "HH:mm");
+// var currentTime = moment.utc(startTime, "HH:mm");
 var end = moment.utc(endTime, "HH:mm");
 
-var d = moment.duration(end.diff(currentTime));
-console.log(`${d} minutes left`); 
+var d1 = moment.duration(end.diff(p1));
+console.log(`${d1} minutes left in Period One`); 
+
+const PeriodOne = "08:41:00";
+var p1 = moment.utc(PeriodOne); 
+const PeriodTwo = "09:26:00";
+var p2 = moment.utc(PeriodTwo);
+const PeriodThree = "10:17:00";
+var p3 = moment.utc(PeriodThree);
+const PeriodFour = "11:02:00";
+var p4 = moment.utc(PeriodFour);
+const PeriodFive = "11:48:00";
+var p5 = moment.utc(PeriodFive);
+const PeriodSix = "12:32:00";
+var p6 = moment.utc(PeriodSix);
+const PeriodSeven = "13:17:00";
+var p7 = moment.utc(PeriodSeven);
+const PeriodEight = "14:01:00";
+var p8 = moment.utc(PeriodEight);
+const PeriodNine = "14:47:00";
+var p9 = moment.utc(PeriodNine);

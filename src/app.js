@@ -50,3 +50,4 @@ app.use('/course', courseRouter)
 app.listen(env.port, () => {
   console.log(`Server up on port ${env.port}...`);
 });
+
