@@ -18,7 +18,7 @@ app.use(express.static(__dirname + "/public")); //export public folder
 //other dependencies
 const passport = require('passport')
 const cookieSession = require('cookie-session')
-const passportSetup = require('./config/passport-setup') //this is necessary
+const passportSetup = require('./config/passport-setup') //this is necessary, even though it is greyed out ((consider removing const, and just put require))
 const env = require('./env')
 //import * as sampledb from "./sampledb.json"
 
@@ -39,6 +39,7 @@ const profileRouter = require('./routers/profile')
 const scheduleRouter = require('./routers/schedule')
 const periodRouter = require('./routers/period')
 const courseRouter = require('./routers/course')
+const taskRouter = require('./routers/task')
 
 //router setup
 app.use('/', rootRouter)
@@ -47,6 +48,7 @@ app.use('/profile', profileRouter)
 app.use('/schedule', scheduleRouter)
 app.use('/schedule/period', periodRouter)
 app.use('/course', courseRouter)
+app.use('/task', taskRouter)
 
 //finally, open the server
 app.listen(env.port, () => {
