@@ -3,7 +3,7 @@ An in-progress, collaborative, and expansive Node.js project that provides a con
 
 ### Important:
 If you wish to utilize this project for yourself, you must create an env.js file.
-Then, run the the `install` NPM script to download the project's dependencies.
+Then, run the the `setup` NPM script to download the project's dependencies.
 Note that this doesn't include Node.js itself, which is required to run the command.
 
 ### Creating an env.js file
@@ -24,6 +24,6 @@ Note that this doesn't include Node.js itself, which is required to run the comm
   }
 ```
 ### NPM Scripts
-`install`: Installs the project's dependencies.
+`setup`: Installs the project's dependencies.
 
 `dev`: Launches a live development server on the port specified in the `env.js` file.
