@@ -2,12 +2,14 @@ const mongoose = require("mongoose");
 const validator = require("validator")
 
 const courseSchema = new mongoose.Schema({
+  //add timestart, timeend
   period: {
     type: Number,
     required: true
   },
   name: {
       type: String,
+      required: true,
       trim: true,
       unique: true,
       validate(value) {
@@ -19,13 +21,16 @@ const courseSchema = new mongoose.Schema({
         }
       }
   },
+  //workaround for virtuals
   forSchedule: {
       type: String,
+      required: true,
       trim: true
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Schedule"
+    ref: "Schedule",
+    required: true
   }
 });
 
