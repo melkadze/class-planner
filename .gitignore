@@ -105,3 +105,6 @@ dist
 
 # Team passwords file
 env.js
+
+# macOS Desktop Services Store
+.DS_Store
