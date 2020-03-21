@@ -10,16 +10,16 @@ Note that this repo doesn't include Node.js itself, which is required to run the
 1. Make a new file titled .env in the root (where package.json lies) directory.
 2. Add the following lines, replacing the `<enclosed text>` with its corresponding keys:
 ```
-mongooseString=`<your MongoDB connection string>`
+mongooseString`<your MongoDB connection string>
 
-oAuthID=`<your Google oAuth ID>`
-oAuthSecret=`<your Google oAuth secret>`
+oAuthID=<your Google oAuth ID>
+oAuthSecret=<your Google oAuth secret>
 
-cookieKey=`<a secure password used to encrypt login cookies>`
+cookieKey=<a secure password used to encrypt login cookies>
 
-email=`<your support email>`
+email=<your support email>
 
-PORT=`<the port you wish to open your server on; 3000 is recommended>`
+PORT=<the port you wish to open your server on; 3000 is recommended>
 ```
 ### NPM Scripts
 `setup`: Installs the project's dependencies.
