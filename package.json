@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "setup": "npm i",
-    "dev": "nodemon src/app.js"
+    "dev": "nodemon src/app.js",
+    "web": "node src/app.js"
   },
   "repository": {
     "type": "git",
