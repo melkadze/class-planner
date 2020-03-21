@@ -1,7 +1,4 @@
 ///visit this project at github.com/melkadze/class-planner
-//modules in use: cookie-session, ejs, express, mongodb, mongoose, passport, passport-google-oauth20, path, validator
-//modules not in use: luxon, moment
-//modules uninstalled: babel, bcryptjs, eslint, jsonwebtoken, multer
 
 //framework dependencies
 const express = require("express");
@@ -19,13 +16,13 @@ app.use(express.static(__dirname + "/public")); //export public folder
 const passport = require('passport')
 const cookieSession = require('cookie-session')
 const passportSetup = require('./config/passport-setup') //this is necessary, even though it is greyed out ((consider removing const, and just put require))
-const env = require('./env')
+require('dotenv').config();
 //import * as sampledb from "./sampledb.json"
 
 //setup cookies for login storage
 app.use(cookieSession({
   maxAge: 24 * 60 * 60 * 1000, //one day, in ms
-  keys: [env.cookieKey]
+  keys: [process.env.cookieKey]
 }))
 
 //initialize passport
@@ -51,6 +48,6 @@ app.use('/course', courseRouter)
 app.use('/task', taskRouter)
 
 //finally, open the server
-app.listen(env.port, () => {
-  console.log(`Server up on port ${env.port}...`);
+app.listen(process.env.PORT, () => {
+  console.log(`Server up on port ${process.env.PORT}...`);
 });

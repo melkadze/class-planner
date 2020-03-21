@@ -103,8 +103,10 @@ dist
 # TernJS port file
 .tern-port
 
-# Team passwords file
+# Team passwords/environment file
+# first line not required, but held just in case
 env.js
+.env
 
 # macOS Desktop Services Store
 .DS_Store
