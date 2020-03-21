@@ -10,7 +10,7 @@ Note that this repo doesn't include Node.js itself, which is required to run the
 1. Make a new file titled .env in the root (where package.json lies) directory.
 2. Add the following lines, replacing the `<enclosed text>` with its corresponding keys:
 ```
-mongooseString`<your MongoDB connection string>
+mongooseString=<your MongoDB connection string>
 
 oAuthID=<your Google oAuth ID>
 oAuthSecret=<your Google oAuth secret>
