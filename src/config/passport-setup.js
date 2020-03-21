@@ -1,7 +1,7 @@
 const passport = require('passport')
 const GoogleStrategy = require('passport-google-oauth20')
 const User = require('../models/user')
-const env = require('../env')
+require('dotenv').config()
 
 //encode user info
 passport.serializeUser((user, done) => {
@@ -19,8 +19,8 @@ passport.deserializeUser((id, done) => {
 passport.use(
   new GoogleStrategy({
     callbackURL: '/auth/google/redirect',
-    clientID: env.oAuthID,
-    clientSecret: env.oAuthSecret
+    clientID: process.env.oAuthID,
+    clientSecret: process.env.oAuthSecret
   }, (accessToken, refreshToken, profile, done) => {
     //check if user already exists
     User.findOne({googleID: profile.id}).then((currentUser) => {
