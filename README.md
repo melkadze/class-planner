@@ -24,6 +24,6 @@ PORT=<the port you wish to open your server on; 3000 is recommended>
 ### NPM Scripts
 `setup`: Installs the project's dependencies.
 
-`dev`: Launches a live development server on the port specified in the `env.js` file.
+`dev`: Launches a live development server on the port specified in the `.env` file.
 
 `start`: Runs the application, intended for production use online.
