@@ -8312,10 +8312,35 @@ function convertToTime(hour, minute, isPM) {
     return convertedTime
 }
 
-console.log(convertToTime(10, 30, true).toISO())
+function sendPOST(url, content) {
+    const xhttp = new XMLHttpRequest();
+    xhttp.open('POST', url, true);
+    xhttp.setRequestHeader('Content-Type', 'application/json')
+    xhttp.send(content)
+}
+
+document.getElementById('periodInputButton').onclick = function () {
+    const forSchedule = document.getElementById('periodInputForSchedule').value
+    const period = document.getElementById('periodInputPeriod').value
+    const hourStart = document.getElementById('periodInputHourStart').value
+    const minuteStart = document.getElementById('periodInputMinuteStart').value
+    const apmStart = document.getElementById('periodInputAPMStart').checked
+    const hourEnd = document.getElementById('periodInputHourEnd').value
+    const minuteEnd = document.getElementById('periodInputMinuteEnd').value
+    const apmEnd = document.getElementById('periodInputAPMEnd').checked
+    
+    const convertedTimeStart = convertToTime(hourStart, minuteStart, apmStart)
+    const convertedTimeEnd = convertToTime(hourEnd, minuteEnd, apmEnd)
+    
+    sendPOST("/schedule/period/upload", `{"forSchedule": "${forSchedule}", "period": "${period}", "timeStart": "${convertedTimeStart}", "timeEnd": "${convertedTimeEnd}"}`)
+}
 
 
 
+
+
+
+//console.log(convertToTime(10, 30, true).toISO())
 
 
 /*

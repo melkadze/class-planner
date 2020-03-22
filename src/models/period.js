@@ -7,12 +7,10 @@ const periodSchema = new mongoose.Schema({
     required: true
   },
   timeStart: {
-    //type: [[moment js type]]
-    type: Number
+    type: Object
   },
   timeEnd: {
-    //type: [[moment js type]]
-    type: Number
+    type: Object
   },
   //workaround for virtuals
   forSchedule: {
@@ -30,6 +28,12 @@ const periodSchema = new mongoose.Schema({
 //force periods to be unique per schedule, but not per db
 periodSchema.index(
   {period: 1, owner: 1}, {unique: true}
+)
+periodSchema.index(
+  {timeStart: 1, owner: 1}, {unique: true}
+)
+periodSchema.index(
+  {timeEnd: 1, owner: 1}, {unique: true}
 )
 
 const Period = mongoose.model("Period", periodSchema);
