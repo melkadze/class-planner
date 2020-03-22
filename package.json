@@ -4,8 +4,9 @@
   "description": "Class planner project",
   "main": "index.js",
   "scripts": {
-    "setup": "npm i",
+    "setup": "npm i && browserify src/public/timing.js -o src/public/main.js",
     "dev": "nodemon src/app.js",
+    "devF": "watchify src/public/timing.js -o src/public/main.js",
     "start": "node src/app.js"
   },
   "repository": {
@@ -24,7 +25,6 @@
     "ejs": "^3.0.1",
     "express": "^4.17.1",
     "luxon": "^1.22.0",
-    "moment": "^2.24.0",
     "mongodb": "^3.5.2",
     "mongoose": "^5.8.11",
     "passport": "^0.4.1",
