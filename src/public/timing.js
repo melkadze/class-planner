@@ -22,14 +22,6 @@ function convertToTime(hour, minute, isPM) {
     return convertedTime
 }
 
-function sendPOST(url, content) {
-    //no longer necessary, rec'd to rem
-    const xhttp = new XMLHttpRequest();
-    xhttp.open('POST', url, true);
-    xhttp.setRequestHeader('Content-Type', 'application/json')
-    xhttp.send(content)
-}
-
 document.getElementById('periodInputButton').onclick = function () {
     const forSchedule = document.getElementById('periodInputForSchedule').value
     const period = document.getElementById('periodInputPeriod').value
@@ -42,8 +34,6 @@ document.getElementById('periodInputButton').onclick = function () {
     
     const convertedTimeStart = convertToTime(hourStart, minuteStart, apmStart)
     const convertedTimeEnd = convertToTime(hourEnd, minuteEnd, apmEnd)
-    
-    //sendPOST("/schedule/period/upload", `{"forSchedule": "${forSchedule}", "period": "${period}", "timeStart": "${convertedTimeStart}", "timeEnd": "${convertedTimeEnd}"}`)
     
     axios.post(`/schedule/period/upload`, {
         forSchedule: forSchedule,
@@ -97,29 +87,3 @@ document.getElementById('scheduleInputButton').onclick = function () {
         document.getElementById('scheduleError').innerHTML = error
     })
 }
-
-
-
-
-
-
-//console.log(convertToTime(10, 30, true).toISO())
-
-
-/*
-
-const timeNow = luxon.DateTime.local()
-const timeTarget = luxon.DateTime.fromObject({
-    hour: 10,
-    minutes: 30
-})
-
-//console.log(luxon.DateTime.local().minus({ hours: 3 }))
-
-
-console.log(timeNow.toISO())
-console.log(timeTarget.toISO())
-
-console.log(Math.sign(timeNow.diff(timeTarget, 'days').values.days))
-console.log(Math.sign(timeTarget.diff(timeNow, 'days').values.days))
-*/

@@ -4,7 +4,7 @@
   "description": "Class planner project",
   "main": "index.js",
   "scripts": {
-    "setup": "npm i && browserify src/public/timing.js -o src/public/main.js",
+    "build": "npm i && browserify src/public/timing.js -o src/public/main.js",
     "devB": "nodemon src/app.js",
     "devF": "watchify src/public/timing.js -o src/public/main.js",
     "start": "node src/app.js"
