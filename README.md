@@ -3,7 +3,7 @@ An in-progress, collaborative, and expansive Node.js project that provides a con
 
 ### Important:
 If you wish to utilize this project for yourself, you must create an .env file.
-Then, run the the `setup` NPM script to download the project's dependencies.
+Then, run the the `build` NPM script to download the project's dependencies and build the necessary js files.
 Note that this repo doesn't include Node.js itself, which is required to run the command.
 
 ### Creating an env.js file
@@ -22,8 +22,10 @@ email=<your support email>
 PORT=<the port you wish to open your server on; 3000 is recommended>
 ```
 ### NPM Scripts
-`setup`: Installs the project's dependencies.
+`build`: Installs the project's dependencies and builds the necessary js files.
 
-`dev`: Launches a live development server on the port specified in the `.env` file.
+`devB`: Launches a live backend development server on the port specified in the `.env` file.
+
+`devF`: Launches a live frontend development environment and rebuilds `main.js` after modifications to core js files.
 
 `start`: Runs the application, intended for production use online.
