@@ -1,11 +1,12 @@
-const luxon = require("luxon");
+const luxon = require("luxon")
+const axios = require("axios")
 
 function convertToTime(hour, minute, isPM) {
     const timeNow = luxon.DateTime.local()
     
     //12hour -> 24hour
     if (isPM) {
-        hour = hour + 12
+        hour = Number(hour) + 12
     }
     
     let convertedTime = luxon.DateTime.fromObject({
@@ -40,6 +41,29 @@ document.getElementById('periodInputButton').onclick = function () {
     
     const convertedTimeStart = convertToTime(hourStart, minuteStart, apmStart)
     const convertedTimeEnd = convertToTime(hourEnd, minuteEnd, apmEnd)
+    
+    sendPOST("/schedule/period/upload", `{"forSchedule": "${forSchedule}", "period": "${period}", "timeStart": "${convertedTimeStart}", "timeEnd": "${convertedTimeEnd}"}`)
+}
+
+document.getElementById('scheduleRetrieveButton').onclick = function () {
+    const schedule = document.getElementById('scheduleRetrieveButton').value
+    
+    axios.get('/schedule/NTest')
+    .then (function (response) {
+        console.log(response.data)
+    
+        for (i = 1; i < 10; i++) {
+            document.getElementById(`periodDisplayPeriod${i}`).innerHTML = response.data[i].period
+            document.getElementById(`periodDisplayTimeStart${i}`).innerHTML = luxon.DateTime.fromISO(response.data[i].timeStart).toFormat('h:mm a')
+            document.getElementById(`periodDisplayEnd${i}`).innerHTML = luxon.DateTime.fromISO(response.data[i].timeEnd).toFormat('h:mm a')
+        }
+    })
+    .catch(function (error) {
+        console.log(`ERROR: ${error}`)
+    })
+    .finally(function () {
+        console.log('OK')
+    })
     
     sendPOST("/schedule/period/upload", `{"forSchedule": "${forSchedule}", "period": "${period}", "timeStart": "${convertedTimeStart}", "timeEnd": "${convertedTimeEnd}"}`)
 }
