@@ -40,7 +40,13 @@
             width: 40%;
             height: 5%;
             font-size: 30px;
-            margin: 1%
+            margin: 1%;
+        }
+        .error {
+            color: red;
+        }
+        .success {
+            color: green;
         }
     </style>
 </head>
@@ -62,6 +68,17 @@
     </header>
     <main>
         <h3>Welcome to the frontend demo website</h3>
+        <h4>First, make a new schedule!</h4>
+        <p>Schedule name</p>
+        <input type="text" id="scheduleInputSchedule"></input>
+        <br>
+        <button id="scheduleInputButton">Upload schedule</button>
+        <p class="error" id="scheduleError"></p>
+        <p class="success" id="scheduleSuccess"></p>
+        
+        
+        
+        
         <h4>Add a period to a schedule!!</h4>
         <p>For which schedule?</p>
         <input type="text" id="periodInputForSchedule"></input>
@@ -96,6 +113,8 @@
         -->
         
         <button id="periodInputButton">Upload period</button>
+        <p class="error" id="periodError"></p>
+        <p class="success" id="periodSuccess"></p>
         
         
         
@@ -104,59 +123,67 @@
         <input type="text" id="scheduleRetrieveSchedule"></input>
         <br>
         <button id="scheduleRetrieveButton">Get schedule</button>
+        <p class="error" id="scheduleGetError"></p>
+        <p class="success" id="scheduleGetSuccess"></p>
         
         <ul>
-            <p id="periodDisplayPeriod1">PERIOD</p>
-            <p id="periodDisplayTimeStart1">START</p>
-            <p id="periodDisplayEnd1">END</p>
+            <p id="periodDisplayPeriod0"></p>
+            <p id="periodDisplayTimeStart0"></p>
+            <p id="periodDisplayEnd0"></p>
         </ul>
         <br>
         <ul>
-            <p id="periodDisplayPeriod2">PERIOD</p>
-            <p id="periodDisplayTimeStart2">START</p>
-            <p id="periodDisplayEnd2">END</p>
+            <p id="periodDisplayPeriod1"></p>
+            <p id="periodDisplayTimeStart1"></p>
+            <p id="periodDisplayEnd1"></p>
         </ul>
         <br>
         <ul>
-            <p id="periodDisplayPeriod3">PERIOD</p>
-            <p id="periodDisplayTimeStart3">START</p>
-            <p id="periodDisplayEnd3">END</p>
+            <p id="periodDisplayPeriod2"></p>
+            <p id="periodDisplayTimeStart2"></p>
+            <p id="periodDisplayEnd2"></p>
         </ul>
         <br>
         <ul>
-            <p id="periodDisplayPeriod4">PERIOD</p>
-            <p id="periodDisplayTimeStart4">START</p>
-            <p id="periodDisplayEnd4">END</p>
+            <p id="periodDisplayPeriod3"></p>
+            <p id="periodDisplayTimeStart3"></p>
+            <p id="periodDisplayEnd3"></p>
         </ul>
         <br>
         <ul>
-            <p id="periodDisplayPeriod5">PERIOD</p>
-            <p id="periodDisplayTimeStart5">START</p>
-            <p id="periodDisplayEnd5">END</p>
+            <p id="periodDisplayPeriod4"></p>
+            <p id="periodDisplayTimeStart4"></p>
+            <p id="periodDisplayEnd4"></p>
         </ul>
         <br>
         <ul>
-            <p id="periodDisplayPeriod6">PERIOD</p>
-            <p id="periodDisplayTimeStart6">START</p>
-            <p id="periodDisplayEnd6">END</p>
+            <p id="periodDisplayPeriod5"></p>
+            <p id="periodDisplayTimeStart5"></p>
+            <p id="periodDisplayEnd5"></p>
         </ul>
         <br>
         <ul>
-            <p id="periodDisplayPeriod7">PERIOD</p>
-            <p id="periodDisplayTimeStart7">START</p>
-            <p id="periodDisplayEnd7">END</p>
+            <p id="periodDisplayPeriod6"></p>
+            <p id="periodDisplayTimeStart6"></p>
+            <p id="periodDisplayEnd6"></p>
         </ul>
         <br>
         <ul>
-            <p id="periodDisplayPeriod8">PERIOD</p>
-            <p id="periodDisplayTimeStart8">START</p>
-            <p id="periodDisplayEnd8">END</p>
+            <p id="periodDisplayPeriod7"></p>
+            <p id="periodDisplayTimeStart7"></p>
+            <p id="periodDisplayEnd7"></p>
         </ul>
         <br>
         <ul>
-            <p id="periodDisplayPeriod9">PERIOD</p>
-            <p id="periodDisplayTimeStart9">START</p>
-            <p id="periodDisplayEnd9">END</p>
+            <p id="periodDisplayPeriod8"></p>
+            <p id="periodDisplayTimeStart8"></p>
+            <p id="periodDisplayEnd8"></p>
+        </ul>
+        <br>
+        <ul>
+            <p id="periodDisplayPeriod9"></p>
+            <p id="periodDisplayTimeStart9"></p>
+            <p id="periodDisplayEnd9"></p>
         </ul>
         <br>
         <br>
