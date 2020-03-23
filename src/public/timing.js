@@ -22,6 +22,26 @@ function convertToTime(hour, minute, isPM) {
     return convertedTime
 }
 
+function truncateTime(time) {
+    return luxon.DateTime.fromISO(time).toFormat('h:mm a')
+}
+
+function truncatedTimeToISO(time) {
+    
+    let apm = time.split(' ')[1]
+    let hour = time.split(':')[0]
+    let minute = time.split(':')[1].split(' ')[0]
+    
+    if (apm == 'PM') {
+        hour = Number(hour) + 12
+    }
+    
+    return luxon.DateTime.fromObject({
+        hour: hour,
+        minutes: minute
+    })
+}
+
 document.getElementById('periodInputButton').onclick = function () {
     const forSchedule = document.getElementById('periodInputForSchedule').value
     const period = document.getElementById('periodInputPeriod').value
@@ -32,8 +52,8 @@ document.getElementById('periodInputButton').onclick = function () {
     const minuteEnd = document.getElementById('periodInputMinuteEnd').value
     const apmEnd = document.getElementById('periodInputAPMEnd').checked
     
-    const convertedTimeStart = convertToTime(hourStart, minuteStart, apmStart)
-    const convertedTimeEnd = convertToTime(hourEnd, minuteEnd, apmEnd)
+    const convertedTimeStart = truncateTime(convertToTime(hourStart, minuteStart, apmStart))
+    const convertedTimeEnd = truncateTime(convertToTime(hourEnd, minuteEnd, apmEnd))
     
     axios.post(`/schedule/period/upload`, {
         forSchedule: forSchedule,
@@ -63,8 +83,8 @@ document.getElementById('scheduleRetrieveButton').onclick = function () {
     
         for (i = 0; i < response.data.length; i++) {
             document.getElementById(`periodDisplayPeriod${i}`).innerHTML = response.data[i].period
-            document.getElementById(`periodDisplayTimeStart${i}`).innerHTML = luxon.DateTime.fromISO(response.data[i].timeStart).toFormat('h:mm a')
-            document.getElementById(`periodDisplayEnd${i}`).innerHTML = luxon.DateTime.fromISO(response.data[i].timeEnd).toFormat('h:mm a')
+            document.getElementById(`periodDisplayTimeStart${i}`).innerHTML = response.data[i].timeStart
+            document.getElementById(`periodDisplayEnd${i}`).innerHTML = response.data[i].timeEnd
         }
     })
     .catch(function (error) {
