@@ -40,7 +40,13 @@
             width: 40%;
             height: 5%;
             font-size: 30px;
-            margin: 1%
+            margin: 1%;
+        }
+        .error {
+            color: red;
+        }
+        .success {
+            color: green;
         }
     </style>
 </head>
@@ -58,11 +64,122 @@
         </ul>
     </nav>
     <header>
-        <h1>Timing API Testsite</h1>
+        <h1>Welcome to the Frontend Demo Website!</h1>
     </header>
     <main>
+        <h4>First, make a new schedule!</h4>
+        <p>Schedule name</p>
+        <input type="text" id="scheduleInputSchedule"></input>
+        <br>
+        <button id="scheduleInputButton">Upload schedule</button>
+        <p class="error" id="scheduleError"></p>
+        <p class="success" id="scheduleSuccess"></p>
         
+        <h4>Add a period to a schedule!!</h4>
+        <p>For which schedule?</p>
+        <input type="text" id="periodInputForSchedule"></input>
+        <br>
+        <p> Period number</p>
+        <input type="text" id="periodInputPeriod"></input>
+        <br>
+        <p>Hour of period start</p>
+        <input type="text" id="periodInputHourStart"></input>
+        <br>
+        <p>Minute of period start</p>
+        <input type="text" id="periodInputMinuteStart"></input>
+        <br>
+        <p>PM? start</p>
+        <input type="checkbox" id="periodInputAPMStart"></input>
+        <br>
+        <p>Hour of period end</p>
+        <input type="text" id="periodInputHourEnd"></input>
+        <br>
+        <p>Minute of period end</p>
+        <input type="text" id="periodInputMinuteEnd"></input>
+        <br>
+        <p>PM? end</p>
+        <input type="checkbox" id="periodInputAPMEnd"></input>
+        <br>
+        <!--
+        <input type="radio" id="inputAM" value="false">
+        <label for="inputAM">AM</label><br>
+        <input type="radio" id="inputPM" value="true">
+        <label for="inputPM">PM</label><br>  
+        -->
+        <button id="periodInputButton">Upload period</button>
+        <p class="error" id="periodError"></p>
+        <p class="success" id="periodSuccess"></p>
+        
+        <h4>Now retrieve it...</h4>
+        <p>Which schedule?</p>
+        <input type="text" id="scheduleRetrieveSchedule"></input>
+        <br>
+        <button id="scheduleRetrieveButton">Get schedule</button>
+        <p class="error" id="scheduleGetError"></p>
+        <p class="success" id="scheduleGetSuccess"></p>
+        <ul>
+            <p id="periodDisplayPeriod0"></p>
+            <p id="periodDisplayTimeStart0"></p>
+            <p id="periodDisplayEnd0"></p>
+        </ul>
+        <br>
+        <ul>
+            <p id="periodDisplayPeriod1"></p>
+            <p id="periodDisplayTimeStart1"></p>
+            <p id="periodDisplayEnd1"></p>
+        </ul>
+        <br>
+        <ul>
+            <p id="periodDisplayPeriod2"></p>
+            <p id="periodDisplayTimeStart2"></p>
+            <p id="periodDisplayEnd2"></p>
+        </ul>
+        <br>
+        <ul>
+            <p id="periodDisplayPeriod3"></p>
+            <p id="periodDisplayTimeStart3"></p>
+            <p id="periodDisplayEnd3"></p>
+        </ul>
+        <br>
+        <ul>
+            <p id="periodDisplayPeriod4"></p>
+            <p id="periodDisplayTimeStart4"></p>
+            <p id="periodDisplayEnd4"></p>
+        </ul>
+        <br>
+        <ul>
+            <p id="periodDisplayPeriod5"></p>
+            <p id="periodDisplayTimeStart5"></p>
+            <p id="periodDisplayEnd5"></p>
+        </ul>
+        <br>
+        <ul>
+            <p id="periodDisplayPeriod6"></p>
+            <p id="periodDisplayTimeStart6"></p>
+            <p id="periodDisplayEnd6"></p>
+        </ul>
+        <br>
+        <ul>
+            <p id="periodDisplayPeriod7"></p>
+            <p id="periodDisplayTimeStart7"></p>
+            <p id="periodDisplayEnd7"></p>
+        </ul>
+        <br>
+        <ul>
+            <p id="periodDisplayPeriod8"></p>
+            <p id="periodDisplayTimeStart8"></p>
+            <p id="periodDisplayEnd8"></p>
+        </ul>
+        <br>
+        <ul>
+            <p id="periodDisplayPeriod9"></p>
+            <p id="periodDisplayTimeStart9"></p>
+            <p id="periodDisplayEnd9"></p>
+        </ul>
+        <br>
+        <br>
+        <br>
     </main>
 </body>
-<script type="text/javascript" src="index.js"></script>
+<script type="text/javascript" src="../main.js"></script>
 </html>
