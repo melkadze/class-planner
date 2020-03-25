@@ -36,6 +36,7 @@ const profileRouter = require('./routers/profile')
 const scheduleRouter = require('./routers/schedule')
 const periodRouter = require('./routers/period')
 const courseRouter = require('./routers/course')
+const dayRouter = require('./routers/day')
 const taskRouter = require('./routers/task')
 
 //router setup
@@ -45,6 +46,7 @@ app.use('/profile', profileRouter)
 app.use('/schedule', scheduleRouter)
 app.use('/schedule/period', periodRouter)
 app.use('/course', courseRouter)
+app.use('/day', dayRouter)
 app.use('/task', taskRouter)
 
 //finally, open the server

@@ -1,32 +1,32 @@
 const router = require('express').Router();
-const Schedule = require("../models/schedule")
-const Period = require("../models/period")
+const Day = require("../models/day")
+const Course = require("../models/course")
 const authCheck = require('../middleware/authCheck')
 const functions = require('../config/functions')
 
 ////make everything async?
-//make a new schedule
+//make a new day
 router.post('/upload', authCheck, async (req, res) => {
-    const schedule = new Schedule ({
+    const day = new Day ({
         ...req.body,
         owner: req.user._id
     })
     try{
-        await schedule.save();
-        res.send(schedule)
-        console.log(`Sent SCHEDULE: ${schedule}`)
+        await day.save();
+        res.send(day)
+        console.log(`Sent DAY: ${day}`)
     } catch(err) {
         functions.error(res, 500, err);
     }
 })
 
 router.get('/:id', authCheck, async (req, res) => {
-    const schedule = req.params.id
-    //const scheduleID = Schedule.findOne({ name: schedule })
+    const day = req.params.id
+    //const dayID = Day.findOne({ name: day })
     try {
-        await Schedule.findOne({ name: schedule }, function (err, adv) {
-            let scheduleID = adv._id
-            Period.find({ owner: scheduleID }, function (err, adv) {
+        await Day.findOne({ day: day }, function (err, adv) {
+            let dayID = adv._id
+            Course.find({ owner: dayID }, function (err, adv) {
                 res.send(adv)
             }).sort({ period: 1 })
         })

@@ -107,3 +107,19 @@ document.getElementById('scheduleInputButton').onclick = function () {
         document.getElementById('scheduleError').innerHTML = error
     })
 }
+
+document.getElementById('courseInputButton').onclick = function () {
+    axios.post(`/course/upload`, {
+        forSchedule: document.getElementById('courseInputSchedule').value,
+        period: document.getElementById('courseInputPeriod').value,
+        name: document.getElementById('').value
+    })
+    .then (function (response) {
+        document.getElementById('courseError').innerHTML = ''
+        document.getElementById('courseSuccess').innerHTML = 'course send OK!'
+    })
+    .catch(function (error) {
+        document.getElementById('courseSuccess').innerHTML = ''
+        document.getElementById('courseError').innerHTML = error
+    })
+}

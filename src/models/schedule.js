@@ -13,7 +13,7 @@ const scheduleSchema = new mongoose.Schema({
           max: 32
         })
       ) {
-        throw new Error("Class name cannot exceed 32 characters");
+        throw new Error("Schedule name cannot exceed 32 characters");
       }
     }
   },
@@ -22,12 +22,6 @@ const scheduleSchema = new mongoose.Schema({
     required: true
   }
 });
-
-scheduleSchema.virtual("course", {
-  ref: "Course",
-  localField: "_id",
-  foreignField: "owner"
-})
 
 scheduleSchema.virtual("period", {
   ref: "Period",
