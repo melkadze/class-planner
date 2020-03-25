@@ -24,7 +24,6 @@ router.get('/:id', authCheck, async (req, res) => {
     const schedule = req.params.id
     //const scheduleID = Schedule.findOne({ name: schedule })
     try {
-        
         await Schedule.findOne({ name: schedule }, function (err, adv) {
             let scheduleID = adv._id
             Period.find({ owner: scheduleID }, function (err, adv) {

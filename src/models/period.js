@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose")
 
 const periodSchema = new mongoose.Schema({
   //add timestart, timeend
@@ -7,10 +7,10 @@ const periodSchema = new mongoose.Schema({
     required: true
   },
   timeStart: {
-    type: Object
+    type: String
   },
   timeEnd: {
-    type: Object
+    type: String
   },
   //workaround for virtuals
   forSchedule: {

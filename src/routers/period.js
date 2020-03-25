@@ -5,7 +5,7 @@ const authCheck = require('../middleware/authCheck')
 const functions = require('../config/functions')
 
 ////make everything async?
-//create a new schedule
+//create a new period
 router.post('/upload', authCheck, async (req, res) => {
     const periodID = await Schedule.findOne({ name: req.body.forSchedule, owner: req.user._id });
     const period = new Period ({
