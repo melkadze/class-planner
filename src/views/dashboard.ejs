@@ -71,31 +71,20 @@
         <p>Schedule name</p>
         <input type="text" id="scheduleInputSchedule"></input>
         <br>
-        <h5>NOTICE: These checkboxes do not work yet...</h5>
-        <p>On Monday?</p>
-        <input type="checkbox" id="scheduleInput0"></input>
-        <br>
-        <p>On Tuesday?</p>
-        <input type="checkbox" id="scheduleInput1"></input>
-        <br>
-        <p>On Wednesday?</p>
-        <input type="checkbox" id="scheduleInput2"></input>
-        <br>
-        <p>On Thursday?</p>
-        <input type="checkbox" id="scheduleInput3"></input>
-        <br>
-        <p>On Friday?</p>
-        <input type="checkbox" id="scheduleInput4"></input>
-        <br>
-        <p>On Saturday?</p>
-        <input type="checkbox" id="scheduleInput5"></input>
-        <br>
-        <p>On Sunday?</p>
-        <input type="checkbox" id="scheduleInput6"></input>
-        <br>
         <button id="scheduleInputButton">Upload schedule</button>
         <p class="error" id="scheduleError"></p>
         <p class="success" id="scheduleSuccess"></p>
+        
+        <h4>Now, a day.</h4>
+        <p>Day (0 for monday, 1 for tuesday, etc...)</p>
+        <input type="text" id="dayInputDay"></input>
+        <br>
+        <p>For which schedule?</p>
+        <input type="text" id="dayInputSchedule"></input>
+        <br>
+        <button id="dayInputButton">Upload day</button>
+        <p class="error" id="dayError"></p>
+        <p class="success" id="daySuccess"></p>
         
         <h4>Add a period to a schedule!!</h4>
         <p>For which schedule?</p>
@@ -133,14 +122,14 @@
         <p class="success" id="periodSuccess"></p>
         
         <h4>What's the course for each of those periods?</h4>
-        <p>On which schedule?</p>
-        <input type="text" id="courseInputSchedule"></input>
+        <p>On which day?</p>
+        <input type="text" id="courseInputDay"></input>
         <br>
         <p>What period?</p>
         <input type="text" id="courseInputPeriod"></input>
         <br>
         <p>What's the course for that period?</p>
-        <input type="text" id="courseInputcourse"></input>
+        <input type="text" id="courseInputCourse"></input>
         <br>
         <button id="courseInputButton">Upload course</button>
         <p class="error" id="courseError"></p>
@@ -211,6 +200,83 @@
             <p id="periodDisplayPeriod9"></p>
             <p id="periodDisplayTimeStart9"></p>
             <p id="periodDisplayEnd9"></p>
+        </ul>
+        
+        <h4>Now retrieve the day...</h4>
+        <p>Which day?</p>
+        <input type="text" id="dayRetrieveDay"></input>
+        <br>
+        <button id="dayRetrieveButton">Get day</button>
+        <p class="error" id="dayGetError"></p>
+        <p class="success" id="dayGetSuccess"></p>
+        <ul>
+            <p id="courseDisplayPeriod0"></p>
+            <p id="courseDisplayCourse0"></p>
+            <p id="courseDisplayTimeStart0"></p>
+            <p id="courseDisplayEnd0"></p>
+        </ul>
+        <br>
+        <ul>
+            <p id="courseDisplayPeriod1"></p>
+            <p id="courseDisplayCourse1"></p>
+            <p id="courseDisplayTimeStart1"></p>
+            <p id="courseDisplayEnd1"></p>
+        </ul>
+        <br>
+        <ul>
+            <p id="courseDisplayPeriod2"></p>
+            <p id="courseDisplayCourse2"></p>
+            <p id="courseDisplayTimeStart2"></p>
+            <p id="courseDisplayEnd2"></p>
+        </ul>
+        <br>
+        <ul>
+            <p id="courseDisplayPeriod3"></p>
+            <p id="courseDisplayCourse3"></p>
+            <p id="courseDisplayTimeStart3"></p>
+            <p id="courseDisplayEnd3"></p>
+        </ul>
+        <br>
+        <ul>
+            <p id="courseDisplayPeriod4"></p>
+            <p id="courseDisplayCourse4"></p>
+            <p id="courseDisplayTimeStart4"></p>
+            <p id="courseDisplayEnd4"></p>
+        </ul>
+        <br>
+        <ul>
+            <p id="courseDisplayPeriod5"></p>
+            <p id="courseDisplayCourse5"></p>
+            <p id="courseDisplayTimeStart5"></p>
+            <p id="courseDisplayEnd5"></p>
+        </ul>
+        <br>
+        <ul>
+            <p id="courseDisplayPeriod6"></p>
+            <p id="courseDisplayCourse6"></p>
+            <p id="courseDisplayTimeStart6"></p>
+            <p id="courseDisplayEnd6"></p>
+        </ul>
+        <br>
+        <ul>
+            <p id="courseDisplayPeriod7"></p>
+            <p id="courseDisplayCourse7"></p>
+            <p id="courseDisplayTimeStart7"></p>
+            <p id="courseDisplayEnd7"></p>
+        </ul>
+        <br>
+        <ul>
+            <p id="courseDisplayPeriod8"></p>
+            <p id="courseDisplayCourse8"></p>
+            <p id="courseDisplayTimeStart8"></p>
+            <p id="courseDisplayEnd8"></p>
+        </ul>
+        <br>
+        <ul>
+            <p id="courseDisplayPeriod9"></p>
+            <p id="courseDisplayCourse9"></p>
+            <p id="courseDisplayTimeStart9"></p>
+            <p id="courseDisplayEnd9"></p>
         </ul>
         <br>
         <br>

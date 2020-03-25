@@ -22,9 +22,9 @@ const courseSchema = new mongoose.Schema({
   },
   //workaround for virtuals
   forDay: {
-      type: String,
-      required: true,
-      trim: true
+    type: String,
+    required: true,
+    trim: true
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,

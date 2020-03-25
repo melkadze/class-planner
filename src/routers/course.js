@@ -1,16 +1,17 @@
 const router = require('express').Router();
 const Course = require("../models/course")
 const Day = require("../models/day")
+const Schedule = require("../models/schedule")
 const authCheck = require('../middleware/authCheck')
 const functions = require('../config/functions')
 
 ////make everything async?
 //make a new schedule
 router.post('/upload', authCheck, async (req, res) => {
-    const courseID = await Day.findOne({ day: req.body.forDay });
+    const dayRef = await Day.findOne({ day: req.body.forDay });
     const course = new Course ({
         ...req.body,
-        owner: courseID._id
+        owner: dayRef._id
     })
     console.log(`Sent COURSE: ${course}`)
     try{

@@ -5,8 +5,12 @@ function convertToTime(hour, minute, isPM) {
     const timeNow = luxon.DateTime.local()
     
     //12hour -> 24hour
-    if (isPM) {
+    if (isPM && hour != 12) {
         hour = Number(hour) + 12
+    }
+    
+    if (isPM == 0 && hour == 12) {
+        hour = 0
     }
     
     let convertedTime = luxon.DateTime.fromObject({
@@ -19,6 +23,7 @@ function convertToTime(hour, minute, isPM) {
         convertedTime = convertedTime.plus({ days: 1 })
     }
     
+    console.log(convertedTime)
     return convertedTime
 }
 
@@ -76,8 +81,6 @@ document.getElementById('scheduleRetrieveButton').onclick = function () {
     
     axios.get(`/schedule/${schedule}`)
     .then (function (response) {
-        console.log(response.data)
-        
         document.getElementById('scheduleGetError').innerHTML = ''
         document.getElementById('scheduleGetSuccess').innerHTML = 'Schedule get OK!'
     
@@ -110,16 +113,75 @@ document.getElementById('scheduleInputButton').onclick = function () {
 
 document.getElementById('courseInputButton').onclick = function () {
     axios.post(`/course/upload`, {
-        forSchedule: document.getElementById('courseInputSchedule').value,
+        forDay: document.getElementById('courseInputDay').value,
         period: document.getElementById('courseInputPeriod').value,
-        name: document.getElementById('').value
+        name: document.getElementById('courseInputCourse').value
     })
     .then (function (response) {
         document.getElementById('courseError').innerHTML = ''
-        document.getElementById('courseSuccess').innerHTML = 'course send OK!'
+        document.getElementById('courseSuccess').innerHTML = 'Course send OK!'
     })
     .catch(function (error) {
         document.getElementById('courseSuccess').innerHTML = ''
         document.getElementById('courseError').innerHTML = error
+    })
+}
+
+document.getElementById('dayRetrieveButton').onclick = function () {
+    const day = document.getElementById('dayRetrieveDay').value
+    axios.get(`/day/${day}`)
+    .then (function (response) {
+        document.getElementById('dayGetError').innerHTML = ''
+        document.getElementById('dayGetSuccess').innerHTML = 'Day get OK!!'
+        console.log(response.data)
+        
+        for (i = 0; i < response.data.length; i++) {
+            document.getElementById(`courseDisplayPeriod${i}`).innerHTML = response.data[i].period;
+            document.getElementById(`courseDisplayCourse${i}`).innerHTML = response.data[i].name;
+        }
+        
+        axios.get(`/day/schedule/${day}`)
+        .then(function(response) {
+            document.getElementById('dayGetSuccess').innerHTML += ' AND SCHEDULE name get OK!!'
+            axios.get(`/schedule/${response.data}`)
+            .then(function(response) {
+                document.getElementById('dayGetSuccess').innerHTML += ' AND SCHEDULE get OK!!'
+                for (i = 0; i < response.data.length; i++) {
+                        document.getElementById(`courseDisplayTimeStart${i}`).innerHTML = response.data[i].timeStart
+                        document.getElementById(`courseDisplayEnd${i}`).innerHTML = response.data[i].timeEnd
+                    }
+                }
+            )
+            .catch(function(error) {
+                document.getElementById('dayGetSuccess').innerHTML = ''
+                document.getElementById('dayGetError').innerHTML = error
+                console.log(error)
+            });
+        })
+        .catch(function(error) {
+            document.getElementById('dayGetSuccess').innerHTML = ''
+            document.getElementById('dayGetError').innerHTML = error
+            console.log(error)
+        });
+    })
+    .catch(function (error) {
+        document.getElementById('dayGetSuccess').innerHTML = ''
+        document.getElementById('dayGetError').innerHTML = error
+        console.log(error)
+    })
+}
+
+document.getElementById('dayInputButton').onclick = function () {
+    axios.post(`/day/upload`, {
+        day: document.getElementById('dayInputDay').value,
+        schedule: document.getElementById('dayInputSchedule').value
+    })
+    .then (function (response) {
+        document.getElementById('dayError').innerHTML = ''
+        document.getElementById('daySuccess').innerHTML = 'Day send OK!'
+    })
+    .catch(function (error) {
+        document.getElementById('daySuccess').innerHTML = ''
+        document.getElementById('dayError').innerHTML = error
     })
 }
