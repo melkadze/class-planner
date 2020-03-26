@@ -232,11 +232,11 @@ function countdownFormat(input) {
 function updateTimer() {
     let timeNow = luxon.DateTime.local()
     let timeNowFormatted = timeNow.toFormat('h:mm:ss a')
-    let targetTime = convertToTime(3, 17, false)
+    let targetTime = convertToTime(7, 0, true)
     let timeUntilTarget = targetTime.diff(timeNow, 'seconds').values.seconds
     let timeUntilTargetFormatted = countdownFormat(timeUntilTarget)
     document.getElementById('currentTime').innerHTML = `Current time: ${timeNowFormatted}`
-    document.getElementById('timeUntil').innerHTML = `Time until 5am: ${timeUntilTargetFormatted}`
+    document.getElementById('timeUntil').innerHTML = `Time until 7pm: ${timeUntilTargetFormatted}`
 }
 
 updateTimer() //runs the timer before the 1000ms delay so its ready at page load
