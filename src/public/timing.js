@@ -229,6 +229,16 @@ function countdownFormat(input) {
     }
 }
 
+function getDayOfWeek(offset) {
+    let result = (luxon.DateTime.local().weekday - 1)
+    
+    if (offset) {
+        result = result + offset
+    }
+    
+    return result
+}
+
 function updateTimer() {
     let timeNow = luxon.DateTime.local()
     let timeNowFormatted = timeNow.toFormat('h:mm:ss a')
