@@ -23,7 +23,6 @@ function convertToTime(hour, minute, isPM) {
         convertedTime = convertedTime.plus({ days: 1 })
     }
     
-    console.log(convertedTime)
     return convertedTime
 }
 
@@ -185,3 +184,60 @@ document.getElementById('dayInputButton').onclick = function () {
         document.getElementById('dayError').innerHTML = error
     })
 }
+
+function isInteger(num) {
+    return (!(num % 1))
+}
+
+function countdownFormat(input) {
+    //making these strings still allows numerical manipulation,
+    //but allows us to return 00 in place of 0 later
+    let inputRounded = JSON.stringify(Math.ceil(input))
+    let hoursInInput = '0'
+    let minutesInInput = '0'
+    
+    while (inputRounded > 3599) {
+        inputRounded = inputRounded - 3600
+        hoursInInput++
+    }
+    
+    while (inputRounded > 59) {
+        inputRounded = inputRounded - 60
+        minutesInInput++
+    }
+    
+    //these all add a leading zero if necessary
+    if (inputRounded < 10) {
+        inputRounded = `0${inputRounded}`
+    }
+    
+    if (minutesInInput < 10) {
+        minutesInInput = `0${minutesInInput}`
+    }
+    
+    if (hoursInInput < 10) {
+        hoursInInput = `0${hoursInInput}`
+    }
+    
+    //inputRounded is now the amount of seconds in input
+    if (hoursInInput != 0) {
+        return `${hoursInInput}:${minutesInInput}:${inputRounded}`
+    } else if (minutesInInput != 0) {
+        return `${minutesInInput}:${inputRounded}`
+    } else {
+        return `${inputRounded}`
+    }
+}
+
+function updateTimer() {
+    let timeNow = luxon.DateTime.local()
+    let timeNowFormatted = timeNow.toFormat('h:mm:ss a')
+    let targetTime = convertToTime(7, 0, true)
+    let timeUntilTarget = targetTime.diff(timeNow, 'seconds').values.seconds
+    let timeUntilTargetFormatted = countdownFormat(timeUntilTarget)
+    document.getElementById('currentTime').innerHTML = `Current time: ${timeNowFormatted}`
+    document.getElementById('timeUntil').innerHTML = `Time until 7pm: ${timeUntilTargetFormatted}`
+}
+
+updateTimer() //runs the timer before the 1000ms delay so its ready at page load
+setInterval(updateTimer, 1000)
