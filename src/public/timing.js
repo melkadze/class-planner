@@ -236,29 +236,52 @@ function getDayOfWeek(offset) {
 }
 
 async function timeOfNextPeriod() {
-    //REMINDER: SET OFFSET TO 0 WHEN DONE TESTING (URGENT)
-    let offset = 0
-    let nextTime
-    
-    document.getElementById('timeUntil').innerHTML = `Loading...`
-    
     try {
-        axios.get(`/day/${getDayOfWeek(offset)}`, {timeout: 1000})
-        .then (function (response) {
+        const scheduleInfo = await getScheduleInfo(await getScheduleName())
+        const currentTime = luxon.DateTime.local()
+        let nextTime
+        
+        for (i = 0; i < scheduleInfo.length; i++) {
+            if (Math.sign(currentTime.diff(truncatedTimeToDT(scheduleInfo[i].timeEnd)).values.milliseconds) === 1) {
+                continue
+            }
             
-        })
-        .catch(function (error) {
-            console.log(error)
-            document.getElementById('timeUntil').innerHTML = `No classes scheduled for today.`
-        })
+            if (Math.sign(currentTime.diff(truncatedTimeToDT(scheduleInfo[i].timeStart)).values.milliseconds) === -1) {
+                nextTime = 0
+                break
+            } else {
+                nextTime = scheduleInfo[i].timeEnd
+                break
+            }
+        }
+        return nextTime
     } catch (error) {
         console.log(error)
         document.getElementById('timeUntil').innerHTML = `No classes scheduled for today.`
     }
 }
 
+async function timeOfNextPeriodStart() {
+    try {
+        const scheduleInfo = await getScheduleInfo(await getScheduleName())
+        const currentTime = luxon.DateTime.local()
+        let nextTime
+        
+        for (i = 0; i < scheduleInfo.length; i++) {
+            if (Math.sign(currentTime.diff(truncatedTimeToDT(scheduleInfo[i].timeEnd)).values.milliseconds) === 1) {
+                continue
+            } else {
+                nextTime = await scheduleInfo[i].timeStart
+            }
+        }
+        return nextTime
+    } catch (error) {
+        console.log(error)
+        document.getElementById('timeUntil').innerHTML = `No further classes scheduled for today.`
+    }
+}
+
 function getDayInfo() {
-    //REMINDER: SET OFFSET TO 0 WHEN DONE TESTING (URGENT)
     let offset = 0
     
     return axios.get(`/day/${getDayOfWeek(offset)}`, {timeout: 1000})
@@ -272,7 +295,6 @@ function getDayInfo() {
 }
 
 function getScheduleName() {
-    //REMINDER: SET OFFSET TO 0 WHEN DONE TESTING (URGENT)
     let offset = 0
             
     return axios.get(`/day/schedule/${getDayOfWeek(offset)}`, {timeout: 1000})
@@ -281,31 +303,70 @@ function getScheduleName() {
     })
     .catch(function (error) {
         console.log(error)
-        document.getElementById('timeUntil').innerHTML = `ERROR: Day is not set up properly.`
+        document.getElementById('timeUntil').innerHTML = `No classes scheduled for today.`
     })
 }
 
-function getScheduleInfo() {
-    //REMINDER: SET OFFSET TO 0 WHEN DONE TESTING (URGENT)
-    let offset = 0
-            
-    return axios.get(`/day/schedule/${getDayOfWeek(offset)}`, {timeout: 1000})
-    .then (function (response) {
+function getScheduleInfo(scheduleName) {
+    return axios.get(`/schedule/${scheduleName}`, {timeout: 1000})
+    .then(async function(response) {
         return response.data
     })
     .catch(function (error) {
-        console.log(error)
-        document.getElementById('timeUntil').innerHTML = `ERROR: Day is not set up properly.`
+        document.getElementById('timeUntil').innerHTML = `No classes scheduled for today.`
     })
 }
 
-function updateTimer() {
+async function getCurrentPeriod() {
+    const scheduleInfo = await getScheduleInfo(await getScheduleName())
+    const currentTime = luxon.DateTime.local()
+    let currentPeriod
+    
+    for (i = 0; i < scheduleInfo.length; i++) {
+        if (Math.sign(currentTime.diff(truncatedTimeToDT(scheduleInfo[i].timeEnd)).values.milliseconds) === 1) {
+            continue
+        }
+        currentPeriod = await scheduleInfo[i].period
+        return currentPeriod
+    }
+}
+
+async function getCurrentCourse() {
+    const currentPeriod = await getCurrentPeriod()
+    const dayInfo = await getDayInfo()
+    let currentCourse
+    
+    for (i = 0; i < dayInfo.length; i++) {
+        if (dayInfo[i].period == currentPeriod) {
+            currentCourse = await dayInfo[i].name
+            return currentCourse
+        } else {
+            continue
+        }
+    }
+}
+
+async function updateTimer() {
     let timeNow = luxon.DateTime.local()
     let timeNowFormatted = timeNow.toFormat('h:mm:ss a')
-    let targetTime = convertToTime(7, 0, true)
-    let timeUntilTarget = targetTime.diff(timeNow, 'seconds').values.seconds
-    let timeUntilTargetFormatted = countdownFormat(timeUntilTarget)
     document.getElementById('currentTime').innerHTML = `Current time: ${timeNowFormatted}`
+    
+    let targetReply = await timeOfNextPeriod()
+    
+    if (await targetReply == 0) {
+        let targetReplyNext = await timeOfNextPeriodStart()
+        let timeNext = await truncatedTimeToDT(targetReplyNext)
+        let timeUntilNext = await timeNext.diff(timeNow, 'seconds').values.seconds
+        timeUntilNextFormatted = countdownFormat(timeUntilNext)
+        document.getElementById('timeUntil').innerHTML = `Period ${await getCurrentPeriod()} ${await getCurrentCourse()} starts in: ${timeUntilNextFormatted}`
+    } else if (!targetReply) {
+        document.getElementById('timeUntil').innerHTML = `No further classes for today.`
+    } else {
+        let targetTime = await truncatedTimeToDT(targetReply)
+        let timeUntilTarget = await targetTime.diff(timeNow, 'seconds').values.seconds
+        let timeUntilTargetFormatted = countdownFormat(timeUntilTarget)
+        document.getElementById('timeUntil').innerHTML = `Time until Period ${await getCurrentPeriod()} ${await getCurrentCourse()} ends: ${timeUntilTargetFormatted}`
+    }
 }
 
 function setupTimer() {
@@ -313,21 +374,6 @@ function setupTimer() {
     setInterval(updateTimer, 1000)
 }
 
-async function writePeriod() {
-    return await timeOfNextPeriod()
-}
-
 setupTimer()
-console.log(writePeriod())
-document.getElementById('scheduleSuccess').innerHTML = `Current time: ${Promise.resolve(writePeriod())}`
 
-console.log(getScheduleInfo())
-
-writePeriod()
-
-getScheduleInfo().then(res => {
-    console.log(res)
-    getDayName().then(res => {
-        console.log(res)
-    })
-})
+timeOfNextPeriod()
