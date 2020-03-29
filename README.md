@@ -24,8 +24,6 @@ PORT=<the port you wish to open your server on; 3000 is recommended>
 ### NPM Scripts
 `build`: Installs the project's dependencies and builds the necessary js files.
 
-`devB`: Launches a live backend development server on the port specified in the `.env` file.
-
-`devF`: Launches a live frontend development environment and rebuilds `main.js` after modifications to core js files.
+`dev`: Launches a live backend development server on the port specified in the `.env` file, and builds the necessary js files as they are updated.
 
 `start`: Runs the application, intended for production use online.
