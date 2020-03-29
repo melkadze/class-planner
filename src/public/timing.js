@@ -30,7 +30,7 @@ function truncateTime(time) {
     return luxon.DateTime.fromISO(time).toFormat('h:mm a')
 }
 
-function truncatedTimeToISO(time) {
+function truncatedTimeToDT(time) {
     
     let apm = time.split(' ')[1]
     let hour = time.split(':')[0]
@@ -92,7 +92,6 @@ document.getElementById('scheduleRetrieveButton').onclick = function () {
     .catch(function (error) {
         document.getElementById('scheduleGetSuccess').innerHTML = ''
         document.getElementById('scheduleGetError').innerHTML = error
-        console.log(error)
     })
 }
 
@@ -132,7 +131,6 @@ document.getElementById('dayRetrieveButton').onclick = function () {
     .then (function (response) {
         document.getElementById('dayGetError').innerHTML = ''
         document.getElementById('dayGetSuccess').innerHTML = 'Day get OK!!'
-        console.log(response.data)
         
         for (i = 0; i < response.data.length; i++) {
             document.getElementById(`courseDisplayPeriod${i}`).innerHTML = response.data[i].period;
@@ -154,19 +152,16 @@ document.getElementById('dayRetrieveButton').onclick = function () {
             .catch(function(error) {
                 document.getElementById('dayGetSuccess').innerHTML = ''
                 document.getElementById('dayGetError').innerHTML = error
-                console.log(error)
             });
         })
         .catch(function(error) {
             document.getElementById('dayGetSuccess').innerHTML = ''
             document.getElementById('dayGetError').innerHTML = error
-            console.log(error)
         });
     })
     .catch(function (error) {
         document.getElementById('dayGetSuccess').innerHTML = ''
         document.getElementById('dayGetError').innerHTML = error
-        console.log(error)
     })
 }
 
@@ -234,9 +229,74 @@ function getDayOfWeek(offset) {
     
     if (offset) {
         result = result + offset
+        result = result % 7
     }
     
     return result
+}
+
+async function timeOfNextPeriod() {
+    //REMINDER: SET OFFSET TO 0 WHEN DONE TESTING (URGENT)
+    let offset = 0
+    let nextTime
+    
+    document.getElementById('timeUntil').innerHTML = `Loading...`
+    
+    try {
+        axios.get(`/day/${getDayOfWeek(offset)}`, {timeout: 1000})
+        .then (function (response) {
+            
+        })
+        .catch(function (error) {
+            console.log(error)
+            document.getElementById('timeUntil').innerHTML = `No classes scheduled for today.`
+        })
+    } catch (error) {
+        console.log(error)
+        document.getElementById('timeUntil').innerHTML = `No classes scheduled for today.`
+    }
+}
+
+function getDayInfo() {
+    //REMINDER: SET OFFSET TO 0 WHEN DONE TESTING (URGENT)
+    let offset = 0
+    
+    return axios.get(`/day/${getDayOfWeek(offset)}`, {timeout: 1000})
+    .then (function (response) {
+        return response.data
+    })
+    .catch(function (error) {
+        console.log(error)
+        document.getElementById('timeUntil').innerHTML = `No classes scheduled for today.`
+    })
+}
+
+function getScheduleName() {
+    //REMINDER: SET OFFSET TO 0 WHEN DONE TESTING (URGENT)
+    let offset = 0
+            
+    return axios.get(`/day/schedule/${getDayOfWeek(offset)}`, {timeout: 1000})
+    .then (function (response) {
+        return response.data
+    })
+    .catch(function (error) {
+        console.log(error)
+        document.getElementById('timeUntil').innerHTML = `ERROR: Day is not set up properly.`
+    })
+}
+
+function getScheduleInfo() {
+    //REMINDER: SET OFFSET TO 0 WHEN DONE TESTING (URGENT)
+    let offset = 0
+            
+    return axios.get(`/day/schedule/${getDayOfWeek(offset)}`, {timeout: 1000})
+    .then (function (response) {
+        return response.data
+    })
+    .catch(function (error) {
+        console.log(error)
+        document.getElementById('timeUntil').innerHTML = `ERROR: Day is not set up properly.`
+    })
 }
 
 function updateTimer() {
@@ -246,8 +306,28 @@ function updateTimer() {
     let timeUntilTarget = targetTime.diff(timeNow, 'seconds').values.seconds
     let timeUntilTargetFormatted = countdownFormat(timeUntilTarget)
     document.getElementById('currentTime').innerHTML = `Current time: ${timeNowFormatted}`
-    document.getElementById('timeUntil').innerHTML = `Time until 7pm: ${timeUntilTargetFormatted}`
 }
 
-updateTimer() //runs the timer before the 1000ms delay so its ready at page load
-setInterval(updateTimer, 1000)
+function setupTimer() {
+    updateTimer() //runs the timer before the 1000ms delay so its ready at page load
+    setInterval(updateTimer, 1000)
+}
+
+async function writePeriod() {
+    return await timeOfNextPeriod()
+}
+
+setupTimer()
+console.log(writePeriod())
+document.getElementById('scheduleSuccess').innerHTML = `Current time: ${Promise.resolve(writePeriod())}`
+
+console.log(getScheduleInfo())
+
+writePeriod()
+
+getScheduleInfo().then(res => {
+    console.log(res)
+    getDayName().then(res => {
+        console.log(res)
+    })
+})
