@@ -377,3 +377,4 @@ function setupTimer() {
 setupTimer()
 
 timeOfNextPeriod()
+
