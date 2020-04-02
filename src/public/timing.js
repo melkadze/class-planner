@@ -36,14 +36,16 @@ function truncatedTimeToDT(time) {
     let hour = time.split(':')[0]
     let minute = time.split(':')[1].split(' ')[0]
     
+    let isPM
+    
     if (apm == 'PM') {
-        hour = Number(hour) + 12
+        isPM = true
+    } else {
+        isPM = false
     }
     
-    return luxon.DateTime.fromObject({
-        hour: hour,
-        minutes: minute
-    })
+    
+    return convertToTime(hour, minute, isPM)
 }
 
 document.getElementById('periodInputButton').onclick = function () {
@@ -242,11 +244,11 @@ async function timeOfNextPeriod() {
         let nextTime
         
         for (i = 0; i < scheduleInfo.length; i++) {
-            if (Math.sign(currentTime.diff(truncatedTimeToDT(scheduleInfo[i].timeEnd)).values.milliseconds) === 1) {
+            if (Math.sign(currentTime.diff(truncatedTimeToDT(scheduleInfo[i].timeEnd)).values.milliseconds) == 1) {
                 continue
             }
             
-            if (Math.sign(currentTime.diff(truncatedTimeToDT(scheduleInfo[i].timeStart)).values.milliseconds) === -1) {
+            if (Math.sign(currentTime.diff(truncatedTimeToDT(scheduleInfo[i].timeStart)).values.milliseconds) == -1) {
                 nextTime = 0
                 break
             } else {
@@ -268,10 +270,12 @@ async function timeOfNextPeriodStart() {
         let nextTime
         
         for (i = 0; i < scheduleInfo.length; i++) {
-            if (Math.sign(currentTime.diff(truncatedTimeToDT(scheduleInfo[i].timeEnd)).values.milliseconds) === 1) {
+            
+            if (Math.sign(currentTime.diff(truncatedTimeToDT(scheduleInfo[i].timeEnd)).values.milliseconds) == 1) {
                 continue
             } else {
                 nextTime = await scheduleInfo[i].timeStart
+                break //new
             }
         }
         return nextTime
@@ -349,7 +353,6 @@ async function getCurrentCourse() {
 async function updateTimer() {
     let timeNow = luxon.DateTime.local()
     let timeNowFormatted = timeNow.toFormat('h:mm:ss a')
-    document.getElementById('currentTime').innerHTML = `Current time: ${timeNowFormatted}`
     
     let targetReply = await timeOfNextPeriod()
     
@@ -367,6 +370,8 @@ async function updateTimer() {
         let timeUntilTargetFormatted = countdownFormat(timeUntilTarget)
         document.getElementById('timeUntil').innerHTML = `Time until Period ${await getCurrentPeriod()} ${await getCurrentCourse()} ends: ${timeUntilTargetFormatted}`
     }
+    
+    document.getElementById('currentTime').innerHTML = `Current time: ${timeNowFormatted}`
 }
 
 function setupTimer() {
@@ -374,6 +379,19 @@ function setupTimer() {
     setInterval(updateTimer, 1000)
 }
 
+function initDatePickers() {
+    let timeNow = luxon.DateTime.local()
+    let timeNowFormatted = timeNow.toFormat('yyyy-LL-dd')
+    
+    document.getElementById('taskInputDate').value = timeNowFormatted
+    document.getElementById('eventInputDate').value = timeNowFormatted
+    document.getElementById('taskRetrieveDay').value = timeNowFormatted
+    document.getElementById('eventRetrieveDay').value = timeNowFormatted
+    document.getElementById('taskInputDate').min = timeNowFormatted
+    document.getElementById('eventInputDate').min = timeNowFormatted
+}
+
 setupTimer()
+initDatePickers()
 
 timeOfNextPeriod()
