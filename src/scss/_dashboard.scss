@@ -95,7 +95,7 @@
 .calendar {
   @include effects.drop-shadow();
   @include grid.grid-position(1, 4, 4, 6);
-  @include grid.grid(7, 0.5vw, 7, 0.5vw);
+  @include grid.grid(7, 0.5vw, 8, 0.5vw);
   align-items: center;
   justify-items: center;
   padding: 1.25vw;
@@ -134,15 +134,15 @@
   @include typography.headline-6();
   color: color.$blue-primary;
 }
-.calendar__days {
+.calendar__day {
   @include typography.body-1();
   color: color.$blue-dark-shade;
 }
-.calendar__days--inactive {
+.calendar__day--inactive {
   @include typography.body-1();
   color: color.$dark-gray;
 }
-.calendar__days--container {
+.calendar__day--container {
   position: relative;
   width: 75%;
   height: 0;
@@ -150,7 +150,7 @@
   border-radius: 50%;
   background-color: color.$blue-primary;
 }
-.calendar__days--today {
+.calendar__day--today {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -237,7 +237,7 @@
   @include effects.drop-shadow();
   width: 16vw;
   height: 16vw;
-  background: color.$white url(../../assets/svg/clock-face.svg);
+  background: color.$white url(../assets/svg/clock-face.svg);
   background-size: cover;
   border-radius: 50%;
   position: relative;

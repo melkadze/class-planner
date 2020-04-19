@@ -34,8 +34,10 @@ const time = {
   },
 };
 const displayTime = {
-  displayCurrentMonthAndYear() {
-    let month = time.getCurrentMonth();
+  displayMonthAndYear(month, year) {
+    let calendar__headline = DOMStrings.calendar__headline;
+    calendar__headline.setAttribute("data-month", month);
+    calendar__headline.setAttribute("data-year", year);
     switch (month) {
       case 0:
         month = "January";
@@ -63,7 +65,7 @@ const displayTime = {
         break;
       case 8:
         month = "September";
-        breaak;
+        break;
       case 9:
         month = "October";
         break;
@@ -74,8 +76,6 @@ const displayTime = {
         month = "December";
         break;
     }
-    const year = time.getCurrentYear();
-    let calendar__headline = DOMStrings.calendar__headline;
     calendar__headline.innerText = `${month} ${year}`;
   },
   displayDays(month, year) {
@@ -92,24 +92,28 @@ const displayTime = {
     ) {
       calendar.insertAdjacentHTML(
         "beforeend",
-        `<a class="calendar__days--inactive">${i}</a>`
+        `<a class="calendar__day--inactive">${i}</a>`
       );
     }
     for (let i = 1; i <= numberOfDays; i++, functionCounter++) {
       calendar.insertAdjacentHTML(
         "beforeend",
-        `<a class="calendar__days">${i}</a>`
+        `<a class="calendar__day">${i}</a>`
       );
-      if (i == today) {
-        calendar.lastElementChild.classList = "calendar__days--container";
+      if (
+        i == today &&
+        month == time.getCurrentMonth() &&
+        year == time.getCurrentYear()
+      ) {
+        calendar.lastElementChild.classList = "calendar__day--container";
         calendar.lastElementChild.innerText = "";
-        calendar.lastElementChild.innerHTML = `<p class="calendar__days calendar__days--today">${i}</p>`;
+        calendar.lastElementChild.innerHTML = `<p class="calendar__day calendar__day--today">${i}</p>`;
       }
     }
-    for (let i = 1; functionCounter < 35; i++, functionCounter++) {
+    for (let i = 1; functionCounter < 42; i++, functionCounter++) {
       calendar.insertAdjacentHTML(
         "beforeend",
-        `<a class="calendar__days--inactive">${i}</a>`
+        `<a class="calendar__day--inactive">${i}</a>`
       );
     }
   },
@@ -140,6 +144,9 @@ const displayTime = {
         period = "PM";
       }
       let minute = time.getMinute();
+      if (hour == 0) {
+        hour = 12;
+      }
       if (hour < 10) {
         hour = `0${hour}`;
       }

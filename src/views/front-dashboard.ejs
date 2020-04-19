@@ -3,7 +3,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Loop Dashboard</title>
-    <link rel="stylesheet" type="text/css" href="styles/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="styles/main.css" />
   </head>
   <body>
     <div class="global--dashboard">
@@ -73,10 +73,10 @@
         </div>
         <div class="calendar" id="calendar">
           <h5 class="calendar__headline" id="calendar__headline"></h5>
-          <button class="calendar__button">
+          <button class="calendar__button" id="calendar__buttonPrevious">
             <img src="assets/svg/arrow-left.svg" alt="left arrow" class="calendar__icon">
           </button>
-          <button class="calendar__button">
+          <button class="calendar__button" id="calendar__buttonNext">
             <img src="assets/svg/arrow-right.svg" alt="right arrow" class="calendar__icon">
           </button>
           <h6 class="calendar__weekdays">Sun</h6>
@@ -205,7 +205,7 @@
           </div>
         </div>
       </main>
-    </div>s
+    </div>
     <script type="module" src="scripts/index.js"></script>
   </body>
 </html>
