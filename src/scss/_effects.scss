@@ -1,0 +1,4 @@
+@use 'color';
+@mixin drop-shadow() {
+  box-shadow: 0 5px 10px rgba(color.$dark-gray, 15%);
+}

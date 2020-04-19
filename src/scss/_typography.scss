@@ -42,5 +42,6 @@
   @include font("Lato", 1.3rem, 400, 0.04rem);
 }
 @mixin overline {
-  @include font("Lato", 0rem, 400, 0.15rem);
+  @include font("Lato", 1rem, 400, 0.15rem);
+  text-transform: uppercase;
 }

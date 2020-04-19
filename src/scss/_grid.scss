@@ -1,14 +1,23 @@
-@mixin grid {
+@mixin grid($col, $col-gap, $row: 1, $row-gap: 0) {
   display: grid;
-  justify-items: center;
-  align-items: center;
+  grid-template-columns: repeat($col, 1fr);
+  grid-template-rows: repeat($row, 1fr);
+  grid-column-gap: $col-gap;
+  grid-row-gap: $row-gap;
 }
-@mixin col-12 {
-  grid-template-columns: repeat(12, 1fr);
-  grid-column-gap: 24px;
+@mixin grid-position($col-start, $col-end: 1, $row-start, $row-end: 1) {
+  grid-column-start: $col-start;
+  grid-column-end: span $col-end;
+  grid-row-start: $row-start;
+  grid-row-end: span $row-end;
 }
-@mixin row-2 {
-  grid-template-rows: 40px 1fr 40px 1fr;
+@mixin grid-position-column($col-start, $col-end: 1) {
+  grid-column-start: $col-start;
+  grid-column-end: span $col-end;
+}
+@mixin grid-position-row($row-start, $row-end: 1) {
+  grid-row-start: $row-start;
+  grid-row-end: $row-end;
 }
 @mixin space-between {
   &::after {
@@ -16,7 +25,4 @@
     width: 100%;
     display: inline-block;
   }
-}
-@mixin start-col-12 {
-  grid-column-start: 12;
 }
