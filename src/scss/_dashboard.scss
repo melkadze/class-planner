@@ -22,6 +22,28 @@
 .navigation__logo {
   height: 5vw;
   width: 5vw;
+  -webkit-mask-image: url(../assets/svg/logo.svg);
+  mask-image: url(../assets/svg/logo.svg);
+  background-color: color.$blue-accent-tint;
+}
+.navigation__logo:hover {
+  background-color: color.$blue-primary;
+}
+.navigation__button--active {
+  .navigation__icon {
+    background-color: color.$blue-primary;
+  }
+  .navigation__text {
+    color: color.$blue-primary;
+  }
+}
+.navigation__button:hover {
+  .navigation__icon {
+    background-color: color.$blue-primary;
+  }
+  .navigation__text {
+    color: color.$blue-primary;
+  }
 }
 .navigation__icon {
   height: 2.5vw;
@@ -30,15 +52,36 @@
   margin-left: auto;
   margin-right: auto;
 }
+.navigation__icon--dashboard {
+  -webkit-mask-image: url(../assets/svg/dashboard.svg);
+  mask-image: url(../assets/svg/dashboard.svg);
+  background-color: color.$blue-accent-tint;
+}
+.navigation__icon--calendar {
+  -webkit-mask-image: url(../assets/svg/calendar.svg);
+  mask-image: url(../assets/svg/calendar.svg);
+  background-color: color.$blue-accent-tint;
+}
+.navigation__icon--courses {
+  -webkit-mask-image: url(../assets/svg/book.svg);
+  mask-image: url(../assets/svg/book.svg);
+  background-color: color.$blue-accent-tint;
+}
+.navigation__icon--clock {
+  -webkit-mask-image: url(../assets/svg/clock.svg);
+  mask-image: url(../assets/svg/clock.svg);
+  background-color: color.$blue-accent-tint;
+}
+.navigation__icon--settings {
+  -webkit-mask-image: url(../assets/svg/cog.svg);
+  mask-image: url(../assets/svg/cog.svg);
+  background-color: color.$blue-accent-tint;
+}
 .navigation__text {
   @include typography.button();
   color: color.$blue-accent-tint;
   text-align: center;
   margin-bottom: 2.5vw;
-}
-.navigation__text--active {
-  color: color.$blue-primary;
-  border-bottom: 5px solid color.$blue-primary;
 }
 .header {
   justify-items: center;
@@ -49,6 +92,10 @@
   flex-direction: row;
   justify-content: space-between;
 }
+.header__profile {
+  display: flex;
+  flex-direction: row;
+}
 .header__text {
   @include typography.headline-2();
   color: color.$blue-dark-shade;
@@ -58,6 +105,21 @@
   width: 2.5vw;
   margin-left: 1.25vw;
   margin-right: 1.25vw;
+  display: block;
+  cursor: grab;
+}
+.header__icon:hover {
+  background-color: color.$blue-primary;
+}
+.header__icon--notifications {
+  -webkit-mask-image: url(../assets/svg/bell.svg);
+  mask-image: url(../assets/svg/bell.svg);
+  background-color: color.$blue-dark-shade;
+}
+.header__icon--profile {
+  -webkit-mask-image: url(../assets/svg/user.svg);
+  mask-image: url(../assets/svg/user.svg);
+  background-color: color.$blue-dark-shade;
 }
 .dashboard {
   @include grid.grid(12, 1vw, 12, 1vw);
@@ -70,8 +132,11 @@
   @include effects.drop-shadow();
   border-radius: 0.5vw;
   background-color: color.$blue-accent-tint;
-  padding: 2.5vw;
+  padding: 2.5vw 2.5vw 0 2.5vw;
   position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 .greeting__headline {
   @include typography.headline-4();
@@ -88,7 +153,6 @@
 }
 .greeting__image {
   height: 10vw;
-  position: absolute;
   right: 0;
   bottom: 0;
 }
@@ -204,6 +268,7 @@
   border-radius: 0.5vw;
   margin-top: auto;
   margin-bottom: auto;
+  flex-shrink: 0;
 }
 .alarms__container--green {
   background-color: color.$green-primary;
@@ -224,6 +289,8 @@
 }
 .alarms__text {
   padding-left: 0.5vw;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 .alarms__timer {
   @include typography.headline-6();

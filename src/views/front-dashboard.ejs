@@ -8,46 +8,29 @@
   <body>
     <div class="global--dashboard">
       <nav class="navigation--side">
-        <a class="navigation__logo" href=".">
-          <img src="assets/svg/logo.svg" alt="Loop">
-          </object>
-        </a>
+        <a class="navigation__logo" href="#"> </a>
         <div class="navigation__container">
-          <a class="navigation__button navigation__button--active" href=".">
-            <img
-              class="navigation__icon navigation__icon--active"
-              src="assets/svg/dashboard--active.svg"
-              alt="dashboard"
-            />
-            <p class="navigation__text navigation__text--active">Dashboard</p>
+          <a class="navigation__button navigation__button--active" href="#">
+            <span class="navigation__icon navigation__icon--dashboard"> </span>
+            <p class="navigation__text navigation__text--active">
+              Dashboard
+            </p>
           </a>
-          <a class="navigation__button" href=".">
-            <img
-              class="navigation__icon"
-              src="assets/svg/calendar.svg"
-              alt="calendar"
-            />
+          <a class="navigation__button" href="#">
+            <span class="navigation__icon navigation__icon--calendar"></span>
             <p class="navigation__text">Calendar</p>
           </a>
-          <a class="navigation__button" href=".">
-            <img
-              class="navigation__icon"
-              src="assets/svg/book.svg"
-              alt="book"
-            />
-            <p class="navigation__text">Classes</p>
+          <a class="navigation__button" href="#">
+            <span class="navigation__icon navigation__icon--courses"></span>
+            <p class="navigation__text">Courses</p>
           </a>
-          <a class="navigation__button" href=".">
-            <img
-              class="navigation__icon"
-              src="assets/svg/clock.svg"
-              alt="clock"
-            />
+          <a class="navigation__button" href="#">
+            <span class="navigation__icon navigation__icon--clock"></span>
             <p class="navigation__text">Clock</p>
           </a>
         </div>
-        <a class="navigation__button" href=".">
-          <img class="navigation__icon" src="assets/svg/cog.svg" alt="cog" />
+        <a class="navigation__button" href="#">
+          <span class="navigation__icon navigation__icon--settings"></span>
           <p class="navigation__text">Settings</p>
         </a>
       </nav>
@@ -55,10 +38,10 @@
         <h2 class="header__text">Dashboard</h2>
         <div class="header__profile">
           <a class="header__button">
-            <img class="header__icon" src="assets/svg/bell.svg" alt="bell"/>
+            <span class="header__icon header__icon--notifications"></span>
           </a>
           <a class="header__button">
-            <img class="header__icon" src="assets/svg/user.svg" alt="user"/>
+            <span class="header__icon header__icon--profile"></span>
           </a>
         </div>
       </header>
@@ -66,18 +49,29 @@
         <div class="greeting">
           <div class="greeting_text">
             <h4 class="greeting__headline">Welcome Back, Person.</h4>
-            <p class="greeting__subtitle">"What lies behind you and what lies in front of you, pales in comparison to what lies inside you."</p>
-            <p class="greeting__subtitle--alternative">Ralph Waldo Emerson</p>
+            <p class="greeting__subtitle" id="greeting__quote"></p>
+            <p
+              class="greeting__subtitle--alternative"
+              id="greeting__author"
+            ></p>
           </div>
-          <img class="greeting__image" src="assets/svg/books.svg" alt="books">
+          <img class="greeting__image" src="assets/svg/books.svg" alt="books" />
         </div>
         <div class="calendar" id="calendar">
           <h5 class="calendar__headline" id="calendar__headline"></h5>
           <button class="calendar__button" id="calendar__buttonPrevious">
-            <img src="assets/svg/arrow-left.svg" alt="left arrow" class="calendar__icon">
+            <img
+              src="assets/svg/arrow-left.svg"
+              alt="left arrow"
+              class="calendar__icon"
+            />
           </button>
           <button class="calendar__button" id="calendar__buttonNext">
-            <img src="assets/svg/arrow-right.svg" alt="right arrow" class="calendar__icon">
+            <img
+              src="assets/svg/arrow-right.svg"
+              alt="right arrow"
+              class="calendar__icon"
+            />
           </button>
           <h6 class="calendar__weekdays">Sun</h6>
           <h6 class="calendar__weekdays">Mon</h6>
@@ -107,7 +101,11 @@
             <div class="alarms__grid">
               <div class="alarms__module">
                 <div class="alarms__container--icon alarms__container--green">
-                  <img src="assets/svg/clock--white.svg" alt="clock" class="alarms__icon">
+                  <img
+                    src="assets/svg/clock--white.svg"
+                    alt="clock"
+                    class="alarms__icon"
+                  />
                 </div>
                 <div class="alarms__text">
                   <h6 class="alarms__timer">00:00:00</h6>
@@ -116,7 +114,11 @@
               </div>
               <div class="alarms__module">
                 <div class="alarms__container--icon alarms__container--cyan">
-                  <img src="assets/svg/clock--white.svg" alt="clock" class="alarms__icon">
+                  <img
+                    src="assets/svg/clock--white.svg"
+                    alt="clock"
+                    class="alarms__icon"
+                  />
                 </div>
                 <div class="alarms__text">
                   <h6 class="alarms__timer">00:00:00</h6>
@@ -125,7 +127,11 @@
               </div>
               <div class="alarms__module">
                 <div class="alarms__container--icon alarms__container--blue">
-                  <img src="assets/svg/clock--white.svg" alt="clock" class="alarms__icon">
+                  <img
+                    src="assets/svg/clock--white.svg"
+                    alt="clock"
+                    class="alarms__icon"
+                  />
                 </div>
                 <div class="alarms__text">
                   <h6 class="alarms__timer">12:00 AM</h6>
@@ -138,7 +144,11 @@
         <h5 class="course__headline">Your Courses</h5>
         <div class="course__container course__container--first">
           <div class="course__container--icon course__container--green">
-            <img src="assets/svg/folder.svg" alt="folder" class="course__icon">
+            <img
+              src="assets/svg/folder.svg"
+              alt="folder"
+              class="course__icon"
+            />
           </div>
           <div class="course__text">
             <h6 class="course__title">Course Title</h6>
@@ -147,7 +157,11 @@
         </div>
         <div class="course__container course__container--second">
           <div class="course__container--icon course__container--cyan">
-            <img src="assets/svg/folder.svg" alt="folder" class="course__icon">
+            <img
+              src="assets/svg/folder.svg"
+              alt="folder"
+              class="course__icon"
+            />
           </div>
           <div class="course__text">
             <h6 class="course__title">Course Title</h6>
@@ -156,7 +170,11 @@
         </div>
         <div class="course__container course__container--third">
           <div class="course__container--icon course__container--blue">
-            <img src="assets/svg/folder.svg" alt="folder" class="course__icon">
+            <img
+              src="assets/svg/folder.svg"
+              alt="folder"
+              class="course__icon"
+            />
           </div>
           <div class="course__text">
             <h6 class="course__title">Course Title</h6>
@@ -168,7 +186,11 @@
           <div class="tasks__grid">
             <div class="tasks__container">
               <div class="tasks__container--icon tasks__container--green">
-                <img src="assets/svg/event.svg" alt="folder" class="tasks__icon">
+                <img
+                  src="assets/svg/event.svg"
+                  alt="folder"
+                  class="tasks__icon"
+                />
               </div>
               <div class="tasks__text">
                 <h6 class="tasks__title">Event Title</h6>
@@ -177,7 +199,11 @@
             </div>
             <div class="tasks__container">
               <div class="tasks__container--icon tasks__container--cyan">
-                <img src="assets/svg/event.svg" alt="folder" class="tasks__icon">
+                <img
+                  src="assets/svg/event.svg"
+                  alt="folder"
+                  class="tasks__icon"
+                />
               </div>
               <div class="tasks__text">
                 <h6 class="tasks__title">Event Title</h6>
@@ -186,7 +212,11 @@
             </div>
             <div class="tasks__container">
               <div class="tasks__container--icon tasks__container--blue">
-                <img src="assets/svg/event.svg" alt="folder" class="tasks__icon">
+                <img
+                  src="assets/svg/event.svg"
+                  alt="folder"
+                  class="tasks__icon"
+                />
               </div>
               <div class="tasks__text">
                 <h6 class="tasks__title">Event Title</h6>
@@ -195,7 +225,11 @@
             </div>
             <div class="tasks__container">
               <div class="tasks__container--icon tasks__container--violet">
-                <img src="assets/svg/event.svg" alt="folder" class="tasks__icon">
+                <img
+                  src="assets/svg/event.svg"
+                  alt="folder"
+                  class="tasks__icon"
+                />
               </div>
               <div class="tasks__text">
                 <h6 class="tasks__title">Event Title</h6>

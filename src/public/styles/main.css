@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Open+Sans:wght@300;400;600&display=swap");
 * {
-  font-size: 62.5%;
+  font-size: 10px;
   padding: 0;
   margin: 0;
   box-sizing: border-box;
@@ -10,9 +10,18 @@ html {
   background-color: #fbfbf8;
 }
 
+a {
+  text-decoration: none;
+}
+
+@media (max-width: 1600px) {
+  * {
+    font-size: 8px;
+  }
+}
 @media (max-width: 1366px) {
   * {
-    font-size: 7.5px;
+    font-size: 7px;
   }
 }
 .global--dashboard {
@@ -40,6 +49,27 @@ html {
 .navigation__logo {
   height: 5vw;
   width: 5vw;
+  -webkit-mask-image: url(../assets/svg/logo.svg);
+  mask-image: url(../assets/svg/logo.svg);
+  background-color: #dee4ff;
+}
+
+.navigation__logo:hover {
+  background-color: #aabbff;
+}
+
+.navigation__button--active .navigation__icon {
+  background-color: #aabbff;
+}
+.navigation__button--active .navigation__text {
+  color: #aabbff;
+}
+
+.navigation__button:hover .navigation__icon {
+  background-color: #aabbff;
+}
+.navigation__button:hover .navigation__text {
+  color: #aabbff;
 }
 
 .navigation__icon {
@@ -48,6 +78,36 @@ html {
   display: block;
   margin-left: auto;
   margin-right: auto;
+}
+
+.navigation__icon--dashboard {
+  -webkit-mask-image: url(../assets/svg/dashboard.svg);
+  mask-image: url(../assets/svg/dashboard.svg);
+  background-color: #dee4ff;
+}
+
+.navigation__icon--calendar {
+  -webkit-mask-image: url(../assets/svg/calendar.svg);
+  mask-image: url(../assets/svg/calendar.svg);
+  background-color: #dee4ff;
+}
+
+.navigation__icon--courses {
+  -webkit-mask-image: url(../assets/svg/book.svg);
+  mask-image: url(../assets/svg/book.svg);
+  background-color: #dee4ff;
+}
+
+.navigation__icon--clock {
+  -webkit-mask-image: url(../assets/svg/clock.svg);
+  mask-image: url(../assets/svg/clock.svg);
+  background-color: #dee4ff;
+}
+
+.navigation__icon--settings {
+  -webkit-mask-image: url(../assets/svg/cog.svg);
+  mask-image: url(../assets/svg/cog.svg);
+  background-color: #dee4ff;
 }
 
 .navigation__text {
@@ -61,11 +121,6 @@ html {
   margin-bottom: 2.5vw;
 }
 
-.navigation__text--active {
-  color: #aabbff;
-  border-bottom: 5px solid #aabbff;
-}
-
 .header {
   justify-items: center;
   align-items: center;
@@ -74,6 +129,11 @@ html {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+
+.header__profile {
+  display: flex;
+  flex-direction: row;
 }
 
 .header__text {
@@ -89,6 +149,24 @@ html {
   width: 2.5vw;
   margin-left: 1.25vw;
   margin-right: 1.25vw;
+  display: block;
+  cursor: grab;
+}
+
+.header__icon:hover {
+  background-color: #aabbff;
+}
+
+.header__icon--notifications {
+  -webkit-mask-image: url(../assets/svg/bell.svg);
+  mask-image: url(../assets/svg/bell.svg);
+  background-color: #33384d;
+}
+
+.header__icon--profile {
+  -webkit-mask-image: url(../assets/svg/user.svg);
+  mask-image: url(../assets/svg/user.svg);
+  background-color: #33384d;
 }
 
 .dashboard {
@@ -110,8 +188,11 @@ html {
   box-shadow: 0 5px 10px rgba(168, 168, 168, 0.15);
   border-radius: 0.5vw;
   background-color: #dee4ff;
-  padding: 2.5vw;
+  padding: 2.5vw 2.5vw 0 2.5vw;
   position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .greeting__headline {
@@ -141,7 +222,6 @@ html {
 
 .greeting__image {
   height: 10vw;
-  position: absolute;
   right: 0;
   bottom: 0;
 }
@@ -310,6 +390,7 @@ html {
   border-radius: 0.5vw;
   margin-top: auto;
   margin-bottom: auto;
+  flex-shrink: 0;
 }
 
 .alarms__container--green {
@@ -335,6 +416,8 @@ html {
 
 .alarms__text {
   padding-left: 0.5vw;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 .alarms__timer {
