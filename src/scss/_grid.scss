@@ -1,0 +1,28 @@
+@mixin grid($col, $col-gap, $row: 1, $row-gap: 0) {
+  display: grid;
+  grid-template-columns: repeat($col, 1fr);
+  grid-template-rows: repeat($row, 1fr);
+  grid-column-gap: $col-gap;
+  grid-row-gap: $row-gap;
+}
+@mixin grid-position($col-start, $col-end: 1, $row-start, $row-end: 1) {
+  grid-column-start: $col-start;
+  grid-column-end: span $col-end;
+  grid-row-start: $row-start;
+  grid-row-end: span $row-end;
+}
+@mixin grid-position-column($col-start, $col-end: 1) {
+  grid-column-start: $col-start;
+  grid-column-end: span $col-end;
+}
+@mixin grid-position-row($row-start, $row-end: 1) {
+  grid-row-start: $row-start;
+  grid-row-end: $row-end;
+}
+@mixin space-between {
+  &::after {
+    content: "";
+    width: 100%;
+    display: inline-block;
+  }
+}

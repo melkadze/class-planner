@@ -1,0 +1,47 @@
+@mixin font($typeface, $font-size, $font-weight, $letter-spacing) {
+  font-family: $typeface, sans-serif;
+  font-size: $font-size;
+  font-weight: $font-weight;
+  letter-spacing: $letter-spacing;
+}
+@mixin headline-1 {
+  @include font("Open Sans", 9.5rem, 300, -0.15rem);
+}
+@mixin headline-2 {
+  @include font("Open Sans", 5.9rem, 300, -0.05rem);
+}
+@mixin headline-3 {
+  @include font("Open Sans", 4.8rem, 400, 0);
+}
+@mixin headline-4 {
+  @include font("Open Sans", 3.4rem, 400, 0.025rem);
+}
+@mixin headline-5 {
+  @include font("Open Sans", 2.4rem, 400, 0);
+}
+@mixin headline-6 {
+  @include font("Open Sans", 2rem, 600, 0.015rem);
+}
+@mixin subtitle-1 {
+  @include font("Open Sans", 1.6rem, 400, 0.015rem);
+}
+@mixin subtitle-2 {
+  @include font("Open Sans", 1.4rem, 600, 0.01rem);
+}
+@mixin body-1 {
+  @include font("Lato", 1.7rem, 400, 0.05rem);
+}
+@mixin body-2 {
+  @include font("Lato", 1.5rem, 400, 0.025rem);
+}
+@mixin button {
+  @include font("Lato", 1.5rem, 700, 0.125rem);
+  text-transform: uppercase;
+}
+@mixin caption {
+  @include font("Lato", 1.3rem, 400, 0.04rem);
+}
+@mixin overline {
+  @include font("Lato", 1rem, 400, 0.15rem);
+  text-transform: uppercase;
+}

@@ -1,0 +1,526 @@
+@use 'color';
+@use 'effects';
+@use 'grid';
+@use 'typography';
+.global--dashboard {
+  display: grid;
+  height: 100vh;
+  width: 100vw;
+  grid-template-columns: 15% auto;
+  grid-template-rows: 5vw auto;
+}
+.navigation--side {
+  @include grid.grid-position(1, 1, 1, 2);
+  align-items: center;
+  justify-items: center;
+  background-color: color.$blue-dark-shade;
+  padding: 1.25vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.navigation__logo {
+  height: 5vw;
+  width: 5vw;
+  -webkit-mask-image: url(../assets/svg/logo.svg);
+  mask-image: url(../assets/svg/logo.svg);
+  background-color: color.$blue-accent-tint;
+}
+.navigation__logo:hover {
+  background-color: color.$blue-primary;
+}
+.navigation__button--active {
+  .navigation__icon {
+    background-color: color.$blue-primary;
+  }
+  .navigation__text {
+    color: color.$blue-primary;
+  }
+}
+.navigation__button:hover {
+  .navigation__icon {
+    background-color: color.$blue-primary;
+  }
+  .navigation__text {
+    color: color.$blue-primary;
+  }
+}
+.navigation__icon {
+  height: 2.5vw;
+  width: 2.5vw;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.navigation__icon--dashboard {
+  -webkit-mask-image: url(../assets/svg/dashboard.svg);
+  mask-image: url(../assets/svg/dashboard.svg);
+  background-color: color.$blue-accent-tint;
+}
+.navigation__icon--calendar {
+  -webkit-mask-image: url(../assets/svg/calendar.svg);
+  mask-image: url(../assets/svg/calendar.svg);
+  background-color: color.$blue-accent-tint;
+}
+.navigation__icon--courses {
+  -webkit-mask-image: url(../assets/svg/book.svg);
+  mask-image: url(../assets/svg/book.svg);
+  background-color: color.$blue-accent-tint;
+}
+.navigation__icon--clock {
+  -webkit-mask-image: url(../assets/svg/clock.svg);
+  mask-image: url(../assets/svg/clock.svg);
+  background-color: color.$blue-accent-tint;
+}
+.navigation__icon--settings {
+  -webkit-mask-image: url(../assets/svg/cog.svg);
+  mask-image: url(../assets/svg/cog.svg);
+  background-color: color.$blue-accent-tint;
+}
+.navigation__text {
+  @include typography.button();
+  color: color.$blue-accent-tint;
+  text-align: center;
+  margin-bottom: 2.5vw;
+}
+.header {
+  justify-items: center;
+  align-items: center;
+  margin-left: 2.5vw;
+  margin-right: 2.5vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.header__profile {
+  display: flex;
+  flex-direction: row;
+}
+.header__text {
+  @include typography.headline-2();
+  color: color.$blue-dark-shade;
+}
+.header__icon {
+  height: 2.5vw;
+  width: 2.5vw;
+  margin-left: 1.25vw;
+  margin-right: 1.25vw;
+  display: block;
+  cursor: grab;
+}
+.header__icon:hover {
+  background-color: color.$blue-primary;
+}
+.header__icon--notifications {
+  -webkit-mask-image: url(../assets/svg/bell.svg);
+  mask-image: url(../assets/svg/bell.svg);
+  background-color: color.$blue-dark-shade;
+}
+.header__icon--profile {
+  -webkit-mask-image: url(../assets/svg/user.svg);
+  mask-image: url(../assets/svg/user.svg);
+  background-color: color.$blue-dark-shade;
+}
+.dashboard {
+  @include grid.grid(12, 1vw, 12, 1vw);
+  padding-left: 2.5vw;
+  padding-right: 2.5vw;
+  padding-bottom: 2.5vw;
+}
+.greeting {
+  @include grid.grid-position(1, 9, 1, 3);
+  @include effects.drop-shadow();
+  border-radius: 0.5vw;
+  background-color: color.$blue-accent-tint;
+  padding: 2.5vw 2.5vw 0 2.5vw;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.greeting__headline {
+  @include typography.headline-4();
+  color: color.$blue-dark-shade;
+}
+.greeting__subtitle {
+  @include typography.subtitle-1();
+  padding-top: 0.5vw;
+  color: color.$blue-dark-shade;
+}
+.greeting__subtitle--alternative {
+  @include typography.subtitle-2();
+  color: color.$blue-dark-shade;
+}
+.greeting__image {
+  height: 10vw;
+  right: 0;
+  bottom: 0;
+}
+.calendar {
+  @include effects.drop-shadow();
+  @include grid.grid-position(1, 4, 4, 6);
+  @include grid.grid(7, 0.5vw, 8, 0.5vw);
+  align-items: center;
+  justify-items: center;
+  padding: 1.25vw;
+  border-radius: 0.5vw;
+  background-color: color.$light-gray;
+}
+.calendar__headline {
+  @include typography.headline-5();
+  @include grid.grid-position(1, 5, 1, 1);
+  justify-self: start;
+  color: color.$blue-dark-shade;
+}
+.calendar__button {
+  position: relative;
+  width: 75%;
+  height: 0;
+  padding-top: 75%;
+  border-radius: 50%;
+  background-color: color.$blue-primary;
+  border: none;
+  @include effects.drop-shadow();
+}
+.calendar__button:hover {
+  background-color: color.$blue-dark-shade;
+  cursor: grab;
+}
+.calendar__icon {
+  height: 75%;
+  width: 75%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.calendar__weekdays {
+  @include typography.headline-6();
+  color: color.$blue-primary;
+}
+.calendar__day {
+  @include typography.body-1();
+  color: color.$blue-dark-shade;
+}
+.calendar__day--inactive {
+  @include typography.body-1();
+  color: color.$dark-gray;
+}
+.calendar__day--container {
+  position: relative;
+  width: 75%;
+  height: 0;
+  padding-top: 75%;
+  border-radius: 50%;
+  background-color: color.$blue-primary;
+}
+.calendar__day--today {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.alarms {
+  @include effects.drop-shadow();
+  @include grid.grid-position(5, 5, 4, 6);
+  border-radius: 0.5vw;
+  background-color: color.$light-gray;
+  padding: 1.25vw;
+}
+.alarms__headline {
+  @include typography.headline-5();
+  color: color.$blue-dark-shade;
+  padding-bottom: 0.5vw;
+}
+.alarms__container {
+  display: flex;
+  flex-direction: row;
+}
+.alarms__digital {
+  @include typography.headline-6();
+  color: color.$blue-dark-shade;
+  text-align: center;
+  padding-top: 1vw;
+}
+.alarms__time {
+  display: inline-block;
+}
+.alarms__grid {
+  @include grid.grid(1, 0, 3, 1.25vw);
+  width: 100%;
+  padding-left: 1vw;
+}
+.alarms__module {
+  @include effects.drop-shadow();
+  width: 100%;
+  height: 100%;
+  border-radius: 0.5vw;
+  background-color: color.$white;
+  padding: 1.25vw;
+  display: flex;
+  flex-direction: row;
+}
+.alarms__container--icon {
+  height: 0;
+  width: 25%;
+  padding-top: 25%;
+  position: relative;
+  border-radius: 0.5vw;
+  margin-top: auto;
+  margin-bottom: auto;
+  flex-shrink: 0;
+}
+.alarms__container--green {
+  background-color: color.$green-primary;
+}
+.alarms__container--cyan {
+  background-color: color.$cyan-primary;
+}
+.alarms__container--blue {
+  background-color: color.$blue-primary;
+}
+.alarms__icon {
+  height: 75%;
+  width: 75%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.alarms__text {
+  padding-left: 0.5vw;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.alarms__timer {
+  @include typography.headline-6();
+  color: color.$blue-dark-shade;
+}
+.alarms__title {
+  @include typography.subtitle-1();
+  color: color.$blue-dark-shade;
+}
+.clock {
+  @include effects.drop-shadow();
+  width: 16vw;
+  height: 16vw;
+  background: color.$white url(../assets/svg/clock-face.svg);
+  background-size: cover;
+  border-radius: 50%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 0.75vw solid color.$white;
+  box-shadow: inset 0 0 30px rgba(color.$dark-gray, 10%);
+}
+.clock::before {
+  content: "";
+  position: absolute;
+  height: 0.75vw;
+  width: 0.75vw;
+  background-color: color.$dark-gray;
+  border-radius: 50%;
+  border: 2px solid color.$white;
+  z-index: 4;
+}
+.clock__container {
+  position: absolute;
+}
+.clock__container--hour {
+  height: 8vw;
+  width: 8vw;
+}
+.clock__container--minute {
+  height: 10vw;
+  width: 10vw;
+}
+.clock__container--second {
+  height: 12.5vw;
+  width: 12.5vw;
+}
+.clock__hour {
+  height: 8vw;
+  width: 8vw;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  border-radius: 50%;
+}
+.clock__hour::before {
+  content: "";
+  position: absolute;
+  width: 0.4vw;
+  height: 4vw;
+  background-color: color.$blue-dark-shade;
+  z-index: 1;
+  border-radius: 0.2vw;
+}
+.clock__minute {
+  height: 10vw;
+  width: 10vw;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  border-radius: 50%;
+}
+.clock__minute::before {
+  content: "";
+  position: absolute;
+  width: 0.2vw;
+  height: 5vw;
+  background-color: color.$dark-gray;
+  z-index: 2;
+  border-radius: 0.1vw;
+}
+.clock__second {
+  height: 12.5vw;
+  width: 12.5vw;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  border-radius: 50%;
+}
+.clock__second::before {
+  content: "";
+  position: absolute;
+  width: 0.1vw;
+  height: 8vw;
+  background-color: color.$red-primary;
+  z-index: 3;
+  border-radius: 0.05vw;
+}
+.course__headline {
+  @include grid.grid-position(1, 9, 10, 1);
+  @include typography.headline-5();
+  color: color.$blue-dark-shade;
+  align-self: center;
+}
+.course__container {
+  @include effects.drop-shadow();
+  border-radius: 0.5vw;
+  padding: 1.25vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.course__container--first {
+  @include grid.grid-position(1, 3, 11, 2);
+  background-color: color.$green-primary;
+}
+.course__container--second {
+  @include grid.grid-position(4, 3, 11, 2);
+  background-color: color.$cyan-primary;
+}
+.course__container--third {
+  @include grid.grid-position(7, 3, 11, 2);
+  background-color: color.$blue-primary;
+}
+.course__container--icon {
+  position: relative;
+  height: 0;
+  width: 25%;
+  padding-top: 25%;
+  border-radius: 0.5vw;
+  margin-top: auto;
+  margin-bottom: auto;
+  flex-shrink: 0;
+}
+.course__container--green {
+  background-color: color.$green-accent-shade;
+}
+.course__container--cyan {
+  background-color: color.$cyan-accent-shade;
+}
+.course__container--blue {
+  background-color: color.$blue-accent-shade;
+}
+.course__icon {
+  height: 50%;
+  width: 50%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.course__text {
+  padding-left: 1.25vw;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.course__title {
+  @include typography.headline-6();
+  color: color.$blue-dark-shade;
+}
+.course__subtitle {
+  @include typography.subtitle-2();
+  color: color.$blue-dark-shade;
+  padding-top: 0.5vw;
+}
+.tasks {
+  @include effects.drop-shadow();
+  @include grid.grid-position(10, 3, 1, 12);
+  border-radius: 0.5vw;
+  background-color: color.$light-gray;
+  padding: 1.25vw;
+}
+.tasks__headline {
+  @include typography.headline-5();
+  color: color.$blue-dark-shade;
+  padding-bottom: 0.5vw;
+}
+.tasks__grid {
+  @include grid.grid(1, 0, 4, 1vw);
+  height: 90%;
+}
+.tasks__container {
+  @include effects.drop-shadow();
+  background-color: color.$white;
+  border-radius: 0.5vw;
+  padding: 1.25vw;
+  display: flex;
+  flex-direction: row;
+}
+.tasks__container--icon {
+  position: relative;
+  height: 0;
+  width: 25%;
+  padding-top: 25%;
+  border-radius: 0.5vw;
+  margin-top: auto;
+  margin-bottom: auto;
+  flex-shrink: 0;
+}
+.tasks__container--green {
+  background-color: color.$green-primary;
+}
+.tasks__container--cyan {
+  background-color: color.$cyan-primary;
+}
+.tasks__container--blue {
+  background-color: color.$blue-primary;
+}
+.tasks__container--violet {
+  background-color: color.$violet-primary;
+}
+.tasks__icon {
+  height: 50%;
+  width: 50%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.tasks__text {
+  padding-left: 1.25vw;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.tasks__title {
+  @include typography.headline-6();
+  color: color.$blue-dark-shade;
+}
+.tasks__subtitle {
+  @include typography.subtitle-2();
+  color: color.$blue-dark-shade;
+}
