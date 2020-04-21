@@ -259,7 +259,7 @@ async function timeOfNextPeriod() {
         return nextTime
     } catch (error) {
         console.log(error)
-        document.getElementById('timeUntil').innerHTML = `No classes scheduled for today.`
+        document.getElementById('timeUntil').innerHTML = `No further classes for today.`
     }
 }
 
@@ -281,7 +281,7 @@ async function timeOfNextPeriodStart() {
         return nextTime
     } catch (error) {
         console.log(error)
-        document.getElementById('timeUntil').innerHTML = `No further classes scheduled for today.`
+        document.getElementById('timeUntil').innerHTML = `No further classes for today.`
     }
 }
 
@@ -294,7 +294,7 @@ function getDayInfo() {
     })
     .catch(function (error) {
         console.log(error)
-        document.getElementById('timeUntil').innerHTML = `No classes scheduled for today.`
+        document.getElementById('timeUntil').innerHTML = `No further classes for today.`
     })
 }
 
@@ -307,7 +307,7 @@ function getScheduleName() {
     })
     .catch(function (error) {
         console.log(error)
-        document.getElementById('timeUntil').innerHTML = `No classes scheduled for today.`
+        document.getElementById('timeUntil').innerHTML = `No further classes for today.`
     })
 }
 
@@ -317,7 +317,7 @@ function getScheduleInfo(scheduleName) {
         return response.data
     })
     .catch(function (error) {
-        document.getElementById('timeUntil').innerHTML = `No classes scheduled for today.`
+        document.getElementById('timeUntil').innerHTML = `No further classes for today.`
     })
 }
 
