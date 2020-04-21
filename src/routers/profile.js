@@ -39,3 +39,4 @@ router.post('/class', authCheck, (req, res) => {
 */
 
 module.exports = router;
+

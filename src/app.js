@@ -1,7 +1,4 @@
 ///visit this project at github.com/melkadze/class-planner
-//modules in use: cookie-session, ejs, express, mongodb, mongoose, passport, passport-google-oauth20, path, validator
-//modules not in use: luxon, moment
-//modules uninstalled: babel, bcryptjs, eslint, jsonwebtoken, multer
 
 //framework dependencies
 const express = require("express");
@@ -18,14 +15,14 @@ app.use(express.static(__dirname + "/public")); //export public folder
 //other dependencies
 const passport = require('passport')
 const cookieSession = require('cookie-session')
-const passportSetup = require('./config/passport-setup') //this is necessary
-const env = require('./env')
+const passportSetup = require('./config/passport-setup') //this is necessary, even though it is greyed out ((consider removing const, and just put require))
+require('dotenv').config();
 //import * as sampledb from "./sampledb.json"
 
 //setup cookies for login storage
 app.use(cookieSession({
   maxAge: 24 * 60 * 60 * 1000, //one day, in ms
-  keys: [env.cookieKey]
+  keys: [process.env.cookieKey]
 }))
 
 //initialize passport
@@ -37,16 +34,22 @@ const rootRouter = require('./routers/root')
 const authRouter = require('./routers/auth')
 const profileRouter = require('./routers/profile')
 const scheduleRouter = require('./routers/schedule')
+const periodRouter = require('./routers/period')
 const courseRouter = require('./routers/course')
+const dayRouter = require('./routers/day')
+const taskRouter = require('./routers/task')
 
 //router setup
 app.use('/', rootRouter)
 app.use('/auth', authRouter)
 app.use('/profile', profileRouter)
 app.use('/schedule', scheduleRouter)
+app.use('/schedule/period', periodRouter)
 app.use('/course', courseRouter)
+app.use('/day', dayRouter)
+app.use('/task', taskRouter)
 
 //finally, open the server
-app.listen(env.port, () => {
-  console.log(`Server up on port ${env.port}...`);
+app.listen(process.env.PORT, () => {
+  console.log(`Server up on port ${process.env.PORT}...`);
 });

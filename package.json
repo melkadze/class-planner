@@ -4,8 +4,10 @@
   "description": "Class planner project",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/app.js",
-    "sass": "sass --watch src/scss/main.scss src/public/styles/main.css"
+    "sass": "sass --watch src/scss/main.scss src/public/styles/main.css",
+    "build": "npm i && browserify src/public/timing.js -o src/public/main.js",
+    "dev": "nodemon -i src/public/main.js --exec \"browserify src/public/timing.js -o src/public/main.js && node src/app.js\"",
+    "start": "node src/app.js"
   },
   "repository": {
     "type": "git",
@@ -18,11 +20,12 @@
   },
   "homepage": "https://github.com/melkadze/class-planner#readme",
   "dependencies": {
+    "axios": "^0.19.2",
     "cookie-session": "^1.4.0",
+    "dotenv": "^8.2.0",
     "ejs": "^3.0.1",
     "express": "^4.17.1",
     "luxon": "^1.22.0",
-    "moment": "^2.24.0",
     "mongodb": "^3.5.2",
     "mongoose": "^5.8.11",
     "passport": "^0.4.1",
@@ -32,6 +35,9 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.2",
-    "sass": "^1.26.2"
+    "sass": "^1.26.2",
+    "browserify": "^16.5.0",
+    "nodemon": "^2.0.2",
+    "watchify": "^3.11.1"
   }
 }

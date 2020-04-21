@@ -40,7 +40,20 @@
             width: 40%;
             height: 5%;
             font-size: 30px;
-            margin: 1%
+            margin: 1%;
+        }
+        .error {
+            color: red;
+        }
+        .success {
+            color: green;
+        }
+        .centered {
+            margin: auto;
+            text-align: center;
+        }
+        .hidden {
+            display: none;
         }
     </style>
 </head>
@@ -58,11 +71,450 @@
         </ul>
     </nav>
     <header>
-        <h1>Timing API Testsite</h1>
+        <h1>Welcome to the Frontend Demo Website!</h1>
     </header>
     <main>
         
+        <div class="centered">
+            <h2 id="currentTime"></h2>
+            <h2 id="timeUntil"></h2>
+        </div>
+        
+        <h4>First, make a new schedule!</h4>
+        <p>Schedule name</p>
+        <input type="text" id="scheduleInputSchedule"></input>
+        <br>
+        <button id="scheduleInputButton">Upload schedule</button>
+        <p class="error" id="scheduleError"></p>
+        <p class="success" id="scheduleSuccess"></p>
+        
+        <h4>Now, a day.</h4>
+        <p>Day (0 for monday, 1 for tuesday, etc...)</p>
+        <input type="text" id="dayInputDay"></input>
+        <br>
+        <p>For which schedule?</p>
+        <input type="text" id="dayInputSchedule"></input>
+        <br>
+        <button id="dayInputButton">Upload day</button>
+        <p class="error" id="dayError"></p>
+        <p class="success" id="daySuccess"></p>
+        
+        <h4>Add a period to a schedule!!</h4>
+        <p>For which schedule?</p>
+        <input type="text" id="periodInputForSchedule"></input>
+        <br>
+        <p> Period number</p>
+        <input type="text" id="periodInputPeriod"></input>
+        <br>
+        <p>Hour of period start</p>
+        <input type="text" id="periodInputHourStart"></input>
+        <br>
+        <p>Minute of period start</p>
+        <input type="text" id="periodInputMinuteStart"></input>
+        <br>
+        <p>PM? start</p>
+        <input type="checkbox" id="periodInputAPMStart"></input>
+        <br>
+        <p>Hour of period end</p>
+        <input type="text" id="periodInputHourEnd"></input>
+        <br>
+        <p>Minute of period end</p>
+        <input type="text" id="periodInputMinuteEnd"></input>
+        <br>
+        <p>PM? end</p>
+        <input type="checkbox" id="periodInputAPMEnd"></input>
+        <br>
+        <!--
+        <input type="radio" id="inputAM" value="false">
+        <label for="inputAM">AM</label><br>
+        <input type="radio" id="inputPM" value="true">
+        <label for="inputPM">PM</label><br>  
+        -->
+        <button id="periodInputButton">Upload period</button>
+        <p class="error" id="periodError"></p>
+        <p class="success" id="periodSuccess"></p>
+        
+        <h4>What's the course for each of those periods?</h4>
+        <p>On which day?</p>
+        <input type="text" id="courseInputDay"></input>
+        <br>
+        <p>What period?</p>
+        <input type="text" id="courseInputPeriod"></input>
+        <br>
+        <p>What's the course for that period?</p>
+        <input type="text" id="courseInputCourse"></input>
+        <br>
+        <button id="courseInputButton">Upload course</button>
+        <p class="error" id="courseError"></p>
+        <p class="success" id="courseSuccess"></p>
+        
+        <h4>Now retrieve it...</h4>
+        <p>Which schedule?</p>
+        <input type="text" id="scheduleRetrieveSchedule"></input>
+        <br>
+        <button id="scheduleRetrieveButton">Get schedule</button>
+        <p class="error" id="scheduleGetError"></p>
+        <p class="success" id="scheduleGetSuccess"></p>
+        <ul>
+            <p id="periodDisplayPeriod0"></p>
+            <p id="periodDisplayTimeStart0"></p>
+            <p id="periodDisplayEnd0"></p>
+        </ul>
+        <br>
+        <ul>
+            <p id="periodDisplayPeriod1"></p>
+            <p id="periodDisplayTimeStart1"></p>
+            <p id="periodDisplayEnd1"></p>
+        </ul>
+        <br>
+        <ul>
+            <p id="periodDisplayPeriod2"></p>
+            <p id="periodDisplayTimeStart2"></p>
+            <p id="periodDisplayEnd2"></p>
+        </ul>
+        <br>
+        <ul>
+            <p id="periodDisplayPeriod3"></p>
+            <p id="periodDisplayTimeStart3"></p>
+            <p id="periodDisplayEnd3"></p>
+        </ul>
+        <br>
+        <ul>
+            <p id="periodDisplayPeriod4"></p>
+            <p id="periodDisplayTimeStart4"></p>
+            <p id="periodDisplayEnd4"></p>
+        </ul>
+        <br>
+        <ul>
+            <p id="periodDisplayPeriod5"></p>
+            <p id="periodDisplayTimeStart5"></p>
+            <p id="periodDisplayEnd5"></p>
+        </ul>
+        <br>
+        <ul>
+            <p id="periodDisplayPeriod6"></p>
+            <p id="periodDisplayTimeStart6"></p>
+            <p id="periodDisplayEnd6"></p>
+        </ul>
+        <br>
+        <ul>
+            <p id="periodDisplayPeriod7"></p>
+            <p id="periodDisplayTimeStart7"></p>
+            <p id="periodDisplayEnd7"></p>
+        </ul>
+        <br>
+        <ul>
+            <p id="periodDisplayPeriod8"></p>
+            <p id="periodDisplayTimeStart8"></p>
+            <p id="periodDisplayEnd8"></p>
+        </ul>
+        <br>
+        <ul>
+            <p id="periodDisplayPeriod9"></p>
+            <p id="periodDisplayTimeStart9"></p>
+            <p id="periodDisplayEnd9"></p>
+        </ul>
+        
+        <h4>Now retrieve the day...</h4>
+        <p>Which day?</p>
+        <input type="text" id="dayRetrieveDay"></input>
+        <br>
+        <button id="dayRetrieveButton">Get day</button>
+        <p class="error" id="dayGetError"></p>
+        <p class="success" id="dayGetSuccess"></p>
+        <ul>
+            <p id="courseDisplayPeriod0"></p>
+            <p id="courseDisplayCourse0"></p>
+            <p id="courseDisplayTimeStart0"></p>
+            <p id="courseDisplayEnd0"></p>
+        </ul>
+        <br>
+        <ul>
+            <p id="courseDisplayPeriod1"></p>
+            <p id="courseDisplayCourse1"></p>
+            <p id="courseDisplayTimeStart1"></p>
+            <p id="courseDisplayEnd1"></p>
+        </ul>
+        <br>
+        <ul>
+            <p id="courseDisplayPeriod2"></p>
+            <p id="courseDisplayCourse2"></p>
+            <p id="courseDisplayTimeStart2"></p>
+            <p id="courseDisplayEnd2"></p>
+        </ul>
+        <br>
+        <ul>
+            <p id="courseDisplayPeriod3"></p>
+            <p id="courseDisplayCourse3"></p>
+            <p id="courseDisplayTimeStart3"></p>
+            <p id="courseDisplayEnd3"></p>
+        </ul>
+        <br>
+        <ul>
+            <p id="courseDisplayPeriod4"></p>
+            <p id="courseDisplayCourse4"></p>
+            <p id="courseDisplayTimeStart4"></p>
+            <p id="courseDisplayEnd4"></p>
+        </ul>
+        <br>
+        <ul>
+            <p id="courseDisplayPeriod5"></p>
+            <p id="courseDisplayCourse5"></p>
+            <p id="courseDisplayTimeStart5"></p>
+            <p id="courseDisplayEnd5"></p>
+        </ul>
+        <br>
+        <ul>
+            <p id="courseDisplayPeriod6"></p>
+            <p id="courseDisplayCourse6"></p>
+            <p id="courseDisplayTimeStart6"></p>
+            <p id="courseDisplayEnd6"></p>
+        </ul>
+        <br>
+        <ul>
+            <p id="courseDisplayPeriod7"></p>
+            <p id="courseDisplayCourse7"></p>
+            <p id="courseDisplayTimeStart7"></p>
+            <p id="courseDisplayEnd7"></p>
+        </ul>
+        <br>
+        <ul>
+            <p id="courseDisplayPeriod8"></p>
+            <p id="courseDisplayCourse8"></p>
+            <p id="courseDisplayTimeStart8"></p>
+            <p id="courseDisplayEnd8"></p>
+        </ul>
+        <br>
+        <ul>
+            <p id="courseDisplayPeriod9"></p>
+            <p id="courseDisplayCourse9"></p>
+            <p id="courseDisplayTimeStart9"></p>
+            <p id="courseDisplayEnd9"></p>
+        </ul>
+        
+        <h4>Now, let's do tasks.</h4>
+        <p>What is the task?</p>
+        <input type="text" id="taskInputTask"></input>
+        <br>
+        <p>What course is it related to, if any? [Optional]</p>
+        <input type="text" id="taskInputCourse"></input>
+        <br>
+        <p>What date is it due? [Optional]</p>
+        <input type="date" id="taskInputDate" value="" min=""></input>
+        <br>
+        <button id="taskInputButton">Upload task</button>
+        <p class="error" id="taskError"></p>
+        <p class="success" id="taskSuccess"></p>
+        
+        <h4>Events, too.</h4>
+        <p>What is the event?</p>
+        <input type="text" id="eventInputTask"></input>
+        <br>
+        <p>What course is it related to, if any? [Optional]</p>
+        <input type="text" id="eventInputCourse"></input>
+        <br>
+        <p>What date is it due? [Optional]</p>
+        <input type="date" id="eventInputDate" value="" min=""></input>
+        <br>
+        <button id="eventInputButton">Upload event</button>
+        <p class="error" id="eventError"></p>
+        <p class="success" id="eventSuccess"></p>
+        
+        <h4>Now retrieve the tasks that are due on the below day</h4>
+        <p>Which day?</p>
+        <input type="text" id="taskRetrieveDay"></input>
+        <br>
+        <button id="taskRetrieveButton">Get tasks</button>
+        <p class="error" id="taskGetError"></p>
+        <p class="success" id="taskGetSuccess"></p>
+        <ul id="taskDisplayU0L" class="hidden">
+            <p id="taskDisplayName0"></p>
+            <p id="taskDisplayCourse0"></p>
+            <p id="taskDisplayActive0"></p>
+            <p id="taskDisplayCompleted0"></p>
+            <button id="taskDisplayUncompletedButton0">Set uncompleted</button>
+            <button id="taskDisplayCompletedButton0">Set completed</button>
+            <button id="taskDisplayDeleteButton0">Delete</button>
+        </ul>
+        <br>
+        <ul id="taskDisplayUL1" class="hidden">
+            <p id="taskDisplayName1"></p>
+            <p id="taskDisplayCourse1"></p>
+            <p id="taskDisplayActive1"></p>
+            <p id="taskDisplayCompleted1"></p>
+            <button id="taskDisplayUncompletedButton1">Set uncompleted</button>
+            <button id="taskDisplayCompletedButton1">Set completed</button>
+            <button id="taskDisplayDeleteButton1">Delete</button>
+        </ul>
+        <br>
+        <ul id="taskDisplayUL2" class="hidden">
+            <p id="taskDisplayName2"></p>
+            <p id="taskDisplayCourse2"></p>
+            <p id="taskDisplayActive2"></p>
+            <p id="taskDisplayCompleted2"></p>
+            <button id="taskDisplayUncompletedButton2">Set uncompleted</button>
+            <button id="taskDisplayCompletedButton2">Set completed</button>
+            <button id="taskDisplayDeleteButton2">Delete</button>
+        </ul>
+        <br>
+        <ul id="taskDisplayUL3" class="hidden">
+            <p id="taskDisplayName3"></p>
+            <p id="taskDisplayCourse3"></p>
+            <p id="taskDisplayActive3"></p>
+            <p id="taskDisplayCompleted3"></p>
+            <button id="taskDisplayUncompletedButton3">Set uncompleted</button>
+            <button id="taskDisplayCompletedButton3">Set completed</button>
+            <button id="taskDisplayDeleteButton3">Delete</button>
+        </ul>
+        <br>
+        <ul id="taskDisplayUL4" class="hidden">
+            <p id="taskDisplayName4"></p>
+            <p id="taskDisplayCourse4"></p>
+            <p id="taskDisplayActive4"></p>
+            <p id="taskDisplayCompleted4"></p>
+            <button id="taskDisplayUncompletedButton4">Set uncompleted</button>
+            <button id="taskDisplayCompletedButton4">Set completed</button>
+            <button id="taskDisplayDeleteButton4">Delete</button>
+        </ul>
+        <br>
+        <ul id="taskDisplayUL5" class="hidden">
+            <p id="taskDisplayName5"></p>
+            <p id="taskDisplayCourse5"></p>
+            <p id="taskDisplayActive5"></p>
+            <p id="taskDisplayCompleted5"></p>
+            <button id="taskDisplayUncompletedButton5">Set uncompleted</button>
+            <button id="taskDisplayCompletedButton5">Set completed</button>
+            <button id="taskDisplayDeleteButton5">Delete</button>
+        </ul>
+        <br>
+        <ul id="taskDisplayUL6" class="hidden">
+            <p id="taskDisplayName6"></p>
+            <p id="taskDisplayCourse6"></p>
+            <p id="taskDisplayActive6"></p>
+            <p id="taskDisplayCompleted6"></p>
+            <button id="taskDisplayUncompletedButton6">Set uncompleted</button>
+            <button id="taskDisplayCompletedButton6">Set completed</button>
+            <button id="taskDisplayDeleteButton6">Delete</button>
+        </ul>
+        <br>
+        <ul id="taskDisplayUL7" class="hidden">
+            <p id="taskDisplayName7"></p>
+            <p id="taskDisplayCourse7"></p>
+            <p id="taskDisplayActive7"></p>
+            <p id="taskDisplayCompleted7"></p>
+            <button id="taskDisplayUncompletedButton7">Set uncompleted</button>
+            <button id="taskDisplayCompletedButton7">Set completed</button>
+            <button id="taskDisplayDeleteButton7">Delete</button>
+        </ul>
+        <br>
+        <ul id="taskDisplayUL8" class="hidden">
+            <p id="taskDisplayName8"></p>
+            <p id="taskDisplayCourse8"></p>
+            <p id="taskDisplayActive8"></p>
+            <p id="taskDisplayCompleted8"></p>
+            <button id="taskDisplayUncompletedButton8">Set uncompleted</button>
+            <button id="taskDisplayCompletedButton8">Set completed</button>
+            <button id="taskDisplayDeleteButton8">Delete</button>
+        </ul>
+        <br>
+        <ul id="taskDisplayUL9" class="hidden">
+            <p id="taskDisplayName9"></p>
+            <p id="taskDisplayCourse9"></p>
+            <p id="taskDisplayActive9"></p>
+            <p id="taskDisplayCompleted9"></p>
+            <button id="taskDisplayUncompletedButton9">Set uncompleted</button>
+            <button id="taskDisplayCompletedButton9">Set completed</button>
+            <button id="taskDisplayDeleteButton9">Delete</button>
+        </ul>
+        <br>
+        
+        <h4>Finally, retrieve the events that are due on the below day</h4>
+        <p>Which day?</p>
+        <input type="text" id="eventRetrieveDay"></input>
+        <br>
+        <button id="eventRetrieveButton">Get events</button>
+        <p class="error" id="eventGetError"></p>
+        <p class="success" id="eventGetSuccess"></p>
+        <ul id="eventDisplayUL0" class="hidden">
+            <p id="eventDisplayName0"></p>
+            <p id="eventDisplayCourse0"></p>
+            <p id="eventDisplayActive0"></p>
+            <button id="eventDisplayDeleteButton0">Delete</button>
+        </ul>
+        <br>
+        <ul id="eventDisplayUL1" class="hidden">
+            <p id="eventDisplayName1"></p>
+            <p id="eventDisplayCourse1"></p>
+            <p id="eventDisplayActive1"></p>
+            <button id="eventDisplayDeleteButton1">Delete</button>
+        </ul>
+        <br>
+        <ul id="eventDisplayUL2" class="hidden">
+            <p id="eventDisplayName2"></p>
+            <p id="eventDisplayCourse2"></p>
+            <p id="eventDisplayActive2"></p>
+            <button id="eventDisplayDeleteButton2">Delete</button>
+        </ul>
+        <br>
+        <ul id="eventDisplayUL3" class="hidden">
+            <p id="eventDisplayName3"></p>
+            <p id="eventDisplayCourse3"></p>
+            <p id="eventDisplayActive3"></p>
+            <button id="eventDisplayDeleteButton3">Delete</button>
+        </ul>
+        <br>
+        <ul id="eventDisplayUL4" class="hidden">
+            <p id="eventDisplayName4"></p>
+            <p id="eventDisplayCourse4"></p>
+            <p id="eventDisplayActive4"></p>
+            <button id="eventDisplayDeleteButton4">Delete</button>
+        </ul>
+        <br>
+        <ul id="eventDisplayUL5" class="hidden">
+            <p id="eventDisplayName5"></p>
+            <p id="eventDisplayCourse5"></p>
+            <p id="eventDisplayActive5"></p>
+            <button id="eventDisplayDeleteButton5">Delete</button>
+        </ul>
+        <br>
+        <ul id="eventDisplayUL6" class="hidden">
+            <p id="eventDisplayName6"></p>
+            <p id="eventDisplayCourse6"></p>
+            <p id="eventDisplayActive6"></p>
+            <button id="eventDisplayDeleteButton6">Delete</button>
+        </ul>
+        <br>
+        <ul id="eventDisplayUL7" class="hidden">
+            <p id="eventDisplayName7"></p>
+            <p id="eventDisplayCourse7"></p>
+            <p id="eventDisplayActive7"></p>
+            <button id="eventDisplayDeleteButton7">Delete</button>
+        </ul>
+        <br>
+        <ul id="eventDisplayUL8" class="hidden">
+            <p id="eventDisplayName8"></p>
+            <p id="eventDisplayCourse8"></p>
+            <p id="eventDisplayActive8"></p>
+            <button id="eventDisplayDeleteButton8">Delete</button>
+        </ul>
+        <br>
+        <ul id="eventDisplayUL9" class="hidden">
+            <p id="eventDisplayName9"></p>
+            <p id="eventDisplayCourse9"></p>
+            <p id="eventDisplayActive9"></p>
+            
+            <button id="eventDisplayDeleteButton9">Delete</button>
+        </ul>
+        <br>
+        
+        <br><br><br><br><br><br><br>
+        <br><br><br><br><br><br><br>
+        <br><br><br><br><br><br><br>
+        <br><br><br><br><br><br><br>
+        <br><br><br><br><br><br><br>
+        <br><br><br><br><br><br><br>
+        <br><br><br><br><br><br><br>
     </main>
 </body>
-<script type="text/javascript" src="index.js"></script>
+<script type="text/javascript" src="../main.js"></script>
 </html>
