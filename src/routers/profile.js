@@ -19,6 +19,14 @@ router.get('/dashboard', authCheck, (req, res) => {
     }
 })
 
+router.get('/front-dashboard', authCheck, (req, res) => {
+    try{
+        res.render('front-dashboard', {user: req.user});
+    } catch(err) {
+        functions.error(res, 500, err);
+    }
+})
+
 router.post('/test', authCheck, (req, res) => {
     try{
         console.log('Front-end test OK!')

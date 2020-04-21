@@ -4,9 +4,8 @@
   "description": "Class planner project",
   "main": "index.js",
   "scripts": {
-    "sass": "sass --watch src/scss/main.scss src/public/styles/main.css",
-    "build": "npm i && browserify src/public/timing.js -o src/public/main.js",
-    "dev": "nodemon -i src/public/main.js --exec \"browserify src/public/timing.js -o src/public/main.js && node src/app.js\"",
+    "build": "npm i && browserify src/public/timing.js -o src/public/main.js && sass src/scss/main.scss src/public/styles/main.css",
+    "dev": "nodemon -i src/public/main.js --exec \"browserify src/public/timing.js -o src/public/main.js && sass src/scss/main.scss src/public/styles/main.css && node src/app.js\"",
     "start": "node src/app.js"
   },
   "repository": {
@@ -34,10 +33,8 @@
     "validator": "^12.2.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.2",
-    "sass": "^1.26.2",
     "browserify": "^16.5.0",
     "nodemon": "^2.0.2",
-    "watchify": "^3.11.1"
+    "sass": "^1.26.2"
   }
 }
