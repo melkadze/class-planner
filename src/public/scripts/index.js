@@ -241,7 +241,7 @@ displayDays(month, year) {
 },
 displayAnalogTime() {
     displayTime.displayAnalogTimeOnce()
-    setInterval(displayTime.displayAnalogTimeOnce, 1000);
+    setInterval(displayTime.displayAnalogTimeOnce, 3000);
 },
 displayAnalogTimeOnce() {
     const clock__hour = DOMStrings.clock__hour;
@@ -257,7 +257,7 @@ displayAnalogTimeOnce() {
 },
 displayDigitalTime() {
     displayTime.displayDigitalTimeOnce()
-    setInterval(displayTime.displayDigitalTimeOnce, 1000);
+    setInterval(displayTime.displayDigitalTimeOnce, 3000);
 },
 displayDigitalTimeOnce() {
     const alarms__digital = DOMStrings.alarms__digital;
