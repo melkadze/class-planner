@@ -339,7 +339,8 @@ a {
   font-weight: 400;
   letter-spacing: 0;
   color: #33384d;
-  padding-bottom: 0.5vw;
+  padding-top: 1vw;
+  padding-bottom: 2vw;
 }
 
 .alarms__container {
@@ -555,7 +556,7 @@ a {
   box-shadow: 0 5px 10px rgba(168, 168, 168, 0.15);
   border-radius: 0.5vw;
   padding: 1.25vw;
-  display: flex;
+  display: none;
   flex-direction: row;
   justify-content: flex-start;
 }

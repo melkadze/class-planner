@@ -393,6 +393,3 @@ function initDatePickers() {
 
 setupTimer()
 initDatePickers()
-
-timeOfNextPeriod()
-

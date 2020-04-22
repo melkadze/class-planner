@@ -108,8 +108,9 @@ dist
 env.js
 .env
 
-# Prebuilt file
+# Prebuilt files
 src/public/main.js
+src/public/scripts/main.js
 
 # macOS Desktop Services Store
 .DS_Store

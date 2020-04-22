@@ -26,7 +26,7 @@ router.post('/upload', authCheck, async (req, res) => {
 router.get('/:id', authCheck, async (req, res) => {
     try {
         const day = req.params.id
-        await Day.findOne({ day: day }, function (err, adv) {
+        await Day.findOne({ day: day, owner: req.user._id }, function (err, adv) {
             if (adv){
                 let dayID = adv._id
                 Course.find({ owner: dayID }, function (err, adv) {
@@ -43,12 +43,18 @@ router.get('/schedule/:id', authCheck, async (req, res) => {
     //const dayID = Day.findOne({ name: day })
     try {
         const day = req.params.id
-        await Day.findOne({ day: day }, function (err, adv) {
-            let scheduleID = adv.schedule
-            
-            Schedule.findById(scheduleID, function (err, adv) {
-                res.send(adv.name)
-            })
+        await Day.findOne({ day: day, owner: req.user._id }, function (err, adv) {
+            try {
+                if (adv) {
+                    let scheduleID = adv.schedule
+                    
+                    Schedule.findById(scheduleID, function (err, adv) {
+                        res.send(adv.name)
+                    })
+                }
+            } catch (err) {
+                functions.error(res, 500, err);
+            }
         })
     } catch (err) {
         functions.error(res, 500, err);
