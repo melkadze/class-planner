@@ -1,4 +1,5 @@
 import { DOMStrings } from "./DOMStrings.js";
+
 const time = {
   getCurrentMonth() {
     const month = new Date().getMonth();
