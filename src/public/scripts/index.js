@@ -241,7 +241,7 @@ displayDays(month, year) {
 },
 displayAnalogTime() {
     displayTime.displayAnalogTimeOnce()
-    setInterval(displayTime.displayAnalogTimeOnce, 3000);
+    setInterval(displayTime.displayAnalogTimeOnce, 1000);
 },
 displayAnalogTimeOnce() {
     const clock__hour = DOMStrings.clock__hour;
@@ -257,7 +257,7 @@ displayAnalogTimeOnce() {
 },
 displayDigitalTime() {
     displayTime.displayDigitalTimeOnce()
-    setInterval(displayTime.displayDigitalTimeOnce, 3000);
+    setInterval(displayTime.displayDigitalTimeOnce, 1000);
 },
 displayDigitalTimeOnce() {
     const alarms__digital = DOMStrings.alarms__digital;
@@ -284,9 +284,6 @@ displayDigitalTimeOnce() {
     }
     
     alarms__digital.innerText = `${hour}:${minute} ${period}`;
-    
-    displayTime.displayNextCourse()
-    displayTime.displayNextCourseList()
 },
 async displayNextCourse() {
     let timeNow = luxon.DateTime.local()
@@ -296,22 +293,21 @@ async displayNextCourse() {
         let targetReplyNext = await timeOfNextPeriodStart()
         let timeNext = truncatedTimeToDT(targetReplyNext)
         let timeUntilNext = await timeNext.diff(timeNow, 'seconds').values.seconds
-        let timeUntilNextFormatted = countdownFormat(timeUntilNext)
-        
-        DOMStrings.alarms__timer1.innerText = timeUntilNextFormatted
+        createTimer(timeUntilNext, displayTime.displayNextCourse, "alarms__timer1", "hh:mm:ss")
         DOMStrings.alarms__title1.innerText = `Period ${await getCurrentPeriod()} ${await getCurrentCourse()} starts`
     } else if (!targetReply) {
         //make a function that can tell if there have been classes today, and change title accordingly
         DOMStrings.alarms__timer1.innerText = ''
         DOMStrings.alarms__title1.innerText = `No further classes scheduled for today`
+        //technically, this will fail (classes will not update) at midnight. fixing this is low priority
     } else {
         let targetTime = truncatedTimeToDT(targetReply)
         let timeUntilTarget = await targetTime.diff(timeNow, 'seconds').values.seconds
-        let timeUntilTargetFormatted = countdownFormat(timeUntilTarget)
-        
-        DOMStrings.alarms__timer1.innerText = timeUntilTargetFormatted
+        createTimer(timeUntilTarget, displayTime.displayNextCourse, "alarms__timer1", "hh:mm:ss")
         DOMStrings.alarms__title1.innerText = `Period ${await getCurrentPeriod()} ${await getCurrentCourse()} ends`
     }
+    
+    displayTime.displayNextCourseList()
 },
 async displayNextCourseList() {
     for (let i = 0; i < 3; i++) {
@@ -352,7 +348,7 @@ async displayNextCourseList() {
 //below
 
 function convertToTime(hour, minute, isPM) {
-    const timeNow = luxon.DateTime.local()
+    //const timeNow = luxon.DateTime.local()
     
     //12hour -> 24hour
     if (isPM && hour != 12) {
@@ -595,6 +591,20 @@ async function getCurrentCourse() {
     }
 }
 
+function createTimer(secs, callback, elementID, format) {
+    const intervalID = setInterval(() => {
+        console.log(secs)
+        const durObj = luxon.Duration.fromObject({seconds: secs})
+        const timeUntil = durObj.toFormat(format)
+        document.getElementById(elementID).innerText = timeUntil
+        secs--
+        if (secs < 0) {
+            clearInterval(intervalID)
+            callback()
+        }
+    }, 1000)
+}
+
 //above
   
 displayTime.displayMonthAndYear(time.getCurrentMonth(), time.getCurrentYear());
@@ -603,3 +613,5 @@ displayTime.displayAnalogTime();
 displayTime.displayDigitalTime();
 eventListeners.calendarNavigation();
 greeting.display();
+
+displayTime.displayNextCourse()
