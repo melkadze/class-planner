@@ -10,4 +10,5 @@ const DOMStrings = {
   clock__second: document.getElementById("clock__second"),
   alarms__digital: document.getElementById("alarms__digital"),
 };
+
 export { DOMStrings };

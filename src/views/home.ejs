@@ -3,46 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homepage</title>
-    <style>
-        body{
-            font-family: arial;
-            margin: 0;
-        }
-        nav{
-            background: #ff5353;
-            padding: 20px 10px;
-        }
-        nav ul{
-            max-width: 960px;
-            margin: 0 auto;
-            padding: 0;
-        }
-        nav li{
-            list-style-type: none;
-            display: inline-block;
-            margin: 0 10px 0 0;
-        }
-        nav a{
-            color: #fff;
-            font-size: 18px;
-            background: rgba(255,255,255,0.2);
-            text-decoration: none;
-            padding: 10px;
-            display: block;
-        }
-        main, header{
-            max-width: 960px;
-            margin: 30px auto;
-            padding: 0 10px;
-            color: #333;
-        }
-        button, input {
-            width: 40%;
-            height: 5%;
-            font-size: 30px;
-            margin: 1%
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="../styles/compat.css" />
 </head>
 <body>
     <nav>
@@ -55,18 +16,14 @@
             <% } %>
             <li><a href="/profile">Profile</a></li>
             <li><a href="/profile/dashboard">Dashboard</a></li>
+            <li><a href="/profile/front-dashboard">Nova</a></li>
         </ul>
     </nav>
     <header>
-        <h1>Developer Hub</h1>
+        <h1>Welcome to the beta of class-planner, or Loop!</h1>
     </header>
     <main>
-        <p>Welcome to Postman 2.0</p>
-        <input type="text" id="testURL" value="/schedule/class"></input>
-        <br>
-        <input type="text" id="testContent" value="{&quot;name&quot;: &quot;test&quot;}"></input>
-        <br>
-        <button id="testBtn">Send POST Data</button>
+        <h2>Login with your google account, configure your dashboard, and view it through nova!</h2>
     </main>
 </body>
 <script type="text/javascript" src="index.js"></script>
