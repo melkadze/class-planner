@@ -19,4 +19,33 @@ router.post('/upload', authCheck, async (req, res) => {
     }
 })
 
+router.get('/', authCheck, async (req, res) => {
+    try {
+        await Event.find({ owner: req.user._id }, function (err, adv) {
+            if (adv){
+                res.send(adv)
+            }
+        }).sort({ dueDate: 1 })
+    } catch (err) {
+        functions.error(res, 500, err);
+    }
+})
+
+router.delete('/:id', authCheck, async (req, res) => {
+    try {
+        await Event.deleteMany({ owner: req.user._id, dueDate: req.params.id })
+    } catch (err) {
+        functions.error(res, 500, err);
+    }
+})
+
+router.delete('/byID/:id', authCheck, async (req, res) => {
+    try {
+        await Event.deleteMany({ owner: req.user._id, _id: req.params.id })
+    } catch (err) {
+        functions.error(res, 500, err);
+    }
+})
+
 module.exports = router;
+

@@ -13,7 +13,7 @@
           <a class="navigation__button navigation__button--active" href="#">
             <span class="navigation__icon navigation__icon--dashboard"> </span>
             <p class="navigation__text navigation__text--active">
-              Dashboard
+              Your Dashboard
             </p>
           </a>
           <a class="navigation__button" href="#">
@@ -82,7 +82,7 @@
           <h6 class="calendar__weekdays">Sat</h6>
         </div>
         <div class="alarms">
-          <h5 class="alarms__headline">Your Alarms and Timers</h5>
+          <h5 class="alarms__headline">Your Events</h5>
           <div class="alarms__container">
             <div class="alarms__time">
               <div class="clock">
@@ -99,8 +99,8 @@
               <h6 id="alarms__digital" class="alarms__digital"></h6>
             </div>
             <div class="alarms__grid">
-              <div class="alarms__module">
-                <div class="alarms__container--icon alarms__container--green">
+              <div class="alarms__module" id="alarms__module1">
+                <div id="alarms__container--icon1" class="alarms__container--icon alarms__container--green">
                   <img
                     src="../assets/svg/clock--white.svg"
                     alt="clock"
@@ -112,8 +112,8 @@
                   <p id="alarms__title1" class="alarms__title"></p>
                 </div>
               </div>
-              <div class="alarms__module">
-                <div class="alarms__container--icon alarms__container--cyan">
+              <div class="alarms__module" id="alarms__module2">
+                <div id="alarms__container--icon2" class="alarms__container--icon alarms__container--cyan">
                   <img
                     src="../assets/svg/clock--white.svg"
                     alt="clock"
@@ -121,12 +121,12 @@
                   />
                 </div>
                 <div class="alarms__text">
-                  <h6 class="alarms__timer">00:00:00</h6>
-                  <p class="alarms__title">Timer Title</p>
+                  <h6 id="alarms__timer2"  class="alarms__timer"></h6>
+                  <p id="alarms__title2" class="alarms__title"></p>
                 </div>
               </div>
-              <div class="alarms__module">
-                <div class="alarms__container--icon alarms__container--blue">
+              <div class="alarms__module" id="alarms__module3">
+                <div id="alarms__container--icon3" class="alarms__container--icon alarms__container--blue">
                   <img
                     src="../assets/svg/clock--white.svg"
                     alt="clock"
@@ -134,14 +134,33 @@
                   />
                 </div>
                 <div class="alarms__text">
-                  <h6 class="alarms__timer">12:00 AM</h6>
-                  <p class="alarms__title">Alarm Title</p>
+                  <h6 id="alarms__timer3"  class="alarms__timer"></h6>
+                  <p id="alarms__title3" class="alarms__title"></p>
                 </div>
               </div>
+              
+              <div class="page__container" id="events__page__container">
+                <button class="page__button" id="page__button__prev">
+                  <img
+                    src="../assets/svg/arrow-left.svg"
+                    alt="left arrow"
+                    class="page__icon"
+                  />
+                </button>
+                <button class="page__button" id="page__button__next">
+                  <img
+                    src="../assets/svg/arrow-right.svg"
+                    alt="right arrow"
+                    class="page__icon"
+                  />
+                </button>
+              </div>
+              
+            
             </div>
           </div>
         </div>
-        <h5 class="course__headline">Your upcoming Courses</h5>
+        <h5 id="course__headline" class="course__headline">Your Upcoming Courses</h5>
         <div id="course__container--first" class="course__container course__container--first">
           <div class="course__container--icon course__container--green">
             <img
@@ -151,8 +170,8 @@
             />
           </div>
           <div class="course__text">
-            <h6 id="course__title1" class="course__title">Course Title</h6>
-            <p id="course__subtitle1" class="course__subtitle">Day, 00:00 AM - 00:00 PM</p>
+            <h6 id="course__title1" class="course__title"></h6>
+            <p id="course__subtitle1" class="course__subtitle"></p>
           </div>
         </div>
         <div id="course__container--second" class="course__container course__container--second">
@@ -164,8 +183,8 @@
             />
           </div>
           <div class="course__text">
-            <h6 id="course__title2" class="course__title">Course Title</h6>
-            <p id="course__subtitle2" class="course__subtitle">Day, 00:00 AM - 00:00 PM</p>
+            <h6 id="course__title2" class="course__title"></h6>
+            <p id="course__subtitle2" class="course__subtitle"></p>
           </div>
         </div>
         <div id="course__container--third" class="course__container course__container--third">
@@ -177,12 +196,12 @@
             />
           </div>
           <div class="course__text">
-            <h6 id="course__title3" class="course__title">Course Title</h6>
-            <p id="course__subtitle3" class="course__subtitle">Day, 00:00 AM - 00:00 PM</p>
+            <h6 id="course__title3" class="course__title"></h6>
+            <p id="course__subtitle3" class="course__subtitle"></p>
           </div>
         </div>
         <div class="tasks">
-          <h5 class="tasks__headline">Your Events and Tasks</h5>
+          <h5 class="tasks__headline">Your Tasks</h5>
           <div class="tasks__grid">
             <div class="tasks__container">
               <div class="tasks__container--icon tasks__container--green">

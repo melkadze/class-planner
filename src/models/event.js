@@ -5,10 +5,6 @@ const eventSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    active: { //active: denotes if item should be shown to user [set to 1 when creating, 0 when expired]
-        type: Boolean,
-        required: true
-    },
     course: { //relevant course, is user-definable and is only for display purposes
         type: String
     },
