@@ -1,8 +1,6 @@
 const luxon = require("luxon")
 const axios = require("axios")
 
-//start
-
 const DOMStrings = {
   greeting__quote: document.getElementById("greeting__quote"),
   greeting__author: document.getElementById("greeting__author"),
@@ -121,6 +119,7 @@ const greeting = {
   };
 
 const time = {
+    updateDelay: 100,
     getCurrentMonth() {
       const month = new Date().getMonth();
       return month;
@@ -198,7 +197,7 @@ displayMonthAndYear(month, year) {
         month = "December";
         break;
     }
-    calendar__headline.innerText = `${month} ${year}`;
+    calendar__headline.innerText = `Your ${month} ${year}`;
 },
 displayDays(month, year) {
     const weekday = time.getFirstWeekDay(month, year);
@@ -241,7 +240,7 @@ displayDays(month, year) {
 },
 displayAnalogTime() {
     displayTime.displayAnalogTimeOnce()
-    setInterval(displayTime.displayAnalogTimeOnce, 1000);
+    setInterval(displayTime.displayAnalogTimeOnce, time.updateDelay);
 },
 displayAnalogTimeOnce() {
     const clock__hour = DOMStrings.clock__hour;
@@ -257,7 +256,7 @@ displayAnalogTimeOnce() {
 },
 displayDigitalTime() {
     displayTime.displayDigitalTimeOnce()
-    setInterval(displayTime.displayDigitalTimeOnce, 1000);
+    setInterval(displayTime.displayDigitalTimeOnce, time.updateDelay);
 },
 displayDigitalTimeOnce() {
     const alarms__digital = DOMStrings.alarms__digital;
@@ -335,6 +334,7 @@ async displayNextCourseList() {
         }
         
         if (nextCourseInfo[0] == 0) {
+            document.getElementById('course__headline').style.display = 'grid'
             DOMContainer.style.display = 'flex'
             DOMTitle.innerText = await nextCourseInfo[1]
             DOMSubtitle.innerText = `${nextCourseInfo[2]}, ${nextCourseInfo[3]} — ${nextCourseInfo[4]}`
@@ -344,8 +344,6 @@ async displayNextCourseList() {
     }
 },
 };
-
-//below
 
 function convertToTime(hour, minute, isPM) {
     //const timeNow = luxon.DateTime.local()
@@ -452,6 +450,7 @@ function getDayOfWeek(offset) {
 
 function noFurtherClasses(error) {
     console.log(error)
+    DOMStrings.alarms__title1.innerText = `No further classes scheduled for today`
 }
 
 async function timeOfNextPeriod() {
@@ -522,7 +521,7 @@ async function periodInfoByOffset(offset) {
         
         return [errorlevel, requestedTitle, requestedDay, requestedStart, requestedEnd]
     } catch (err) {
-        console.log(err)
+        //console.log(err)
         errorlevel = 1
         return [errorlevel]
     }
@@ -532,6 +531,16 @@ function getDayInfo() {
     let offset = 0
     
     return axios.get(`/day/${getDayOfWeek(offset)}`, {timeout: 3000})
+    .then (function (response) {
+        return response.data
+    })
+    .catch(function (error) {
+        noFurtherClasses(error)
+    })
+}
+
+function getAllEvents() {
+    return axios.get(`/event`, {timeout: 3000})
     .then (function (response) {
         return response.data
     })
@@ -593,7 +602,6 @@ async function getCurrentCourse() {
 
 function createTimer(secs, callback, elementID, format) {
     const intervalID = setInterval(() => {
-        console.log(secs)
         const durObj = luxon.Duration.fromObject({seconds: secs})
         const timeUntil = durObj.toFormat(format)
         document.getElementById(elementID).innerText = timeUntil
@@ -605,8 +613,314 @@ function createTimer(secs, callback, elementID, format) {
     }, 1000)
 }
 
-//above
-  
+function clearAllEvents(isPageOne) {
+    document.getElementById("alarms__timer1").innerText = ''
+    document.getElementById("alarms__title1").innerText = ''
+    document.getElementById("alarms__timer2").innerText = ''
+    document.getElementById("alarms__title2").innerText = ''
+    document.getElementById("alarms__timer3").innerText = ''
+    document.getElementById("alarms__title3").innerText = ''
+    document.getElementById("alarms__module2").style.display = 'none'
+    document.getElementById("alarms__module3").style.display = 'none'
+    
+    if (isPageOne) {
+        displayTime.displayNextCourse()
+    }
+}
+
+function insertEvent(position, title, subtitle) {
+    switch (position) {
+        case 1:
+            document.getElementById("alarms__timer1").innerText = subtitle
+            document.getElementById("alarms__title1").innerText = title
+            break
+        case 2:
+            document.getElementById("alarms__timer2").innerText = subtitle
+            document.getElementById("alarms__title2").innerText = title
+            document.getElementById("alarms__module2").style.display = 'flex'
+            break
+        case 3:
+            document.getElementById("alarms__timer3").innerText = subtitle
+            document.getElementById("alarms__title3").innerText = title
+            document.getElementById("alarms__module3").style.display = 'flex'
+            break
+    }
+}
+
+function getIndexFromPage(page) {
+    return (((page - 1) * 3) - 1)
+}
+
+function updateEventsPages(currentPage, totalPages, totalObjects, eventsArray) {
+    if (currentPage == 1) {
+        document.getElementById("page__button__prev").style = 'background-color: silver'
+    } else {
+        document.getElementById("page__button__prev").style -= 'background-color: silver'
+    }
+    
+    if (currentPage == totalPages) {
+        document.getElementById("page__button__next").style = 'background-color: silver'
+    } else {
+        document.getElementById("page__button__next").style -= 'background-color: silver'
+    }
+    
+    let id1
+    let id2
+    let id3
+    
+    if (currentPage == 1) {
+        clearAllEvents(true)
+        try {
+            id1 = false
+            insertEvent(2, eventsArray[0][0], eventsArray[0][1])
+            id2 = eventsArray[0][2]
+            insertEvent(3, eventsArray[1][0], eventsArray[1][1])
+            id3 = eventsArray[1][2]
+        } catch (err) {
+            //console.log(err)
+        }
+    } else {
+        clearAllEvents(false)
+        try {
+            insertEvent(1, eventsArray[getIndexFromPage(currentPage) + 0][0], eventsArray[getIndexFromPage(currentPage) + 0][1])
+            id1 = eventsArray[getIndexFromPage(currentPage) + 0][2]
+            insertEvent(2, eventsArray[getIndexFromPage(currentPage) + 1][0], eventsArray[getIndexFromPage(currentPage) + 1][1])
+            id2 = eventsArray[getIndexFromPage(currentPage) + 1][2]
+            insertEvent(3, eventsArray[getIndexFromPage(currentPage) + 2][0], eventsArray[getIndexFromPage(currentPage) + 2][1])
+            id3 = eventsArray[getIndexFromPage(currentPage) + 2][2]
+        } catch (err) {
+            //console.log(err)
+        }
+    }
+        
+    document.getElementById("alarms__container--icon1").onclick = function() {
+        if (id1) {
+            removeEventByID(id1)
+            setTimeout(function() {
+                updateEvents(currentPage)
+            }, 100)
+        } else {
+            document.getElementById("alarms__module1").style.animation = 'shake 0.82s cubic-bezier(.36,.07,.19,.97) both'
+            setTimeout(function() {
+                document.getElementById("alarms__module1").style.animation -= 'shake 0.82s cubic-bezier(.36,.07,.19,.97) both'
+            }, 1500)
+        }
+    }
+    
+    document.getElementById("alarms__container--icon2").onclick = function() {
+        removeEventByID(id2)
+        setTimeout(function() {
+            updateEvents(currentPage)
+        }, 100)
+    }
+    
+    document.getElementById("alarms__container--icon3").onclick = function() {
+        removeEventByID(id3)
+        setTimeout(function() {
+            updateEvents(currentPage)
+        }, 100)
+    }
+}
+
+function removeEventByID(eventID) {
+    axios.delete(`/event/byID/${eventID}`)
+    .then(async function(response) {
+        console.log(response)
+    })
+    .catch(function (error) {
+        console.log(error)
+    })
+}
+
+function expireOldEvents(eventsInfo) {
+    for (let i = 0; i < eventsInfo.length; i++) {
+        const currentObjDT = truncatedDateToDTUnformatted(eventsInfo[i].dueDate)
+        const currentTime = luxon.DateTime.local()
+        const timeDiff = currentObjDT.diff(currentTime, 'days').values.days
+        
+        if (timeDiff < -1) {
+            axios.delete(`/event/${eventsInfo[i].dueDate}`)
+            .then(async function(response) {
+                console.log(response)
+            })
+            .catch(function (error) {
+                console.log(error)
+            })
+        }
+    }
+}
+
+async function updateEvents(reqPage) {
+    
+    const eventsInfo = await getAllEvents()
+    const totalEvents = await eventsInfo.length
+    const totalObjects = await totalEvents + 1
+    
+    refreshEmphasized(await eventsInfo)
+    expireOldEvents(await eventsInfo)
+    
+    let currentPage
+    let eventsArray = []
+    
+    const totalPages = Math.ceil(totalObjects / 3)
+    
+    if (reqPage) {
+        if (reqPage > totalPages) {
+            currentPage = totalPages
+        } else {
+            currentPage = reqPage
+        }
+    } else {
+        currentPage = 1
+    }
+    
+    if (currentPage == 1) {
+        clearAllEvents(true)
+    } else {
+        clearAllEvents(false)
+    }
+    
+    for (let i = 0; i < totalEvents; i++) {
+        if (eventsInfo[i].course) {
+            eventsArray.push([truncatedDateToDT(eventsInfo[i].dueDate), `[${eventsInfo[i].course}] ${eventsInfo[i].name}`, eventsInfo[i]._id])
+        } else {
+            eventsArray.push([truncatedDateToDT(eventsInfo[i].dueDate), eventsInfo[i].name, eventsInfo[i]._id])
+        }
+    }
+    
+    if (totalObjects > 3) {
+        
+        document.getElementById("page__button__next").onclick = function() {
+            if (currentPage < totalPages) {
+                currentPage++
+                updateEventsPages(currentPage, totalPages, totalObjects, eventsArray)
+            }
+        }
+        
+        document.getElementById("page__button__prev").onclick = function() {
+            if (currentPage > 1) {
+                currentPage--
+                updateEventsPages(currentPage, totalPages, totalObjects, eventsArray)
+            }
+        }
+        
+        document.getElementById("page__button__prev").style = 'background-color: silver'
+        document.getElementById("events__page__container").style.display = 'flex'
+        
+    } else {
+        document.getElementById("events__page__container").style.display = 'none'
+    }
+    
+    updateEventsPages(currentPage, totalPages, totalObjects, eventsArray)
+}
+
+function truncatedDateToDT(input) {
+    const splitArray = input.split('-')
+    const createdDate = luxon.DateTime.fromObject({ year: splitArray[0], month: splitArray[1], day: splitArray[2] })
+    const formattedDate = createdDate.toFormat('EEEE, MMMM d')
+    
+    return formattedDate
+}
+
+function truncatedDateToDTUnformatted(input) {
+    const splitArray = input.split('-')
+    const createdDate = luxon.DateTime.fromObject({ year: splitArray[0], month: splitArray[1], day: splitArray[2] })
+    
+    return createdDate
+}
+
+function refreshEmphasized(eventsInfo) {
+    //broken? low priority (auto refresh yellow dots)
+    /*
+    try {
+        
+        for (let i = 0; i < 32; i++) {
+            const aTags = document.getElementsByClassName("calendar__day--emphasized");
+            for (let i = 0; aTags.length > i; i++) {
+                aTags[i].classList.remove("calendar__day--emphasized")
+            }
+            
+            const bTags = document.getElementsByClassName("calendar__day--container--emphasized");
+            for (let i = 0; bTags.length > i; i++) {
+                bTags[i].classList.remove("calendar__day--container--emphasized")
+                bTags[i].classList.add("removed-calendar-day")
+            }
+            
+            if (i == 32) {
+                emphasizeDates(eventsInfo)
+            }
+        }
+        
+    } catch (err) {
+        console.log(err)
+    }
+    */
+    
+    emphasizeDates(eventsInfo)
+    
+}
+
+function emphasizeOnCalendar(date) {
+    const aTags = document.getElementsByClassName("calendar__day");
+    const searchText = date;
+    let found;
+    
+    for (let i = 0; i < aTags.length; i++) {
+      if (aTags[i].textContent == searchText) {
+        found = aTags[i];
+        break;
+      }
+    }
+    
+    let okToAdd = true
+    
+    for (let i = 0; i < found.classList.length; i++) {
+        if (found.classList[i] == "calendar__day--emphasized") {
+            okToAdd = false
+            break
+        }
+        continue
+    }
+    
+    let okToOverride = true
+    
+    for (let i = 0; i < found.parentNode.classList.length; i++) {
+        if (found.parentNode.classList[i] == "removed-calendar-day") {
+            okToOverride = false
+            break
+        }
+        continue
+    }
+    
+    if (okToAdd) {
+        if (okToOverride) {
+            const wrapper = document.createElement('div')
+            wrapper.setAttribute("class", "calendar__day--container--emphasized")
+            found.setAttribute("class", "calendar__day calendar__day--emphasized")
+            found.parentNode.insertBefore(wrapper, found)
+            wrapper.appendChild(found)
+        } else {
+            found.parentNode.classList.remove("removed-calendar-day")
+            found.parentNode.setAttribute("class", "calendar__day--container--emphasized")
+        }
+    }
+}
+
+function emphasizeDates(eventsInfo) {
+    const currentTime = luxon.DateTime.local()
+    
+    for (let i = 0; i < eventsInfo.length; i++) {
+        const currentObjDT = truncatedDateToDTUnformatted(eventsInfo[i].dueDate)
+        if (currentObjDT.month == currentTime.month && currentObjDT.year == currentTime.year) {
+            const timeDiff = currentObjDT.diff(currentTime, 'days').values.days
+            
+            if (timeDiff > 0) {
+                emphasizeOnCalendar(currentObjDT.day)
+            }
+        }
+    }
+}
+
 displayTime.displayMonthAndYear(time.getCurrentMonth(), time.getCurrentYear());
 displayTime.displayDays(time.getCurrentMonth(), time.getCurrentYear());
 displayTime.displayAnalogTime();
@@ -614,4 +928,4 @@ displayTime.displayDigitalTime();
 eventListeners.calendarNavigation();
 greeting.display();
 
-displayTime.displayNextCourse()
+updateEvents(0)

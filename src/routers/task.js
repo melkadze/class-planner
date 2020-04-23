@@ -19,4 +19,25 @@ router.post('/upload', authCheck, async (req, res) => {
     }
 })
 
+router.get('/', authCheck, async (req, res) => {
+    try {
+        await Task.find({ owner: req.user._id }, function (err, adv) {
+            if (adv){
+                res.send(adv)
+            }
+        }).sort({ dueDate: 1 })
+    } catch (err) {
+        functions.error(res, 500, err);
+    }
+})
+
+router.delete('/:id', authCheck, async (req, res) => {
+    try {
+        const res = await Task.remove({ owner: req.user._id, dueDate: req.params.id })
+        res.send(res.deletedCount);
+    } catch (err) {
+        functions.error(res, 500, err);
+    }
+})
+
 module.exports = router;

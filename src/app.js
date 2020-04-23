@@ -38,6 +38,7 @@ const periodRouter = require('./routers/period')
 const courseRouter = require('./routers/course')
 const dayRouter = require('./routers/day')
 const taskRouter = require('./routers/task')
+const eventRouter = require('./routers/event')
 
 //router setup
 app.use('/', rootRouter)
@@ -48,6 +49,7 @@ app.use('/schedule/period', periodRouter)
 app.use('/course', courseRouter)
 app.use('/day', dayRouter)
 app.use('/task', taskRouter)
+app.use('/event', eventRouter)
 
 //finally, open the server
 app.listen(process.env.PORT, () => {

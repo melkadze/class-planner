@@ -2,6 +2,23 @@
 @use 'effects';
 @use 'grid';
 @use 'typography';
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
 .global--dashboard {
   display: grid;
   height: 100vh;
@@ -174,6 +191,7 @@
 }
 .calendar__button {
   position: relative;
+  outline: 0;
   width: 75%;
   height: 0;
   padding-top: 75%;
@@ -186,7 +204,34 @@
   background-color: color.$blue-dark-shade;
   cursor: grab;
 }
+.page__container {
+  display: none; //flex
+}
+.page__button {
+  position: relative;
+  outline: 0;
+  width: 75%;
+  height: 75%;
+  padding-top: 50%;
+  border-radius: 50%;
+  background-color: color.$blue-primary;
+  border: none;
+  transform: scale(0.5);
+  @include effects.drop-shadow();
+}
+.page__button:hover {
+  background-color: color.$blue-dark-shade;
+  cursor: grab;
+}
 .calendar__icon {
+  height: 75%;
+  width: 75%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.page__icon {
   height: 75%;
   width: 75%;
   position: absolute;
@@ -215,6 +260,20 @@
   background-color: color.$blue-primary;
 }
 .calendar__day--today {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.calendar__day--container--emphasized {
+  position: relative;
+  width: 75%;
+  height: 0;
+  padding-top: 75%;
+  border-radius: 50%;
+  background-color: color.$yellow-primary;
+}
+.calendar__day--emphasized {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -258,8 +317,11 @@
   border-radius: 0.5vw;
   background-color: color.$white;
   padding: 1.25vw;
-  display: flex;
+  display: none; //flex
   flex-direction: row;
+}
+#alarms__module1 {
+  display: flex;
 }
 .alarms__container--icon {
   height: 0;
@@ -287,6 +349,12 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+}
+.alarms__container--icon:hover {
+  background-color: #ff6767;
+}
+.alarms__container--icon:hover .alarms__icon {
+  content: url("../assets/svg/trash.svg");
 }
 .alarms__text {
   padding-left: 0.5vw;
@@ -396,6 +464,7 @@
   @include typography.headline-5();
   color: color.$blue-dark-shade;
   align-self: center;
+  display: none; //grid
 }
 .course__container {
   @include effects.drop-shadow();
