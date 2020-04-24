@@ -680,7 +680,8 @@ function insertEvent(position, title, subtitle) {
 }
 
 function getEventIndexFromPage(page) {
-    return (((page - 1) * 3) - 1)
+    //return (((page - 1) * 3) - 1) unrem for 3 events
+    return (((page - 1) * 2) - 1)
 }
 
 function updateEventsPages(currentPage, totalPages, totalObjects, eventsArray) {
@@ -708,8 +709,8 @@ function updateEventsPages(currentPage, totalPages, totalObjects, eventsArray) {
             id1 = false
             insertEvent(2, eventsArray[0][0], eventsArray[0][1])
             id2 = eventsArray[0][2]
-            insertEvent(3, eventsArray[1][0], eventsArray[1][1])
-            id3 = eventsArray[1][2]
+            //insertEvent(3, eventsArray[1][0], eventsArray[1][1])
+            //id3 = eventsArray[1][2]
         } catch (err) {
             //console.log(err)
         }
@@ -723,8 +724,9 @@ function updateEventsPages(currentPage, totalPages, totalObjects, eventsArray) {
                 id1 = eventsArray[getEventIndexFromPage(currentPage) + 0][2]
                 insertEvent(2, eventsArray[getEventIndexFromPage(currentPage) + 1][0], eventsArray[getEventIndexFromPage(currentPage) + 1][1])
                 id2 = eventsArray[getEventIndexFromPage(currentPage) + 1][2]
-                insertEvent(3, eventsArray[getEventIndexFromPage(currentPage) + 2][0], eventsArray[getEventIndexFromPage(currentPage) + 2][1])
-                id3 = eventsArray[getEventIndexFromPage(currentPage) + 2][2]
+                
+                //insertEvent(3, eventsArray[getEventIndexFromPage(currentPage) + 2][0], eventsArray[getEventIndexFromPage(currentPage) + 2][1]) unrem for 3 events
+                //id3 = eventsArray[getEventIndexFromPage(currentPage) + 2][2] unrem for 3 events
                 
             }
         } catch (err) {
@@ -810,8 +812,13 @@ async function updateEvents(reqPage) {
     
     let currentPage
     let eventsArray = []
+    let totalPages
     
-    const totalPages = Math.ceil(totalObjects / 3)
+    if (totalObjects == 3) {
+        totalPages = 1 //wasnt here when 3 objs (the entire if statement)
+    } else {
+        totalPages = Math.ceil(totalObjects / 2) //change to 3 to have 3 objs
+    }
     
     if (reqPage) {
         if (reqPage > totalPages) {
@@ -837,7 +844,7 @@ async function updateEvents(reqPage) {
         }
     }
     
-    if (totalObjects > 3) {
+    if (totalObjects > 3) { //change to 3 to have 3 objs
         
         document.getElementById("page__button__next").onclick = function() {
             if (currentPage < totalPages) {
@@ -970,345 +977,6 @@ function emphasizeEventDates(eventsInfo) {
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-function clearAllTasks(isPageOne) {
-    document.getElementById("alarms__timer1").innerText = ''
-    document.getElementById("alarms__title1").innerText = ''
-    document.getElementById("alarms__timer2").innerText = ''
-    document.getElementById("alarms__title2").innerText = ''
-    document.getElementById("alarms__timer3").innerText = ''
-    document.getElementById("alarms__title3").innerText = ''
-    document.getElementById("alarms__module2").style.display = 'none'
-    document.getElementById("alarms__module3").style.display = 'none'
-    
-    if (isPageOne) {
-        displayTime.displayNextCourse()
-    }
-}
-
-function insertTask(position, title, subtitle) {
-    switch (position) {
-        case 1:
-            document.getElementById("alarms__timer1").innerText = subtitle
-            document.getElementById("alarms__title1").innerText = title
-            break
-        case 2:
-            document.getElementById("alarms__timer2").innerText = subtitle
-            document.getElementById("alarms__title2").innerText = title
-            document.getElementById("alarms__module2").style.display = 'flex'
-            break
-        case 3:
-            document.getElementById("alarms__timer3").innerText = subtitle
-            document.getElementById("alarms__title3").innerText = title
-            document.getElementById("alarms__module3").style.display = 'flex'
-            break
-    }
-}
-
-function getTaskIndexFromPage(page) {
-    return (((page - 1) * 3) - 1)
-}
-
-function updateTasksPages(currentPage, totalPages, totalObjects, tasksArray) {
-    pages.tasks = currentPage
-    
-    if (currentPage == 1) {
-        document.getElementById("page__button__prev").style = 'background-color: silver'
-    } else {
-        document.getElementById("page__button__prev").style -= 'background-color: silver'
-    }
-    
-    if (currentPage == totalPages) {
-        document.getElementById("page__button__next").style = 'background-color: silver'
-    } else {
-        document.getElementById("page__button__next").style -= 'background-color: silver'
-    }
-    
-    let id1
-    let id2
-    let id3
-    
-    if (currentPage == 1) {
-        clearAllTasks(true)
-        try {
-            id1 = false
-            insertTask(2, tasksArray[0][0], tasksArray[0][1])
-            id2 = tasksArray[0][2]
-            insertTask(3, tasksArray[1][0], tasksArray[1][1])
-            id3 = tasksArray[1][2]
-        } catch (err) {
-            //console.log(err)
-        }
-    } else {
-        clearAllTasks(false)
-        try {
-            insertTask(1, tasksArray[getTaskIndexFromPage(currentPage) + 0][0], tasksArray[getTaskIndexFromPage(currentPage) + 0][1])
-            id1 = tasksArray[getTaskIndexFromPage(currentPage) + 0][2]
-            insertTask(2, tasksArray[getTaskIndexFromPage(currentPage) + 1][0], tasksArray[getTaskIndexFromPage(currentPage) + 1][1])
-            id2 = tasksArray[getTaskIndexFromPage(currentPage) + 1][2]
-            insertTask(3, tasksArray[getTaskIndexFromPage(currentPage) + 2][0], tasksArray[getTaskIndexFromPage(currentPage) + 2][1])
-            id3 = tasksArray[getTaskIndexFromPage(currentPage) + 2][2]
-        } catch (err) {
-            //console.log(err)
-        }
-    }
-        
-    document.getElementById("alarms__container--icon1").onclick = function() {
-        if (id1) {
-            removeTaskByID(id1)
-            setTimeout(function() {
-                updateTasks(currentPage)
-            }, timeouts.delay)
-        } else {
-            document.getElementById("alarms__module1").style.animation = 'shake 0.82s cubic-bezier(.36,.07,.19,.97) both'
-            setTimeout(function() {
-                document.getElementById("alarms__module1").style.animation -= 'shake 0.82s cubic-bezier(.36,.07,.19,.97) both'
-            }, timeouts.animation)
-        }
-    }
-    
-    document.getElementById("alarms__container--icon2").onclick = function() {
-        removeTaskByID(id2)
-        setTimeout(function() {
-            updateTasks(currentPage)
-        }, timeouts.delay)
-    }
-    
-    document.getElementById("alarms__container--icon3").onclick = function() {
-        removeTaskByID(id3)
-        setTimeout(function() {
-            updateTasks(currentPage)
-        }, timeouts.delay)
-    }
-}
-
-function removeTaskByID(taskID) {
-    axios.delete(`/task/byID/${taskID}`)
-    .then(async function(response) {
-        //console.log(response)
-    })
-    .catch(function (error) {
-        //console.log(error)
-    })
-}
-
-function expireOldTasks(tasksInfo) {
-    for (let i = 0; i < tasksInfo.length; i++) {
-        const currentObjDT = truncatedDateToDTUnformatted(tasksInfo[i].dueDate)
-        const currentTime = luxon.DateTime.local()
-        const timeDiff = currentObjDT.diff(currentTime, 'days').values.days
-        
-        if (timeDiff < -1) {
-            axios.delete(`/task/${tasksInfo[i].dueDate}`)
-            .then(async function(response) {
-                //console.log(response)
-            })
-            .catch(function (error) {
-                //console.log(error)
-            })
-        }
-    }
-}
-
-async function updateTasks(reqPage) {
-    
-    const tasksInfo = await getAllTasks()
-    const totalTasks = await tasksInfo.length
-    const totalObjects = await totalTasks
-    
-    expireOldTasks(await tasksInfo)
-    setTimeout(refreshEmphasizedTasks(await tasksInfo), timeouts.delay) //waits for expires to happen
-    
-    let currentPage
-    let tasksArray = []
-    
-    const totalPages = Math.ceil(totalObjects / 3)
-    
-    if (reqPage) {
-        if (reqPage > totalPages) {
-            currentPage = totalPages
-        } else {
-            currentPage = reqPage
-        }
-    } else {
-        currentPage = 1
-    }
-    
-    if (currentPage == 1) {
-        clearAllTasks(true)
-    } else {
-        clearAllTasks(false)
-    }
-    
-    for (let i = 0; i < totalTasks; i++) {
-        if (tasksInfo[i].course) {
-            tasksArray.push([truncatedDateToFormattedDT(tasksInfo[i].dueDate), `[${tasksInfo[i].course}] ${tasksInfo[i].name}`, tasksInfo[i]._id])
-        } else {
-            tasksArray.push([truncatedDateToFormattedDT(tasksInfo[i].dueDate), tasksInfo[i].name, tasksInfo[i]._id])
-        }
-    }
-    
-    if (totalObjects > 3) {
-        
-        document.getElementById("page__button__next").onclick = function() {
-            if (currentPage < totalPages) {
-                currentPage++
-                updateTasksPages(currentPage, totalPages, totalObjects, tasksArray)
-            }
-        }
-        
-        document.getElementById("page__button__prev").onclick = function() {
-            if (currentPage > 1) {
-                currentPage--
-                updateTasksPages(currentPage, totalPages, totalObjects, tasksArray)
-            }
-        }
-        
-        document.getElementById("page__button__prev").style = 'background-color: silver'
-        document.getElementById("tasks__page__container").style.display = 'flex'
-        
-    } else {
-        document.getElementById("tasks__page__container").style.display = 'none'
-    }
-    
-    updateTasksPages(currentPage, totalPages, totalObjects, tasksArray)
-}
-
-function truncatedDateToFormattedDT(input) {
-    const splitArray = input.split('-')
-    const createdDate = luxon.DateTime.fromObject({ year: splitArray[0], month: splitArray[1], day: splitArray[2] })
-    const formattedDate = createdDate.toFormat('EEEE, MMMM d')
-    
-    return formattedDate
-}
-
-function truncatedDateToDTUnformatted(input) {
-    const splitArray = input.split('-')
-    const createdDate = luxon.DateTime.fromObject({ year: splitArray[0], month: splitArray[1], day: splitArray[2] })
-    
-    return createdDate
-}
-
-function refreshEmphasizedTasks(tasksInfo) {
-    //broken? low priority (auto refresh yellow dots)
-    /*
-    try {
-        
-        for (let i = 0; i < 32; i++) {
-            const aTags = document.getElementsByClassName("calendar__day--emphasized");
-            for (let i = 0; aTags.length > i; i++) {
-                aTags[i].classList.remove("calendar__day--emphasized")
-            }
-            
-            const bTags = document.getElementsByClassName("calendar__day--container--emphasized");
-            for (let i = 0; bTags.length > i; i++) {
-                bTags[i].classList.remove("calendar__day--container--emphasized")
-                bTags[i].classList.add("removed-calendar-day")
-            }
-            
-            if (i == 32) {
-                emphasizeTaskDates(tasksInfo)
-            }
-        }
-        
-    } catch (err) {
-        //console.log(err)
-    }
-    */
-    
-    emphasizeTaskDates(tasksInfo)
-    
-}
-
-function emphasizeTaskOnCalendar(date) {
-    const aTags = document.getElementsByClassName("calendar__day");
-    const searchText = date;
-    let found;
-    
-    for (let i = 0; i < aTags.length; i++) {
-      if (aTags[i].textContent == searchText) {
-        found = aTags[i];
-        break;
-      }
-    }
-    
-    let okToAdd = true
-    
-    for (let i = 0; i < found.classList.length; i++) {
-        if (found.classList[i] == "calendar__day--emphasized") {
-            okToAdd = false
-            break
-        }
-        continue
-    }
-    
-    let okToOverride = true
-    
-    for (let i = 0; i < found.parentNode.classList.length; i++) {
-        if (found.parentNode.classList[i] == "removed-calendar-day") {
-            okToOverride = false
-            break
-        }
-        continue
-    }
-    
-    if (okToAdd) {
-        if (okToOverride) {
-            const wrapper = document.createElement('div')
-            wrapper.setAttribute("class", "calendar__day--container--emphasized")
-            found.setAttribute("class", "calendar__day calendar__day--emphasized")
-            found.parentNode.insertBefore(wrapper, found)
-            wrapper.appendChild(found)
-        } else {
-            found.parentNode.classList.remove("removed-calendar-day")
-            found.parentNode.setAttribute("class", "calendar__day--container--emphasized")
-        }
-    }
-}
-
-function emphasizeTaskDates(tasksInfo) {
-    const currentTime = luxon.DateTime.local()
-    
-    for (let i = 0; i < tasksInfo.length; i++) {
-        const currentObjDT = truncatedDateToDTUnformatted(tasksInfo[i].dueDate)
-        if (currentObjDT.month == currentTime.month && currentObjDT.year == currentTime.year) {
-            const timeDiff = currentObjDT.diff(currentTime, 'days').values.days
-            
-            if (timeDiff > 0) {
-                emphasizeTaskOnCalendar(currentObjDT.day)
-            }
-        }
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 displayTime.displayMonthAndYear(time.getCurrentMonth(), time.getCurrentYear());
 displayTime.displayDays(time.getCurrentMonth(), time.getCurrentYear());
 displayTime.displayAnalogTime();
@@ -1317,6 +985,3 @@ eventListeners.calendarNavigation();
 greeting.display();
 
 updateEvents(false)
-//updateTasks(false)
-
-document.getElementById("tasks__page__container").style.display = "flex"
