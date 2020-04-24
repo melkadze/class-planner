@@ -25,6 +25,19 @@ const DOMStrings = {
   alarms__title1: document.getElementById("alarms__title1"),
 };
 
+const timeouts = {
+    net: 1000, //for network calls
+    time: 1000, //for clock/time updates
+    second: 1000, //for value of a second (do not change)
+    animation: 1500, //for delay until allowing second animation
+    delay: 100 //for allowing another action to finish
+}
+
+let pages = {
+    events: 1,
+    tasks: 1
+}
+
 const eventListeners = {
   calendarNavigation() {
     const calendar__buttonPrevious = DOMStrings.calendar__buttonPrevious;
@@ -119,7 +132,6 @@ const greeting = {
   };
 
 const time = {
-    updateDelay: 100,
     getCurrentMonth() {
       const month = new Date().getMonth();
       return month;
@@ -240,7 +252,7 @@ displayDays(month, year) {
 },
 displayAnalogTime() {
     displayTime.displayAnalogTimeOnce()
-    setInterval(displayTime.displayAnalogTimeOnce, time.updateDelay);
+    setInterval(displayTime.displayAnalogTimeOnce, timeouts.time);
 },
 displayAnalogTimeOnce() {
     const clock__hour = DOMStrings.clock__hour;
@@ -256,7 +268,7 @@ displayAnalogTimeOnce() {
 },
 displayDigitalTime() {
     displayTime.displayDigitalTimeOnce()
-    setInterval(displayTime.displayDigitalTimeOnce, time.updateDelay);
+    setInterval(displayTime.displayDigitalTimeOnce, timeouts.time);
 },
 displayDigitalTimeOnce() {
     const alarms__digital = DOMStrings.alarms__digital;
@@ -265,6 +277,7 @@ displayDigitalTimeOnce() {
     let period;
     if (hour == 0) {
         hour = 12;
+        period = "AM";
     } else if (hour < 12) {
         period = "AM";
     } else {
@@ -296,8 +309,10 @@ async displayNextCourse() {
         DOMStrings.alarms__title1.innerText = `Period ${await getCurrentPeriod()} ${await getCurrentCourse()} starts`
     } else if (!targetReply) {
         //make a function that can tell if there have been classes today, and change title accordingly
-        DOMStrings.alarms__timer1.innerText = ''
-        DOMStrings.alarms__title1.innerText = `No further classes scheduled for today`
+        if (pages.events == 1) {
+            DOMStrings.alarms__timer1.innerText = ''
+            DOMStrings.alarms__title1.innerText = `No further classes scheduled for today`
+        }
         //technically, this will fail (classes will not update) at midnight. fixing this is low priority
     } else {
         let targetTime = truncatedTimeToDT(targetReply)
@@ -449,8 +464,10 @@ function getDayOfWeek(offset) {
 }
 
 function noFurtherClasses(error) {
-    console.log(error)
-    DOMStrings.alarms__title1.innerText = `No further classes scheduled for today`
+    //console.log(error)
+    if (pages.events == 1) {
+        DOMStrings.alarms__title1.innerText = `No further classes scheduled for today`
+    }
 }
 
 async function timeOfNextPeriod() {
@@ -530,29 +547,40 @@ async function periodInfoByOffset(offset) {
 function getDayInfo() {
     let offset = 0
     
-    return axios.get(`/day/${getDayOfWeek(offset)}`, {timeout: 3000})
+    return axios.get(`/day/${getDayOfWeek(offset)}`, {timeout: timeouts.net})
     .then (function (response) {
         return response.data
     })
     .catch(function (error) {
+        //phase out these noFurtherClasses, and all error msgs (at least for shipping)
         noFurtherClasses(error)
     })
 }
 
 function getAllEvents() {
-    return axios.get(`/event`, {timeout: 3000})
+    return axios.get(`/event`, {timeout: timeouts.net})
     .then (function (response) {
         return response.data
     })
     .catch(function (error) {
-        noFurtherClasses(error)
+        //console.log(error)
+    })
+}
+
+function getAllTasks() {
+    return axios.get(`/task`, {timeout: timeouts.net})
+    .then (function (response) {
+        return response.data
+    })
+    .catch(function (error) {
+        //console.log(error)
     })
 }
 
 function getScheduleName() {
     let offset = 0
             
-    return axios.get(`/day/schedule/${getDayOfWeek(offset)}`, {timeout: 3000})
+    return axios.get(`/day/schedule/${getDayOfWeek(offset)}`, {timeout: timeouts.net})
     .then (function (response) {
         return response.data
     })
@@ -562,7 +590,7 @@ function getScheduleName() {
 }
 
 function getScheduleInfo(scheduleName) {
-    return axios.get(`/schedule/${scheduleName}`, {timeout: 3000})
+    return axios.get(`/schedule/${scheduleName}`, {timeout: timeouts.net})
     .then(async function(response) {
         return response.data
     })
@@ -610,7 +638,7 @@ function createTimer(secs, callback, elementID, format) {
             clearInterval(intervalID)
             callback()
         }
-    }, 1000)
+    }, timeouts.second)
 }
 
 function clearAllEvents(isPageOne) {
@@ -624,7 +652,10 @@ function clearAllEvents(isPageOne) {
     document.getElementById("alarms__module3").style.display = 'none'
     
     if (isPageOne) {
+        document.getElementById("alarms__module1").style.display = 'flex'
         displayTime.displayNextCourse()
+    } else {
+        document.getElementById("alarms__module1").style.display = 'none'
     }
 }
 
@@ -633,6 +664,7 @@ function insertEvent(position, title, subtitle) {
         case 1:
             document.getElementById("alarms__timer1").innerText = subtitle
             document.getElementById("alarms__title1").innerText = title
+            document.getElementById("alarms__module1").style.display = 'flex'
             break
         case 2:
             document.getElementById("alarms__timer2").innerText = subtitle
@@ -647,11 +679,14 @@ function insertEvent(position, title, subtitle) {
     }
 }
 
-function getIndexFromPage(page) {
-    return (((page - 1) * 3) - 1)
+function getEventIndexFromPage(page) {
+    //return (((page - 1) * 3) - 1) unrem for 3 events
+    return (((page - 1) * 2) - 1)
 }
 
 function updateEventsPages(currentPage, totalPages, totalObjects, eventsArray) {
+    pages.events = currentPage
+    
     if (currentPage == 1) {
         document.getElementById("page__button__prev").style = 'background-color: silver'
     } else {
@@ -674,23 +709,35 @@ function updateEventsPages(currentPage, totalPages, totalObjects, eventsArray) {
             id1 = false
             insertEvent(2, eventsArray[0][0], eventsArray[0][1])
             id2 = eventsArray[0][2]
-            insertEvent(3, eventsArray[1][0], eventsArray[1][1])
-            id3 = eventsArray[1][2]
+            //insertEvent(3, eventsArray[1][0], eventsArray[1][1])
+            //id3 = eventsArray[1][2]
         } catch (err) {
             //console.log(err)
         }
     } else {
         clearAllEvents(false)
         try {
-            insertEvent(1, eventsArray[getIndexFromPage(currentPage) + 0][0], eventsArray[getIndexFromPage(currentPage) + 0][1])
-            id1 = eventsArray[getIndexFromPage(currentPage) + 0][2]
-            insertEvent(2, eventsArray[getIndexFromPage(currentPage) + 1][0], eventsArray[getIndexFromPage(currentPage) + 1][1])
-            id2 = eventsArray[getIndexFromPage(currentPage) + 1][2]
-            insertEvent(3, eventsArray[getIndexFromPage(currentPage) + 2][0], eventsArray[getIndexFromPage(currentPage) + 2][1])
-            id3 = eventsArray[getIndexFromPage(currentPage) + 2][2]
+            
+            if (!(currentPage == totalPages && !(eventsArray[getEventIndexFromPage(currentPage)]))) {
+            
+                insertEvent(1, eventsArray[getEventIndexFromPage(currentPage) + 0][0], eventsArray[getEventIndexFromPage(currentPage) + 0][1])
+                id1 = eventsArray[getEventIndexFromPage(currentPage) + 0][2]
+                insertEvent(2, eventsArray[getEventIndexFromPage(currentPage) + 1][0], eventsArray[getEventIndexFromPage(currentPage) + 1][1])
+                id2 = eventsArray[getEventIndexFromPage(currentPage) + 1][2]
+                
+                //insertEvent(3, eventsArray[getEventIndexFromPage(currentPage) + 2][0], eventsArray[getEventIndexFromPage(currentPage) + 2][1]) unrem for 3 events
+                //id3 = eventsArray[getEventIndexFromPage(currentPage) + 2][2] unrem for 3 events
+                
+            }
         } catch (err) {
             //console.log(err)
         }
+    }
+    
+    if (currentPage == totalPages) {
+        setDisplayProperty("plus__container__event", "flex")
+    } else {
+        setDisplayProperty("plus__container__event", "none")
     }
         
     document.getElementById("alarms__container--icon1").onclick = function() {
@@ -698,12 +745,12 @@ function updateEventsPages(currentPage, totalPages, totalObjects, eventsArray) {
             removeEventByID(id1)
             setTimeout(function() {
                 updateEvents(currentPage)
-            }, 100)
+            }, timeouts.delay)
         } else {
             document.getElementById("alarms__module1").style.animation = 'shake 0.82s cubic-bezier(.36,.07,.19,.97) both'
             setTimeout(function() {
                 document.getElementById("alarms__module1").style.animation -= 'shake 0.82s cubic-bezier(.36,.07,.19,.97) both'
-            }, 1500)
+            }, timeouts.animation)
         }
     }
     
@@ -711,24 +758,24 @@ function updateEventsPages(currentPage, totalPages, totalObjects, eventsArray) {
         removeEventByID(id2)
         setTimeout(function() {
             updateEvents(currentPage)
-        }, 100)
+        }, timeouts.delay)
     }
     
     document.getElementById("alarms__container--icon3").onclick = function() {
         removeEventByID(id3)
         setTimeout(function() {
             updateEvents(currentPage)
-        }, 100)
+        }, timeouts.delay)
     }
 }
 
 function removeEventByID(eventID) {
     axios.delete(`/event/byID/${eventID}`)
     .then(async function(response) {
-        console.log(response)
+        //console.log(response)
     })
     .catch(function (error) {
-        console.log(error)
+        //console.log(error)
     })
 }
 
@@ -741,28 +788,37 @@ function expireOldEvents(eventsInfo) {
         if (timeDiff < -1) {
             axios.delete(`/event/${eventsInfo[i].dueDate}`)
             .then(async function(response) {
-                console.log(response)
+                //console.log(response)
             })
             .catch(function (error) {
-                console.log(error)
+                //console.log(error)
             })
         }
     }
+}
+
+function setDisplayProperty(id, property) {
+    document.getElementById(id).style.display = property
 }
 
 async function updateEvents(reqPage) {
     
     const eventsInfo = await getAllEvents()
     const totalEvents = await eventsInfo.length
-    const totalObjects = await totalEvents + 1
+    const totalObjects = await totalEvents + 2
     
-    refreshEmphasized(await eventsInfo)
     expireOldEvents(await eventsInfo)
+    setTimeout(refreshEmphasizedEvents(await eventsInfo), timeouts.delay) //waits for expires to happen
     
     let currentPage
     let eventsArray = []
+    let totalPages
     
-    const totalPages = Math.ceil(totalObjects / 3)
+    if (totalObjects == 3) {
+        totalPages = 1 //wasnt here when 3 objs (the entire if statement)
+    } else {
+        totalPages = Math.ceil(totalObjects / 2) //change to 3 to have 3 objs
+    }
     
     if (reqPage) {
         if (reqPage > totalPages) {
@@ -782,13 +838,13 @@ async function updateEvents(reqPage) {
     
     for (let i = 0; i < totalEvents; i++) {
         if (eventsInfo[i].course) {
-            eventsArray.push([truncatedDateToDT(eventsInfo[i].dueDate), `[${eventsInfo[i].course}] ${eventsInfo[i].name}`, eventsInfo[i]._id])
+            eventsArray.push([truncatedDateToFormattedDT(eventsInfo[i].dueDate), `[${eventsInfo[i].course}] ${eventsInfo[i].name}`, eventsInfo[i]._id])
         } else {
-            eventsArray.push([truncatedDateToDT(eventsInfo[i].dueDate), eventsInfo[i].name, eventsInfo[i]._id])
+            eventsArray.push([truncatedDateToFormattedDT(eventsInfo[i].dueDate), eventsInfo[i].name, eventsInfo[i]._id])
         }
     }
     
-    if (totalObjects > 3) {
+    if (totalObjects > 3) { //change to 3 to have 3 objs
         
         document.getElementById("page__button__next").onclick = function() {
             if (currentPage < totalPages) {
@@ -814,7 +870,7 @@ async function updateEvents(reqPage) {
     updateEventsPages(currentPage, totalPages, totalObjects, eventsArray)
 }
 
-function truncatedDateToDT(input) {
+function truncatedDateToFormattedDT(input) {
     const splitArray = input.split('-')
     const createdDate = luxon.DateTime.fromObject({ year: splitArray[0], month: splitArray[1], day: splitArray[2] })
     const formattedDate = createdDate.toFormat('EEEE, MMMM d')
@@ -829,7 +885,7 @@ function truncatedDateToDTUnformatted(input) {
     return createdDate
 }
 
-function refreshEmphasized(eventsInfo) {
+function refreshEmphasizedEvents(eventsInfo) {
     //broken? low priority (auto refresh yellow dots)
     /*
     try {
@@ -847,20 +903,20 @@ function refreshEmphasized(eventsInfo) {
             }
             
             if (i == 32) {
-                emphasizeDates(eventsInfo)
+                emphasizeEventDates(eventsInfo)
             }
         }
         
     } catch (err) {
-        console.log(err)
+        //console.log(err)
     }
     */
     
-    emphasizeDates(eventsInfo)
+    emphasizeEventDates(eventsInfo)
     
 }
 
-function emphasizeOnCalendar(date) {
+function emphasizeEventOnCalendar(date) {
     const aTags = document.getElementsByClassName("calendar__day");
     const searchText = date;
     let found;
@@ -906,7 +962,7 @@ function emphasizeOnCalendar(date) {
     }
 }
 
-function emphasizeDates(eventsInfo) {
+function emphasizeEventDates(eventsInfo) {
     const currentTime = luxon.DateTime.local()
     
     for (let i = 0; i < eventsInfo.length; i++) {
@@ -915,7 +971,7 @@ function emphasizeDates(eventsInfo) {
             const timeDiff = currentObjDT.diff(currentTime, 'days').values.days
             
             if (timeDiff > 0) {
-                emphasizeOnCalendar(currentObjDT.day)
+                emphasizeEventOnCalendar(currentObjDT.day)
             }
         }
     }
@@ -928,4 +984,4 @@ displayTime.displayDigitalTime();
 eventListeners.calendarNavigation();
 greeting.display();
 
-updateEvents(0)
+updateEvents(false)

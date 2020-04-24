@@ -34,6 +34,7 @@ router.get('/', authCheck, async (req, res) => {
 router.delete('/:id', authCheck, async (req, res) => {
     try {
         await Event.deleteMany({ owner: req.user._id, dueDate: req.params.id })
+        res.status(200).send('OK')
     } catch (err) {
         functions.error(res, 500, err);
     }
@@ -42,10 +43,10 @@ router.delete('/:id', authCheck, async (req, res) => {
 router.delete('/byID/:id', authCheck, async (req, res) => {
     try {
         await Event.deleteMany({ owner: req.user._id, _id: req.params.id })
+        res.status(200).send('OK')
     } catch (err) {
         functions.error(res, 500, err);
     }
 })
 
 module.exports = router;
-
