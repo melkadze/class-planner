@@ -18,24 +18,24 @@
           </a>
           <a class="navigation__button" href="#">
             <span class="navigation__icon navigation__icon--calendar"></span>
-            <p class="navigation__text">Calendar</p>
+            <p class="navigation__text">Your Calendar</p>
           </a>
           <a class="navigation__button" href="#">
             <span class="navigation__icon navigation__icon--courses"></span>
-            <p class="navigation__text">Courses</p>
+            <p class="navigation__text">Your Courses</p>
           </a>
           <a class="navigation__button" href="#">
             <span class="navigation__icon navigation__icon--clock"></span>
-            <p class="navigation__text">Clock</p>
+            <p class="navigation__text">Your Clock</p>
           </a>
         </div>
         <a class="navigation__button" href="#">
           <span class="navigation__icon navigation__icon--settings"></span>
-          <p class="navigation__text">Settings</p>
+          <p class="navigation__text">Your Settings</p>
         </a>
       </nav>
       <header class="header">
-        <h2 class="header__text">Dashboard</h2>
+        <h2 class="header__text">Your Dashboard</h2>
         <div class="header__profile">
           <a class="header__button">
             <span class="header__icon header__icon--notifications"></span>
@@ -139,6 +139,12 @@
                 </div>
               </div>
               
+              <div class="alarms__module plus__container" id="plus__container__event">
+                <div class="alarms__text plus__text">
+                  <h6 class="alarms__timer plus__title" id="plus__title__event">+</h6>
+                </div>
+              </div>
+              
               <div class="page__container" id="events__page__container">
                 <button class="page__button" id="page__button__prev">
                   <img
@@ -155,7 +161,6 @@
                   />
                 </button>
               </div>
-              
             
             </div>
           </div>
@@ -255,6 +260,32 @@
                 <p class="tasks__subtitle">Day, 00:00 AM - 00:00 PM</p>
               </div>
             </div>
+            
+            
+            
+            <div class="tasks__container plus__container" id="plus__container__tasks">
+              <div class="tasks__text plus__text" id="plus__text__tasks">
+                <h6 class="tasks__title plus__title" id="plus__title__tasks">+</h6>
+              </div>
+            </div>
+            
+            <div class="page__container" id="tasks__page__container">
+              <button class="page__button" id="page__button__prev">
+                <img
+                  src="../assets/svg/arrow-left.svg"
+                  alt="left arrow"
+                  class="page__icon"
+                />
+              </button>
+              <button class="page__button" id="page__button__next">
+                <img
+                  src="../assets/svg/arrow-right.svg"
+                  alt="right arrow"
+                  class="page__icon"
+                />
+              </button>
+            </div>
+            
           </div>
         </div>
       </main>

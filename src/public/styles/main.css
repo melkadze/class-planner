@@ -38,10 +38,14 @@ a {
     transform: translate3d(4px, 0, 0);
   }
 }
+body {
+  overflow-x: hidden;
+}
+
 .global--dashboard {
   display: grid;
-  height: 100vh;
   width: 100vw;
+  height: 100vh;
   grid-template-columns: 15% auto;
   grid-template-rows: 5vw auto;
 }
@@ -483,6 +487,7 @@ a {
 
 .alarms__container--icon:hover {
   background-color: #ff6767;
+  cursor: pointer;
 }
 
 .alarms__container--icon:hover .alarms__icon {
@@ -778,6 +783,33 @@ a {
 
 .tasks__container--violet {
   background-color: #b8abf5;
+}
+
+.plus__container {
+  background-color: #a0efcc !important;
+  padding: 0.1vw !important;
+}
+
+.plus__text {
+  margin: auto !important;
+}
+
+.plus__title {
+  color: #fbfbf8 !important;
+  font-size: 10rem !important;
+}
+
+#plus__title__event {
+  font-size: 8rem !important;
+}
+
+.plus__container:hover {
+  background-color: #85c7aa !important;
+  cursor: pointer !important;
+}
+
+.plus__container:hover #plus__title {
+  color: #f5f5f5 !important;
 }
 
 .tasks__icon {

@@ -19,10 +19,13 @@
     transform: translate3d(4px, 0, 0);
   }
 }
+body {
+  overflow-x: hidden;
+}
 .global--dashboard {
   display: grid;
-  height: 100vh;
   width: 100vw;
+  height: 100vh;
   grid-template-columns: 15% auto;
   grid-template-rows: 5vw auto;
 }
@@ -352,6 +355,7 @@
 }
 .alarms__container--icon:hover {
   background-color: #ff6767;
+  cursor: pointer;
 }
 .alarms__container--icon:hover .alarms__icon {
   content: url("../assets/svg/trash.svg");
@@ -572,6 +576,27 @@
 }
 .tasks__container--violet {
   background-color: color.$violet-primary;
+}
+.plus__container {
+  background-color: color.$green-primary !important;
+  padding: 0.1vw !important;
+}
+.plus__text {
+  margin: auto !important;
+}
+.plus__title {
+  color: color.$white !important;
+  font-size: 10rem !important;
+}
+#plus__title__event {
+  font-size: 8rem !important;
+}
+.plus__container:hover  {
+  background-color: color.$green-accent-shade !important;
+  cursor: pointer !important;
+}
+.plus__container:hover #plus__title {
+  color: color.$light-gray !important;
 }
 .tasks__icon {
   height: 50%;
