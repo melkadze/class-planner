@@ -4,6 +4,8 @@ const axios = require("axios")
 const DOMStrings = {
   greeting__quote: document.getElementById("greeting__quote"),
   greeting__author: document.getElementById("greeting__author"),
+  greeting__update__title: document.getElementById("greeting__update__title"),
+  greeting__update__subtitle: document.getElementById("greeting__update"),
   calendar: document.getElementById("calendar"),
   calendar__headline: document.getElementById("calendar__headline"),
   calendar__buttonPrevious: document.getElementById("calendar__buttonPrevious"),
@@ -25,6 +27,11 @@ const DOMStrings = {
   alarms__title1: document.getElementById("alarms__title1"),
 };
 
+const updates = {
+    title: "Stay in the loop:",
+    subtitle: "Loop's dashboard is now complete! We're on track to release within a couple weeks."
+}
+
 const timeouts = {
     net: 1000, //for network calls
     time: 1000, //for clock/time updates
@@ -35,6 +42,7 @@ const timeouts = {
 
 let pages = {
     events: 1,
+    eventsPlus: 1,
     tasks: 1
 }
 
@@ -128,6 +136,8 @@ const greeting = {
       const greeting__author = DOMStrings.greeting__author;
       greeting__quote.innerText = `"${quotes[randomChoice]}"`;
       greeting__author.innerText = `${authors[randomChoice]}`;
+      DOMStrings.greeting__update__title.innerText = updates.title;
+      DOMStrings.greeting__update__subtitle.innerText = updates.subtitle;
     },
   };
 
@@ -684,6 +694,51 @@ function getEventIndexFromPage(page) {
     return (((page - 1) * 2) - 1)
 }
 
+function addEventsPlusPages() {
+    pages.eventsPlus++
+    updateEventsPlusPages()
+}
+
+function subtractEventsPlusPages() {
+    pages.eventsPlus--
+    updateEventsPlusPages()
+}
+
+function updateEventsPlusPages() {
+    let currentPage = pages.eventsPlus
+    let totalPages = 3
+    
+    if (currentPage == 1) {
+        document.getElementById("page__button__prev__plus").style = 'background-color: silver'
+    } else {
+        document.getElementById("page__button__prev__plus").style -= 'background-color: silver'
+    }
+    
+    if (currentPage == totalPages) {
+        document.getElementById("page__button__next__plus").style = 'background-color: silver'
+    } else {
+        document.getElementById("page__button__next__plus").style -= 'background-color: silver'
+    }
+    
+    switch (currentPage) {
+        case 1:
+            setDisplayProperty("material__group1", "block")
+            setDisplayProperty("material__group2", "none")
+            setDisplayProperty("material__group3", "none")
+            break
+        case 2:
+            setDisplayProperty("material__group1", "none")
+            setDisplayProperty("material__group2", "block")
+            setDisplayProperty("material__group3", "none")
+            break
+        case 3:
+            setDisplayProperty("material__group1", "none")
+            setDisplayProperty("material__group2", "none")
+            setDisplayProperty("material__group3", "block")
+            break
+    }
+}
+
 function updateEventsPages(currentPage, totalPages, totalObjects, eventsArray) {
     pages.events = currentPage
     
@@ -702,6 +757,10 @@ function updateEventsPages(currentPage, totalPages, totalObjects, eventsArray) {
     let id1
     let id2
     let id3
+    
+    setDisplayProperty("events__plus__container__back", "none")
+    initDatePickers('events')
+    pages.eventsPlus = 1
     
     if (currentPage == 1) {
         clearAllEvents(true)
@@ -1044,6 +1103,8 @@ function updateTasksPages(currentPage, totalPages, totalObjects, tasksArray) {
     let id4
     
     clearAllTasks()
+    setDisplayProperty("tasks__plus__container__back", "none")
+    initDatePickers('tasks')
     
     if (currentPage == 1) {
         try {
@@ -1230,41 +1291,111 @@ function initDatePickers(givenName) {
     let timeNow = luxon.DateTime.local()
     let timeNowFormatted = timeNow.toFormat('LL/dd/yyyy')
     
-    if (givenName = 'tasks') {
+    if (givenName == 'tasks') {
         document.getElementById("tasks__plus__date__input").value = timeNowFormatted
-    } else if (givenName = 'events') {
-        
+        document.getElementById("tasks__plus__task__input").value = ''
+        document.getElementById("tasks__plus__course__input").value = ''
+        document.getElementById("tasks__plus__container__error").innerText = ''
+    } else if (givenName == 'events') {
+        document.getElementById("events__plus__date__input").value = timeNowFormatted
+        document.getElementById("events__plus__event__input").value = ''
+        document.getElementById("events__plus__course__input").value = ''
+        document.getElementById("events__plus__container__error").innerText = ''
     } else {
         document.getElementById("tasks__plus__date__input").value = timeNowFormatted
+        document.getElementById("tasks__plus__task__input").value = ''
+        document.getElementById("tasks__plus__course__input").value = ''
+        document.getElementById("tasks__plus__container__error").innerText = ''
+        document.getElementById("events__plus__date__input").value = timeNowFormatted
+        document.getElementById("events__plus__event__input").value = ''
+        document.getElementById("events__plus__course__input").value = ''
+        document.getElementById("events__plus__container__error").innerText = ''
     }
     
 }
 
-function abc() {
-    setDisplayProperty("tasks__plus__container__back", "none")
-    setDisplayProperty("tasks__plus__container__front", "flex")
-}
-
 function initPlusButtons() {
     initDatePickers()
+    
+    updateEventsPlusPages()
+    
+    document.getElementById("page__button__prev__plus").onclick = function () {
+        if (pages.eventsPlus != 1) {
+            subtractEventsPlusPages()
+        }
+    }
+    
+    document.getElementById("page__button__next__plus").onclick = function () {
+        if (pages.eventsPlus != 3) {
+            addEventsPlusPages()
+        }
+    }
     
     document.getElementById("tasks__plus__container").onclick = function () {
         setDisplayProperty("tasks__plus__container", "none")
         setDisplayProperty("tasks__plus__container__back", "flex")
     }
     
+    document.getElementById("tasks__plus__container--icon--cross").onclick = function () {
+        setDisplayProperty("tasks__plus__container__back", "none")
+        setDisplayProperty("tasks__plus__container", "flex")
+        initDatePickers('tasks')
+    }
+    
+    document.getElementById("plus__container__event").onclick = function () {
+        setDisplayProperty("plus__container__event", "none")
+        setDisplayProperty("events__plus__container__back", "flex")
+    }
+    
+    document.getElementById("events__plus__container--icon--cross").onclick = function () {
+        setDisplayProperty("events__plus__container__back", "none")
+        setDisplayProperty("plus__container__event", "flex")
+        initDatePickers('events')
+    }
+    
     document.getElementById("tasks__plus__container--icon").onclick = function () {
         
         if (document.getElementById("tasks__plus__task__input").value != '' && document.getElementById("tasks__plus__date__input").value) {
-            document.getElementById("tasks__plus__task__input").innerText = ''
-        
+            let dateFormatted
             
-            
-            
-            
-            setDisplayProperty("tasks__plus__container__back", "none")
-            setDisplayProperty("tasks__plus__container", "flex")
-            initDatePickers('tasks')
+            try {
+                const inputDateArray = document.getElementById("tasks__plus__date__input").value.split('/')
+                
+                if (!(inputDateArray[0]) || !(inputDateArray[1]) || !(inputDateArray[2])) {
+                    throw new Error("Please enter a valid date") //maybe make this silent
+                }
+                
+                dateFormatted = `${inputDateArray[2]}-${inputDateArray[0]}-${inputDateArray[1]}`
+                
+                if (truncatedDateToFormattedDT(dateFormatted) == 'Invalid DateTime') {
+                    throw new Error("Please enter a valid date") //maybe make this silent
+                }
+                
+                try {
+                    axios.post(`/task/upload`, {
+                        name: document.getElementById("tasks__plus__task__input").value,
+                        course: document.getElementById('tasks__plus__course__input').value,
+                        dueDate: dateFormatted
+                    })
+                    .then (function (response) {
+                        //console.log(response)
+                        updateTasks(false)
+                    })
+                    .catch(function (error) {
+                        //console.log(err)
+                    })
+                } catch (err) {
+                    console.log(err)
+                }
+                
+                setDisplayProperty("tasks__plus__container__back", "none")
+                setDisplayProperty("tasks__plus__container", "flex")
+                initDatePickers('tasks')
+                
+            } catch (err) {
+                document.getElementById("tasks__plus__container__error").innerText = 'Please enter a valid date'
+                console.log(err)
+            }
         } else if (document.getElementById("tasks__plus__task__input").value == '' && document.getElementById("tasks__plus__date__input").value == '') {
             document.getElementById("tasks__plus__container__error").innerText = 'Please enter a task name and due date'
         } else if (document.getElementById("tasks__plus__task__input").value == '') {
@@ -1273,6 +1404,81 @@ function initPlusButtons() {
             document.getElementById("tasks__plus__container__error").innerText = 'Please enter a due date'
         } else {
             document.getElementById("tasks__plus__container__error").innerText = 'Please enter a valid date'
+        }
+    }
+    
+    document.getElementById("events__plus__container--icon").onclick = function () {
+        
+        let pastDate = false
+        
+        if (document.getElementById("events__plus__event__input").value != '' && document.getElementById("events__plus__date__input").value) {
+            let dateFormatted
+            
+            try {
+                const inputDateArray = document.getElementById("events__plus__date__input").value.split('/')
+                
+                if (!(inputDateArray[0]) || !(inputDateArray[1]) || !(inputDateArray[2])) {
+                    throw new Error("Please enter a valid date") //maybe make this silent
+                }
+                
+                dateFormatted = `${inputDateArray[2]}-${inputDateArray[0]}-${inputDateArray[1]}`
+                
+                if (truncatedDateToFormattedDT(dateFormatted) == 'Invalid DateTime') {
+                    throw new Error("Please enter a valid date") //maybe make this silent
+                }
+                
+                const currentObjDT = truncatedDateToDTUnformatted(dateFormatted)
+                const currentTime = luxon.DateTime.local()
+                const timeDiff = currentObjDT.diff(currentTime, 'days').values.days
+                
+                if (timeDiff < -1) {
+                    pastDate = true
+                    throw new Error("Please enter a future or present date")
+                }
+                
+                try {
+                    axios.post(`/event/upload`, {
+                        name: document.getElementById("events__plus__event__input").value,
+                        course: document.getElementById('events__plus__course__input').value,
+                        dueDate: dateFormatted
+                    })
+                    .then (function (response) {
+                        //console.log(response)
+                        updateEvents(false)
+                    })
+                    .catch(function (error) {
+                        //console.log(err)
+                    })
+                
+                    setDisplayProperty("events__plus__container__back", "none")
+                    setDisplayProperty("plus__container__event", "flex")
+                    initDatePickers('events')
+                    
+                } catch (err) {
+                    console.log(err)
+                    if (pastDate) {
+                        document.getElementById("events__plus__container__error").innerText = 'Please enter a future or present date'
+                    } else {
+                        document.getElementById("events__plus__container__error").innerText = 'Please enter a valid date'
+                    }
+                }
+                
+            } catch (err) {
+                console.log(err)
+                if (pastDate) {
+                    document.getElementById("events__plus__container__error").innerText = 'Please enter a future or present date'
+                } else {
+                    document.getElementById("events__plus__container__error").innerText = 'Please enter a valid date'
+                }
+            }
+        } else if (document.getElementById("events__plus__event__input").value == '' && document.getElementById("events__plus__date__input").value == '') {
+            document.getElementById("events__plus__container__error").innerText = 'Please enter an event name and due date'
+        } else if (document.getElementById("events__plus__event__input").value == '') {
+            document.getElementById("events__plus__container__error").innerText = 'Please enter an event name'
+        } else if (document.getElementById("events__plus__date__input").value == '') {
+            document.getElementById("events__plus__container__error").innerText = 'Please enter a due date'
+        } else {
+            document.getElementById("events__plus__container__error").innerText = 'Please enter a valid date'
         }
     }
 }

@@ -238,6 +238,18 @@ body {
   color: #33384d;
 }
 
+#greeting__update__title {
+  font-size: 1.6rem;
+  position: absolute;
+  bottom: 6rem;
+}
+
+#greeting__update {
+  font-size: 1.4rem;
+  position: absolute;
+  bottom: 4rem;
+}
+
 .greeting__image {
   height: 10vw;
   right: 0;
@@ -847,19 +859,36 @@ body {
   flex-direction: column;
 }
 
+.plus__container--icon__parent {
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+}
+
 .plus__container--icon {
-  background-color: #a0efcc;
   margin: auto;
   position: relative;
-  height: 0;
-  width: 25%;
-  padding-top: 25%;
+  width: 100%;
+  padding-top: 100%;
   border-radius: 0.5vw;
   flex-shrink: 0;
 }
 
-.plus__container--icon:hover {
+.plus__container--icon__check {
+  background-color: #a0efcc;
+}
+
+.plus__container--icon__cross {
+  background-color: #ff6767;
+}
+
+.plus__container--icon__check:hover {
   background-color: #85c7aa;
+  cursor: pointer;
+}
+
+.plus__container--icon__cross:hover {
+  background-color: #b14242;
   cursor: pointer;
 }
 
@@ -905,9 +934,9 @@ body {
 
 .material__input {
   font-size: 1.7rem;
-  padding: 1rem 1rem 1rem 0.5rem;
+  padding: 1rem 1rem 0.3rem 0.5rem;
   display: block;
-  width: 20rem;
+  width: 85%;
   border: none;
   border-bottom: 0.1rem solid #757575;
   background-color: #fbfbf8;
@@ -937,7 +966,7 @@ body {
 .material__bar {
   position: relative;
   display: block;
-  width: 20rem;
+  width: 85%;
 }
 
 .material__bar:before, .material__bar:after {
@@ -960,6 +989,51 @@ body {
 
 .material__input:focus ~ .material__bar:before, .material__input:focus ~ .material__bar:after {
   width: 50%;
+}
+
+#events__plus__container__back {
+  box-shadow: 0 5px 10px rgba(168, 168, 168, 0.15);
+  padding: 0.3vw !important;
+}
+
+#events__plus__container__back .page__container {
+  display: flex !important;
+  width: 10rem;
+  margin: auto;
+  transform: scale(1.4);
+}
+
+#events__plus__container__back .material__group {
+  margin: 2rem auto auto 1rem;
+  display: none;
+  z-index: 10;
+}
+
+#events__plus__container__back .material__bar {
+  display: none !important;
+}
+
+#events__plus__container__back .material__input {
+  padding-top: 0;
+  font-size: 2rem;
+  height: 100%;
+}
+
+#events__plus__container__back .material__input:focus ~ .material__label, .material__input:valid ~ .material__label {
+  top: -2rem !important;
+}
+
+#events__plus__container__back .material__label {
+  top: 0.5rem;
+}
+
+#events__plus__container__back .plus__container--icon {
+  padding: 15%;
+  margin: auto;
+}
+
+#events__plus__container__back .events__icon {
+  margin: auto 1rem auto 1rem;
 }
 
 /*# sourceMappingURL=main.css.map */

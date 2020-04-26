@@ -54,6 +54,8 @@
               class="greeting__subtitle--alternative"
               id="greeting__author"
             ></p>
+            <p class="greeting__subtitle--alternative" id="greeting__update__title"></p>
+            <p class="greeting__subtitle" id="greeting__update"></p>
           </div>
           <img class="greeting__image" src="../assets/svg/books.svg" alt="books" />
         </div>
@@ -140,8 +142,63 @@
               </div>
               
               <div class="alarms__module plus__container" id="plus__container__event">
-                <div class="alarms__text plus__text">
+                <div class="alarms__text plus__text" id="plus__text__events">
                   <h6 class="alarms__timer plus__title" id="plus__title__event">+</h6>
+                </div>
+              </div>
+              <div class="events__container plus__container__back" id="events__plus__container__back">
+                <div class="plus__container__parent" id="events__plus__container__parent">
+                  <div class="material__group" id="material__group1">      
+                    <input type="text" class="material__input" id="events__plus__event__input"required>
+                    <span class="material__highlight"></span>
+                    <span class="material__bar"></span>
+                    <label class="material__label">Event name</label>
+                  </div> 
+                  <div class="material__group" id="material__group2">      
+                    <input type="text" class="material__input" id="events__plus__course__input" required>
+                    <span class="material__highlight"></span>
+                    <span class="material__bar"></span>
+                    <label class="material__label">Course (optional)</label>
+                  </div> 
+                  <div class="material__group" id="material__group3">      
+                    <input type="text" class="material__input" id="events__plus__date__input" value="" required>
+                    <span class="material__highlight"></span>
+                    <span class="material__bar"></span>
+                    <label class="material__label">Due date (mm/dd/yyyy)</label>
+                  </div>
+                  <div class="page__container" id="events__page__container__plus">
+                    <button class="page__button" id="page__button__prev__plus">
+                      <img
+                        src="../assets/svg/arrow-left.svg"
+                        alt="left arrow"
+                        class="page__icon"
+                      />
+                    </button>
+                    <button class="page__button" id="page__button__next__plus">
+                      <img
+                        src="../assets/svg/arrow-right.svg"
+                        alt="right arrow"
+                        class="page__icon"
+                      />
+                    </button>
+                  </div>
+                  <h6 class="events__subtitle plus__container__error" id="events__plus__container__error"></h6>
+                </div>
+                <div class="plus__container--icon__parent">
+                  <div class="plus__container--icon plus__container--icon__check" id="events__plus__container--icon">
+                    <img
+                      src="../assets/svg/check.svg"
+                      alt="folder"
+                      class="events__icon"
+                    />
+                  </div>
+                  <div class="plus__container--icon plus__container--icon__cross" id="events__plus__container--icon--cross">
+                    <img
+                      src="../assets/svg/cross.svg"
+                      alt="folder"
+                      class="events__icon"
+                    />
+                  </div>
                 </div>
               </div>
               
@@ -261,32 +318,6 @@
               </div>
             </div>
             
-            <!--
-            <div class="tasks__container" id="tasks__container4" style="display: flex">
-              <div class="tasks__container--context--icon tasks__container--violet" id="tasks__container--icon4">
-                <img
-                  src="../assets/svg/event.svg"
-                  alt="folder"
-                  class="tasks__icon"
-                />
-              </div>
-              <div class="tasks__container--context--icon tasks__container--violet" id="tasks__container--icon4">
-                <img
-                  src="../assets/svg/event.svg"
-                  alt="folder"
-                  class="tasks__icon"
-                />
-              </div>
-              <div class="tasks__container--context--icon tasks__container--violet" id="tasks__container--icon4">
-                <img
-                  src="../assets/svg/event.svg"
-                  alt="folder"
-                  class="tasks__icon"
-                />
-              </div>
-            </div>
-            -->
-            
             <div class="tasks__container plus__container" id="tasks__plus__container">
               <div class="tasks__text plus__text" id="plus__text__tasks">
                 <h6 class="tasks__title plus__title" id="plus__title__tasks">+</h6>
@@ -315,14 +346,14 @@
                 <h6 class="tasks__subtitle plus__container__error" id="tasks__plus__container__error"></h6>
               </div>
               <div class="plus__container--icon__parent">
-                <div class="plus__container--icon" id="tasks__plus__container--icon">
+                <div class="plus__container--icon plus__container--icon__check" id="tasks__plus__container--icon">
                   <img
                     src="../assets/svg/check.svg"
                     alt="folder"
                     class="tasks__icon"
                   />
                 </div>
-                <div class="plus__container--icon" id="tasks__plus__container--icon--x">
+                <div class="plus__container--icon plus__container--icon__cross" id="tasks__plus__container--icon--cross">
                   <img
                     src="../assets/svg/cross.svg"
                     alt="folder"
