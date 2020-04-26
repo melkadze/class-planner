@@ -807,13 +807,24 @@ body {
 }
 
 .plus__container {
+  padding: 0.1vw !important;
+}
+
+.plus__container__front {
   background-color: #a0efcc !important;
   padding: 0.1vw !important;
+  width: 100%;
+  height: 100%;
+  border-radius: 0.5vw;
 }
 
 .plus__container__back {
   background-color: #fbfbf8 !important;
   padding: 1.3vw !important;
+  display: none;
+  height: 100%;
+  width: 100%;
+  border-radius: 0.5vw;
 }
 
 .plus__text {
@@ -852,7 +863,6 @@ body {
   padding-top: 25%;
   border-radius: 0.5vw;
   flex-shrink: 0;
-  display: none;
 }
 
 .plus__container--icon:hover {
@@ -862,10 +872,6 @@ body {
 
 .plus__container__error {
   color: #ff6767 !important;
-}
-
-.plus__container__parent {
-  display: none;
 }
 
 .tasks__icon {

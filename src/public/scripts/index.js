@@ -1233,13 +1233,23 @@ function initDatePickers() {
     document.getElementById("tasks__add__date__input").value = timeNowFormatted
 }
 
+function abc() {
+    setDisplayProperty("tasks__plus__container__back", "none")
+    setDisplayProperty("tasks__plus__container__front", "flex")
+}
+
 function initPlusButtons() {
     initDatePickers()
     
-    document.getElementById("tasks__plus__container").onclick = function() {
-        setDisplayProperty("plus__text__tasks", "none")
-        setDisplayProperty("tasks__plus__container__superparent", "flex")
-    }
+    document.getElementById("tasks__plus__container").addEventListener("click", function () {
+        setDisplayProperty("tasks__plus__container__front", "none")
+        setDisplayProperty("tasks__plus__container__back", "flex")
+    })
+    
+    document.getElementById("tasks__plus__container--icon").addEventListener("click", function () {
+        console.log('e')
+        abc()
+    })
 }
 
 displayTime.displayMonthAndYear(time.getCurrentMonth(), time.getCurrentYear());

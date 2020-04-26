@@ -596,12 +596,22 @@ body {
   background-color: color.$violet-primary;
 }
 .plus__container {
+  padding: 0.1vw !important;
+}
+.plus__container__front {
   background-color: color.$green-primary !important;
   padding: 0.1vw !important;
+  width: 100%;
+  height: 100%;
+  border-radius: 0.5vw;
 }
 .plus__container__back {
   background-color: color.$white !important;
   padding: 1.3vw !important;
+  display: none; //flex
+  height: 100%;
+  width: 100%;
+  border-radius: 0.5vw;
 }
 .plus__text {
   margin: auto !important;
@@ -633,7 +643,6 @@ body {
   padding-top: 25%;
   border-radius: 0.5vw;
   flex-shrink: 0;
-  display: none; //flex
 }
 .plus__container--icon:hover {
   background-color: color.$green-accent-shade;
@@ -641,9 +650,6 @@ body {
 }
 .plus__container__error {
   color: color.$red-primary !important;
-}
-.plus__container__parent {
-  display: none; //flex
 }
 .tasks__icon {
   height: 50%;
