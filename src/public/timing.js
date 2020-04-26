@@ -168,8 +168,7 @@ document.getElementById('taskInputButton').onclick = function () {
     axios.post(`/task/upload`, {
         name: document.getElementById('taskInputTask').value,
         course: document.getElementById('taskInputCourse').value,
-        dueDate: document.getElementById('taskInputDate').value,
-        completed: false
+        dueDate: document.getElementById('taskInputDate').value
     })
     .then (function (response) {
         document.getElementById('taskError').innerHTML = ''

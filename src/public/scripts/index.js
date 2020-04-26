@@ -4,6 +4,8 @@ const axios = require("axios")
 const DOMStrings = {
   greeting__quote: document.getElementById("greeting__quote"),
   greeting__author: document.getElementById("greeting__author"),
+  greeting__update__title: document.getElementById("greeting__update__title"),
+  greeting__update__subtitle: document.getElementById("greeting__update"),
   calendar: document.getElementById("calendar"),
   calendar__headline: document.getElementById("calendar__headline"),
   calendar__buttonPrevious: document.getElementById("calendar__buttonPrevious"),
@@ -25,6 +27,11 @@ const DOMStrings = {
   alarms__title1: document.getElementById("alarms__title1"),
 };
 
+const updates = {
+    title: "Stay in the loop:",
+    subtitle: "Loop's dashboard is now complete! We're on track to release within a couple weeks."
+}
+
 const timeouts = {
     net: 1000, //for network calls
     time: 1000, //for clock/time updates
@@ -35,6 +42,7 @@ const timeouts = {
 
 let pages = {
     events: 1,
+    eventsPlus: 1,
     tasks: 1
 }
 
@@ -128,6 +136,8 @@ const greeting = {
       const greeting__author = DOMStrings.greeting__author;
       greeting__quote.innerText = `"${quotes[randomChoice]}"`;
       greeting__author.innerText = `${authors[randomChoice]}`;
+      DOMStrings.greeting__update__title.innerText = updates.title;
+      DOMStrings.greeting__update__subtitle.innerText = updates.subtitle;
     },
   };
 
@@ -684,6 +694,51 @@ function getEventIndexFromPage(page) {
     return (((page - 1) * 2) - 1)
 }
 
+function addEventsPlusPages() {
+    pages.eventsPlus++
+    updateEventsPlusPages()
+}
+
+function subtractEventsPlusPages() {
+    pages.eventsPlus--
+    updateEventsPlusPages()
+}
+
+function updateEventsPlusPages() {
+    let currentPage = pages.eventsPlus
+    let totalPages = 3
+    
+    if (currentPage == 1) {
+        document.getElementById("page__button__prev__plus").style = 'background-color: silver'
+    } else {
+        document.getElementById("page__button__prev__plus").style -= 'background-color: silver'
+    }
+    
+    if (currentPage == totalPages) {
+        document.getElementById("page__button__next__plus").style = 'background-color: silver'
+    } else {
+        document.getElementById("page__button__next__plus").style -= 'background-color: silver'
+    }
+    
+    switch (currentPage) {
+        case 1:
+            setDisplayProperty("material__group1", "block")
+            setDisplayProperty("material__group2", "none")
+            setDisplayProperty("material__group3", "none")
+            break
+        case 2:
+            setDisplayProperty("material__group1", "none")
+            setDisplayProperty("material__group2", "block")
+            setDisplayProperty("material__group3", "none")
+            break
+        case 3:
+            setDisplayProperty("material__group1", "none")
+            setDisplayProperty("material__group2", "none")
+            setDisplayProperty("material__group3", "block")
+            break
+    }
+}
+
 function updateEventsPages(currentPage, totalPages, totalObjects, eventsArray) {
     pages.events = currentPage
     
@@ -702,6 +757,10 @@ function updateEventsPages(currentPage, totalPages, totalObjects, eventsArray) {
     let id1
     let id2
     let id3
+    
+    setDisplayProperty("events__plus__container__back", "none")
+    initDatePickers('events')
+    pages.eventsPlus = 1
     
     if (currentPage == 1) {
         clearAllEvents(true)
@@ -886,7 +945,7 @@ function truncatedDateToDTUnformatted(input) {
 }
 
 function refreshEmphasizedEvents(eventsInfo) {
-    //broken? low priority (auto refresh yellow dots)
+    //broken? low priority (auto refresh dots)
     /*
     try {
         
@@ -977,6 +1036,453 @@ function emphasizeEventDates(eventsInfo) {
     }
 }
 
+function clearAllTasks() {
+    document.getElementById("tasks__title1").innerText = ''
+    document.getElementById("tasks__title2").innerText = ''
+    document.getElementById("tasks__title3").innerText = ''
+    document.getElementById("tasks__title4").innerText = ''
+    document.getElementById("tasks__subtitle1").innerText = ''
+    document.getElementById("tasks__subtitle2").innerText = ''
+    document.getElementById("tasks__subtitle3").innerText = ''
+    document.getElementById("tasks__subtitle4").innerText = ''
+    document.getElementById("tasks__container1").style.display = 'none'
+    document.getElementById("tasks__container2").style.display = 'none'
+    document.getElementById("tasks__container3").style.display = 'none'
+    document.getElementById("tasks__container4").style.display = 'none'
+}
+
+function insertTask(position, subtitle, title) {
+    switch (position) {
+        case 1:
+            document.getElementById("tasks__title1").innerText = title
+            document.getElementById("tasks__subtitle1").innerText = subtitle
+            document.getElementById("tasks__container1").style.display = 'flex'
+            break
+        case 2:
+            document.getElementById("tasks__title2").innerText = title
+            document.getElementById("tasks__subtitle2").innerText = subtitle
+            document.getElementById("tasks__container2").style.display = 'flex'
+            break
+        case 3:
+            document.getElementById("tasks__title3").innerText = title
+            document.getElementById("tasks__subtitle3").innerText = subtitle
+            document.getElementById("tasks__container3").style.display = 'flex'
+            break
+        case 4:
+            document.getElementById("tasks__title4").innerText = title
+            document.getElementById("tasks__subtitle4").innerText = subtitle
+            document.getElementById("tasks__container4").style.display = 'flex'
+            break
+    }
+}
+
+function getTaskIndexFromPage(page) {
+    return ((page - 1) * 4)
+}
+
+function updateTasksPages(currentPage, totalPages, totalObjects, tasksArray) {
+    pages.tasks = currentPage
+    
+    if (currentPage == 1) {
+        document.getElementById("task__button__prev").style = 'background-color: silver'
+    } else {
+        document.getElementById("task__button__prev").style -= 'background-color: silver'
+    }
+    
+    if (currentPage == totalPages) {
+        document.getElementById("task__button__next").style = 'background-color: silver'
+    } else {
+        document.getElementById("task__button__next").style -= 'background-color: silver'
+    }
+    
+    //revamp:: resize buttons (force square, for both sets)
+    
+    let id1
+    let id2
+    let id3
+    let id4
+    
+    clearAllTasks()
+    setDisplayProperty("tasks__plus__container__back", "none")
+    initDatePickers('tasks')
+    
+    if (currentPage == 1) {
+        try {
+            for (let i = 0; i < 4; i++) {
+                insertTask((i + 1), tasksArray[i][0], tasksArray[i][1])
+                switch (i) {
+                    case 0:
+                        id1 = tasksArray[i][2]
+                        break
+                    case 1:
+                        id2 = tasksArray[i][2]
+                        break
+                    case 2:
+                        id3 = tasksArray[i][2]
+                        break
+                    case 3:
+                        id4 = tasksArray[i][2]
+                        break
+                }
+            }
+        } catch (err) {
+            //console.log(err)
+        }
+    } else {
+        clearAllTasks(false)
+        try {
+            
+            if (!(currentPage == totalPages && !(tasksArray[getTaskIndexFromPage(currentPage)]))) {
+            
+                for (let i = 0; i < 4; i++) {
+                    let returnedIndex = getTaskIndexFromPage(currentPage)
+                    let currentIndex = returnedIndex + i
+                    insertTask((i + 1), tasksArray[currentIndex][0], tasksArray[currentIndex][1])
+                    switch (i) {
+                        case 0:
+                            id1 = tasksArray[currentIndex][2]
+                            break
+                        case 1:
+                            id2 = tasksArray[currentIndex][2]
+                            break
+                        case 2:
+                            id3 = tasksArray[currentIndex][2]
+                            break
+                        case 3:
+                            id4 = tasksArray[currentIndex][2]
+                            break
+                    }
+                }
+            }
+        } catch (err) {
+            //console.log(err)
+        }
+    }
+    
+    if (currentPage == totalPages) {
+        setDisplayProperty("tasks__plus__container", "flex")
+    } else {
+        setDisplayProperty("tasks__plus__container", "none")
+    }
+        
+    document.getElementById("tasks__container--icon1").onclick = function() {
+        removeTaskByID(id1)
+        setTimeout(function() {
+            updateTasks(currentPage)
+        }, timeouts.delay)
+    }
+    
+    document.getElementById("tasks__container--icon2").onclick = function() {
+        removeTaskByID(id2)
+        setTimeout(function() {
+            updateTasks(currentPage)
+        }, timeouts.delay)
+    }
+    
+    document.getElementById("tasks__container--icon3").onclick = function() {
+        removeTaskByID(id3)
+        setTimeout(function() {
+            updateTasks(currentPage)
+        }, timeouts.delay)
+    }
+    
+    document.getElementById("tasks__container--icon4").onclick = function() {
+        removeTaskByID(id4)
+        setTimeout(function() {
+            updateTasks(currentPage)
+        }, timeouts.delay)
+    }
+}
+
+function removeTaskByID(taskID) {
+    axios.delete(`/task/byID/${taskID}`)
+    .then(async function(response) {
+        //console.log(response)
+    })
+    .catch(function (error) {
+        //console.log(error)
+    })
+}
+
+function expireOldTasks(tasksInfo) {
+    for (let i = 0; i < tasksInfo.length; i++) {
+        const currentObjDT = truncatedDateToDTUnformatted(tasksInfo[i].dueDate)
+        const currentTime = luxon.DateTime.local()
+        const timeDiff = currentObjDT.diff(currentTime, 'days').values.days
+        
+        if (timeDiff < -1) {
+            axios.delete(`/task/${tasksInfo[i].dueDate}`)
+            .then(async function(response) {
+                //console.log(response)
+            })
+            .catch(function (error) {
+                //console.log(error)
+            })
+        }
+    }
+}
+
+async function updateTasks(reqPage) {
+    
+    const tasksInfo = await getAllTasks()
+    const totalTasks = await tasksInfo.length
+    const totalObjects = await totalTasks + 1
+    
+    //expireOldTasks(await tasksInfo) may be destructive, wait for user OK
+    setTimeout(emphasizeEventDates(await tasksInfo), timeouts.delay) //waits for expires to happen
+    
+    let currentPage
+    let tasksArray = []
+    let totalPages
+    
+    if (totalObjects == 5) {
+        totalPages = 1
+    } else {
+        totalPages = Math.ceil(totalObjects / 4)
+    }
+    
+    if (reqPage) {
+        if (reqPage > totalPages) {
+            currentPage = totalPages
+        } else {
+            currentPage = reqPage
+        }
+    } else {
+        currentPage = 1
+    }
+    
+    clearAllTasks()
+    
+    for (let i = 0; i < totalTasks; i++) {
+        if (tasksInfo[i].course) {
+            tasksArray.push([truncatedDateToFormattedDT(tasksInfo[i].dueDate), `[${tasksInfo[i].course}] ${tasksInfo[i].name}`, tasksInfo[i]._id])
+        } else {
+            tasksArray.push([truncatedDateToFormattedDT(tasksInfo[i].dueDate), tasksInfo[i].name, tasksInfo[i]._id])
+        }
+    }
+    
+    if (totalObjects > 5) {
+        
+        document.getElementById("task__button__next").onclick = function() {
+            if (currentPage < totalPages) {
+                currentPage++
+                updateTasksPages(currentPage, totalPages, totalObjects, tasksArray)
+            }
+        }
+        
+        document.getElementById("task__button__prev").onclick = function() {
+            if (currentPage > 1) {
+                currentPage--
+                updateTasksPages(currentPage, totalPages, totalObjects, tasksArray)
+            }
+        }
+        
+        document.getElementById("task__button__prev").style = 'background-color: silver'
+        document.getElementById("task__page__container").style.display = 'flex'
+        
+    } else {
+        document.getElementById("task__page__container").style.display = 'none'
+    }
+    
+    updateTasksPages(currentPage, totalPages, totalObjects, tasksArray)
+}
+
+function initDatePickers(givenName) {
+    let timeNow = luxon.DateTime.local()
+    let timeNowFormatted = timeNow.toFormat('LL/dd/yyyy')
+    
+    if (givenName == 'tasks') {
+        document.getElementById("tasks__plus__date__input").value = timeNowFormatted
+        document.getElementById("tasks__plus__task__input").value = ''
+        document.getElementById("tasks__plus__course__input").value = ''
+        document.getElementById("tasks__plus__container__error").innerText = ''
+    } else if (givenName == 'events') {
+        document.getElementById("events__plus__date__input").value = timeNowFormatted
+        document.getElementById("events__plus__event__input").value = ''
+        document.getElementById("events__plus__course__input").value = ''
+        document.getElementById("events__plus__container__error").innerText = ''
+    } else {
+        document.getElementById("tasks__plus__date__input").value = timeNowFormatted
+        document.getElementById("tasks__plus__task__input").value = ''
+        document.getElementById("tasks__plus__course__input").value = ''
+        document.getElementById("tasks__plus__container__error").innerText = ''
+        document.getElementById("events__plus__date__input").value = timeNowFormatted
+        document.getElementById("events__plus__event__input").value = ''
+        document.getElementById("events__plus__course__input").value = ''
+        document.getElementById("events__plus__container__error").innerText = ''
+    }
+    
+}
+
+function initPlusButtons() {
+    initDatePickers()
+    
+    updateEventsPlusPages()
+    
+    document.getElementById("page__button__prev__plus").onclick = function () {
+        if (pages.eventsPlus != 1) {
+            subtractEventsPlusPages()
+        }
+    }
+    
+    document.getElementById("page__button__next__plus").onclick = function () {
+        if (pages.eventsPlus != 3) {
+            addEventsPlusPages()
+        }
+    }
+    
+    document.getElementById("tasks__plus__container").onclick = function () {
+        setDisplayProperty("tasks__plus__container", "none")
+        setDisplayProperty("tasks__plus__container__back", "flex")
+    }
+    
+    document.getElementById("tasks__plus__container--icon--cross").onclick = function () {
+        setDisplayProperty("tasks__plus__container__back", "none")
+        setDisplayProperty("tasks__plus__container", "flex")
+        initDatePickers('tasks')
+    }
+    
+    document.getElementById("plus__container__event").onclick = function () {
+        setDisplayProperty("plus__container__event", "none")
+        setDisplayProperty("events__plus__container__back", "flex")
+    }
+    
+    document.getElementById("events__plus__container--icon--cross").onclick = function () {
+        setDisplayProperty("events__plus__container__back", "none")
+        setDisplayProperty("plus__container__event", "flex")
+        initDatePickers('events')
+    }
+    
+    document.getElementById("tasks__plus__container--icon").onclick = function () {
+        
+        if (document.getElementById("tasks__plus__task__input").value != '' && document.getElementById("tasks__plus__date__input").value) {
+            let dateFormatted
+            
+            try {
+                const inputDateArray = document.getElementById("tasks__plus__date__input").value.split('/')
+                
+                if (!(inputDateArray[0]) || !(inputDateArray[1]) || !(inputDateArray[2])) {
+                    throw new Error("Please enter a valid date") //maybe make this silent
+                }
+                
+                dateFormatted = `${inputDateArray[2]}-${inputDateArray[0]}-${inputDateArray[1]}`
+                
+                if (truncatedDateToFormattedDT(dateFormatted) == 'Invalid DateTime') {
+                    throw new Error("Please enter a valid date") //maybe make this silent
+                }
+                
+                try {
+                    axios.post(`/task/upload`, {
+                        name: document.getElementById("tasks__plus__task__input").value,
+                        course: document.getElementById('tasks__plus__course__input').value,
+                        dueDate: dateFormatted
+                    })
+                    .then (function (response) {
+                        //console.log(response)
+                        updateTasks(false)
+                    })
+                    .catch(function (error) {
+                        //console.log(err)
+                    })
+                } catch (err) {
+                    console.log(err)
+                }
+                
+                setDisplayProperty("tasks__plus__container__back", "none")
+                setDisplayProperty("tasks__plus__container", "flex")
+                initDatePickers('tasks')
+                
+            } catch (err) {
+                document.getElementById("tasks__plus__container__error").innerText = 'Please enter a valid date'
+                console.log(err)
+            }
+        } else if (document.getElementById("tasks__plus__task__input").value == '' && document.getElementById("tasks__plus__date__input").value == '') {
+            document.getElementById("tasks__plus__container__error").innerText = 'Please enter a task name and due date'
+        } else if (document.getElementById("tasks__plus__task__input").value == '') {
+            document.getElementById("tasks__plus__container__error").innerText = 'Please enter a task name'
+        } else if (document.getElementById("tasks__plus__date__input").value == '') {
+            document.getElementById("tasks__plus__container__error").innerText = 'Please enter a due date'
+        } else {
+            document.getElementById("tasks__plus__container__error").innerText = 'Please enter a valid date'
+        }
+    }
+    
+    document.getElementById("events__plus__container--icon").onclick = function () {
+        
+        let pastDate = false
+        
+        if (document.getElementById("events__plus__event__input").value != '' && document.getElementById("events__plus__date__input").value) {
+            let dateFormatted
+            
+            try {
+                const inputDateArray = document.getElementById("events__plus__date__input").value.split('/')
+                
+                if (!(inputDateArray[0]) || !(inputDateArray[1]) || !(inputDateArray[2])) {
+                    throw new Error("Please enter a valid date") //maybe make this silent
+                }
+                
+                dateFormatted = `${inputDateArray[2]}-${inputDateArray[0]}-${inputDateArray[1]}`
+                
+                if (truncatedDateToFormattedDT(dateFormatted) == 'Invalid DateTime') {
+                    throw new Error("Please enter a valid date") //maybe make this silent
+                }
+                
+                const currentObjDT = truncatedDateToDTUnformatted(dateFormatted)
+                const currentTime = luxon.DateTime.local()
+                const timeDiff = currentObjDT.diff(currentTime, 'days').values.days
+                
+                if (timeDiff < -1) {
+                    pastDate = true
+                    throw new Error("Please enter a future or present date")
+                }
+                
+                try {
+                    axios.post(`/event/upload`, {
+                        name: document.getElementById("events__plus__event__input").value,
+                        course: document.getElementById('events__plus__course__input').value,
+                        dueDate: dateFormatted
+                    })
+                    .then (function (response) {
+                        //console.log(response)
+                        updateEvents(false)
+                    })
+                    .catch(function (error) {
+                        //console.log(err)
+                    })
+                
+                    setDisplayProperty("events__plus__container__back", "none")
+                    setDisplayProperty("plus__container__event", "flex")
+                    initDatePickers('events')
+                    
+                } catch (err) {
+                    console.log(err)
+                    if (pastDate) {
+                        document.getElementById("events__plus__container__error").innerText = 'Please enter a future or present date'
+                    } else {
+                        document.getElementById("events__plus__container__error").innerText = 'Please enter a valid date'
+                    }
+                }
+                
+            } catch (err) {
+                console.log(err)
+                if (pastDate) {
+                    document.getElementById("events__plus__container__error").innerText = 'Please enter a future or present date'
+                } else {
+                    document.getElementById("events__plus__container__error").innerText = 'Please enter a valid date'
+                }
+            }
+        } else if (document.getElementById("events__plus__event__input").value == '' && document.getElementById("events__plus__date__input").value == '') {
+            document.getElementById("events__plus__container__error").innerText = 'Please enter an event name and due date'
+        } else if (document.getElementById("events__plus__event__input").value == '') {
+            document.getElementById("events__plus__container__error").innerText = 'Please enter an event name'
+        } else if (document.getElementById("events__plus__date__input").value == '') {
+            document.getElementById("events__plus__container__error").innerText = 'Please enter a due date'
+        } else {
+            document.getElementById("events__plus__container__error").innerText = 'Please enter a valid date'
+        }
+    }
+}
+
 displayTime.displayMonthAndYear(time.getCurrentMonth(), time.getCurrentYear());
 displayTime.displayDays(time.getCurrentMonth(), time.getCurrentYear());
 displayTime.displayAnalogTime();
@@ -985,3 +1491,8 @@ eventListeners.calendarNavigation();
 greeting.display();
 
 updateEvents(false)
+updateTasks(false)
+
+initPlusButtons()
+//revamp:: both pluses have unness padding on left
+//revamp:: add cancel buttons
