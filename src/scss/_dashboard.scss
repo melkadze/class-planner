@@ -346,8 +346,8 @@ body {
   background-color: color.$blue-primary;
 }
 .alarms__icon {
-  height: 75%;
-  width: 75%;
+  height: 65%;
+  width: 65%;
   position: absolute;
   left: 50%;
   top: 50%;
@@ -358,6 +358,13 @@ body {
   cursor: pointer;
 }
 .alarms__container--icon:hover .alarms__icon {
+  content: url("../assets/svg/trash.svg");
+}
+.tasks__container--icon:hover {
+  background-color: #ff6767;
+  cursor: pointer;
+}
+.tasks__container--icon:hover .tasks__icon {
   content: url("../assets/svg/trash.svg");
 }
 .alarms__text {
@@ -552,7 +559,7 @@ body {
   background-color: color.$white;
   border-radius: 0.5vw;
   padding: 1.25vw;
-  display: flex;
+  display: none; //flex
   flex-direction: row;
 }
 .tasks__container--icon {
@@ -564,6 +571,17 @@ body {
   margin-top: auto;
   margin-bottom: auto;
   flex-shrink: 0;
+}
+.tasks__container--context--icon {
+  position: relative;
+  height: 0;
+  width: 25%;
+  padding-top: 25%;
+  border-radius: 0.5vw;
+  margin-top: auto;
+  margin-bottom: auto;
+  flex-shrink: 0;
+  margin: auto;
 }
 .tasks__container--green {
   background-color: color.$green-primary;

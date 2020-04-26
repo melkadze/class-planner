@@ -886,7 +886,7 @@ function truncatedDateToDTUnformatted(input) {
 }
 
 function refreshEmphasizedEvents(eventsInfo) {
-    //broken? low priority (auto refresh yellow dots)
+    //broken? low priority (auto refresh dots)
     /*
     try {
         
@@ -977,6 +977,255 @@ function emphasizeEventDates(eventsInfo) {
     }
 }
 
+function clearAllTasks() {
+    document.getElementById("tasks__title1").innerText = ''
+    document.getElementById("tasks__title2").innerText = ''
+    document.getElementById("tasks__title3").innerText = ''
+    document.getElementById("tasks__title4").innerText = ''
+    document.getElementById("tasks__subtitle1").innerText = ''
+    document.getElementById("tasks__subtitle2").innerText = ''
+    document.getElementById("tasks__subtitle3").innerText = ''
+    document.getElementById("tasks__subtitle4").innerText = ''
+    document.getElementById("tasks__container1").style.display = 'none'
+    document.getElementById("tasks__container2").style.display = 'none'
+    document.getElementById("tasks__container3").style.display = 'none'
+    document.getElementById("tasks__container4").style.display = 'none'
+}
+
+function insertTask(position, subtitle, title) {
+    switch (position) {
+        case 1:
+            document.getElementById("tasks__title1").innerText = title
+            document.getElementById("tasks__subtitle1").innerText = subtitle
+            document.getElementById("tasks__container1").style.display = 'flex'
+            break
+        case 2:
+            document.getElementById("tasks__title2").innerText = title
+            document.getElementById("tasks__subtitle2").innerText = subtitle
+            document.getElementById("tasks__container2").style.display = 'flex'
+            break
+        case 3:
+            document.getElementById("tasks__title3").innerText = title
+            document.getElementById("tasks__subtitle3").innerText = subtitle
+            document.getElementById("tasks__container3").style.display = 'flex'
+            break
+        case 4:
+            document.getElementById("tasks__title4").innerText = title
+            document.getElementById("tasks__subtitle4").innerText = subtitle
+            document.getElementById("tasks__container4").style.display = 'flex'
+            break
+    }
+}
+
+function getTaskIndexFromPage(page) {
+    return ((page - 1) * 4)
+}
+
+function updateTasksPages(currentPage, totalPages, totalObjects, tasksArray) {
+    pages.tasks = currentPage
+    
+    if (currentPage == 1) {
+        document.getElementById("task__button__prev").style = 'background-color: silver'
+    } else {
+        document.getElementById("task__button__prev").style -= 'background-color: silver'
+    }
+    
+    if (currentPage == totalPages) {
+        document.getElementById("task__button__next").style = 'background-color: silver'
+    } else {
+        document.getElementById("task__button__next").style -= 'background-color: silver'
+    }
+    
+    //revamp:: resize buttons (force square, for both sets)
+    
+    let id1
+    let id2
+    let id3
+    let id4
+    
+    clearAllTasks()
+    
+    if (currentPage == 1) {
+        try {
+            for (let i = 0; i < 4; i++) {
+                insertTask((i + 1), tasksArray[i][0], tasksArray[i][1])
+                switch (i) {
+                    case 0:
+                        id1 = tasksArray[i][2]
+                        break
+                    case 1:
+                        id2 = tasksArray[i][2]
+                        break
+                    case 2:
+                        id3 = tasksArray[i][2]
+                        break
+                    case 3:
+                        id4 = tasksArray[i][2]
+                        break
+                }
+            }
+        } catch (err) {
+            //console.log(err)
+        }
+    } else {
+        clearAllTasks(false)
+        try {
+            
+            if (!(currentPage == totalPages && !(tasksArray[getTaskIndexFromPage(currentPage)]))) {
+            
+                for (let i = 0; i < 4; i++) {
+                    let returnedIndex = getTaskIndexFromPage(currentPage)
+                    let currentIndex = returnedIndex + i
+                    insertTask((i + 1), tasksArray[currentIndex][0], tasksArray[currentIndex][1])
+                    switch (i) {
+                        case 0:
+                            id1 = tasksArray[currentIndex][2]
+                            break
+                        case 1:
+                            id2 = tasksArray[currentIndex][2]
+                            break
+                        case 2:
+                            id3 = tasksArray[currentIndex][2]
+                            break
+                        case 3:
+                            id4 = tasksArray[currentIndex][2]
+                            break
+                    }
+                }
+            }
+        } catch (err) {
+            //console.log(err)
+        }
+    }
+    
+    if (currentPage == totalPages) {
+        setDisplayProperty("plus__container__tasks", "flex")
+    } else {
+        setDisplayProperty("plus__container__tasks", "none")
+    }
+        
+    document.getElementById("tasks__container--icon1").onclick = function() {
+        removeTaskByID(id1)
+        setTimeout(function() {
+            updateTasks(currentPage)
+        }, timeouts.delay)
+    }
+    
+    document.getElementById("tasks__container--icon2").onclick = function() {
+        removeTaskByID(id2)
+        setTimeout(function() {
+            updateTasks(currentPage)
+        }, timeouts.delay)
+    }
+    
+    document.getElementById("tasks__container--icon3").onclick = function() {
+        removeTaskByID(id3)
+        setTimeout(function() {
+            updateTasks(currentPage)
+        }, timeouts.delay)
+    }
+    
+    document.getElementById("tasks__container--icon4").onclick = function() {
+        removeTaskByID(id4)
+        setTimeout(function() {
+            updateTasks(currentPage)
+        }, timeouts.delay)
+    }
+}
+
+function removeTaskByID(taskID) {
+    axios.delete(`/task/byID/${taskID}`)
+    .then(async function(response) {
+        //console.log(response)
+    })
+    .catch(function (error) {
+        //console.log(error)
+    })
+}
+
+function expireOldTasks(tasksInfo) {
+    for (let i = 0; i < tasksInfo.length; i++) {
+        const currentObjDT = truncatedDateToDTUnformatted(tasksInfo[i].dueDate)
+        const currentTime = luxon.DateTime.local()
+        const timeDiff = currentObjDT.diff(currentTime, 'days').values.days
+        
+        if (timeDiff < -1) {
+            axios.delete(`/task/${tasksInfo[i].dueDate}`)
+            .then(async function(response) {
+                //console.log(response)
+            })
+            .catch(function (error) {
+                //console.log(error)
+            })
+        }
+    }
+}
+
+async function updateTasks(reqPage) {
+    
+    const tasksInfo = await getAllTasks()
+    const totalTasks = await tasksInfo.length
+    const totalObjects = await totalTasks + 1
+    
+    //expireOldTasks(await tasksInfo) may be destructive, wait for user OK
+    setTimeout(emphasizeEventDates(await tasksInfo), timeouts.delay) //waits for expires to happen
+    
+    let currentPage
+    let tasksArray = []
+    let totalPages
+    
+    if (totalObjects == 5) {
+        totalPages = 1
+    } else {
+        totalPages = Math.ceil(totalObjects / 4)
+    }
+    
+    if (reqPage) {
+        if (reqPage > totalPages) {
+            currentPage = totalPages
+        } else {
+            currentPage = reqPage
+        }
+    } else {
+        currentPage = 1
+    }
+    
+    clearAllTasks()
+    
+    for (let i = 0; i < totalTasks; i++) {
+        if (tasksInfo[i].course) {
+            tasksArray.push([truncatedDateToFormattedDT(tasksInfo[i].dueDate), `[${tasksInfo[i].course}] ${tasksInfo[i].name}`, tasksInfo[i]._id])
+        } else {
+            tasksArray.push([truncatedDateToFormattedDT(tasksInfo[i].dueDate), tasksInfo[i].name, tasksInfo[i]._id])
+        }
+    }
+    
+    if (totalObjects > 5) {
+        
+        document.getElementById("task__button__next").onclick = function() {
+            if (currentPage < totalPages) {
+                currentPage++
+                updateTasksPages(currentPage, totalPages, totalObjects, tasksArray)
+            }
+        }
+        
+        document.getElementById("task__button__prev").onclick = function() {
+            if (currentPage > 1) {
+                currentPage--
+                updateTasksPages(currentPage, totalPages, totalObjects, tasksArray)
+            }
+        }
+        
+        document.getElementById("task__button__prev").style = 'background-color: silver'
+        document.getElementById("task__page__container").style.display = 'flex'
+        
+    } else {
+        document.getElementById("task__page__container").style.display = 'none'
+    }
+    
+    updateTasksPages(currentPage, totalPages, totalObjects, tasksArray)
+}
+
 displayTime.displayMonthAndYear(time.getCurrentMonth(), time.getCurrentYear());
 displayTime.displayDays(time.getCurrentMonth(), time.getCurrentYear());
 displayTime.displayAnalogTime();
@@ -985,3 +1234,4 @@ eventListeners.calendarNavigation();
 greeting.display();
 
 updateEvents(false)
+//updateTasks(false)

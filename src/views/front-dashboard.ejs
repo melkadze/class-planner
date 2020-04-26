@@ -208,8 +208,8 @@
         <div class="tasks">
           <h5 class="tasks__headline">Your Tasks</h5>
           <div class="tasks__grid">
-            <div class="tasks__container">
-              <div class="tasks__container--icon tasks__container--green">
+            <div class="tasks__container" id="tasks__container1">
+              <div class="tasks__container--icon tasks__container--green" id="tasks__container--icon1">
                 <img
                   src="../assets/svg/event.svg"
                   alt="folder"
@@ -217,12 +217,12 @@
                 />
               </div>
               <div class="tasks__text">
-                <h6 class="tasks__title">Event Title</h6>
-                <p class="tasks__subtitle">Day, 00:00 AM - 00:00 PM</p>
+                <h6 class="tasks__title" id="tasks__title1"></h6>
+                <p class="tasks__subtitle" id="tasks__subtitle1"></p>
               </div>
             </div>
-            <div class="tasks__container">
-              <div class="tasks__container--icon tasks__container--cyan">
+            <div class="tasks__container" id="tasks__container2">
+              <div class="tasks__container--icon tasks__container--cyan" id="tasks__container--icon2">
                 <img
                   src="../assets/svg/event.svg"
                   alt="folder"
@@ -230,12 +230,12 @@
                 />
               </div>
               <div class="tasks__text">
-                <h6 class="tasks__title">Event Title</h6>
-                <p class="tasks__subtitle">Day, 00:00 AM - 00:00 PM</p>
+                <h6 class="tasks__title" id="tasks__title2"></h6>
+                <p class="tasks__subtitle" id="tasks__subtitle2"></p>
               </div>
             </div>
-            <div class="tasks__container">
-              <div class="tasks__container--icon tasks__container--blue">
+            <div class="tasks__container" id="tasks__container3">
+              <div class="tasks__container--icon tasks__container--blue" id="tasks__container--icon3">
                 <img
                   src="../assets/svg/event.svg"
                   alt="folder"
@@ -243,12 +243,12 @@
                 />
               </div>
               <div class="tasks__text">
-                <h6 class="tasks__title">Event Title</h6>
-                <p class="tasks__subtitle">Day, 00:00 AM - 00:00 PM</p>
+                <h6 class="tasks__title" id="tasks__title3"></h6>
+                <p class="tasks__subtitle" id="tasks__subtitle3"></p>
               </div>
             </div>
-            <div class="tasks__container">
-              <div class="tasks__container--icon tasks__container--violet">
+            <div class="tasks__container" id="tasks__container4">
+              <div class="tasks__container--icon tasks__container--violet" id="tasks__container--icon4">
                 <img
                   src="../assets/svg/event.svg"
                   alt="folder"
@@ -256,28 +256,58 @@
                 />
               </div>
               <div class="tasks__text">
-                <h6 class="tasks__title">Event Title</h6>
-                <p class="tasks__subtitle">Day, 00:00 AM - 00:00 PM</p>
+                <h6 class="tasks__title" id="tasks__title4"></h6>
+                <p class="tasks__subtitle" id="tasks__subtitle4"></p>
               </div>
             </div>
             
+            <!--
+            <div class="tasks__container" id="tasks__container4" style="display: flex">
+              <div class="tasks__container--context--icon tasks__container--violet" id="tasks__container--icon4">
+                <img
+                  src="../assets/svg/event.svg"
+                  alt="folder"
+                  class="tasks__icon"
+                />
+              </div>
+              <div class="tasks__container--context--icon tasks__container--violet" id="tasks__container--icon4">
+                <img
+                  src="../assets/svg/event.svg"
+                  alt="folder"
+                  class="tasks__icon"
+                />
+              </div>
+              <div class="tasks__container--context--icon tasks__container--violet" id="tasks__container--icon4">
+                <img
+                  src="../assets/svg/event.svg"
+                  alt="folder"
+                  class="tasks__icon"
+                />
+              </div>
+            </div>
+            -->
             
-            
-            <div class="tasks__container plus__container" id="plus__container__tasks">
+            <div class="tasks__container plus__container" id="plus__container__tasks" style="display: flex">
               <div class="tasks__text plus__text" id="plus__text__tasks">
                 <h6 class="tasks__title plus__title" id="plus__title__tasks">+</h6>
               </div>
             </div>
             
-            <div class="page__container" id="tasks__page__container">
-              <button class="page__button" id="page__button__prev">
+            <div class="tasks__container plus__container" id="plus__container__tasks" style="display: flex">
+              <div class="tasks__text" id="plus__text__tasks">
+                <h6 class="tasks__title" id="plus__title__tasks">Add a new task...</h6>
+              </div>
+            </div>
+              
+            <div class="page__container" id="task__page__container">
+              <button class="page__button" id="task__button__prev">
                 <img
                   src="../assets/svg/arrow-left.svg"
                   alt="left arrow"
                   class="page__icon"
                 />
               </button>
-              <button class="page__button" id="page__button__next">
+              <button class="page__button" id="task__button__next">
                 <img
                   src="../assets/svg/arrow-right.svg"
                   alt="right arrow"
