@@ -812,7 +812,6 @@ body {
 }
 
 .plus__container__back {
-  flex-direction: column;
   background-color: #fbfbf8 !important;
   padding: 1.3vw !important;
 }
@@ -837,6 +836,36 @@ body {
 
 .plus__container:hover #plus__title {
   color: #f5f5f5 !important;
+}
+
+.plus__container__parent {
+  display: flex;
+  flex-direction: column;
+}
+
+.plus__container--icon {
+  background-color: #a0efcc;
+  margin: auto;
+  position: relative;
+  height: 0;
+  width: 25%;
+  padding-top: 25%;
+  border-radius: 0.5vw;
+  flex-shrink: 0;
+  display: none;
+}
+
+.plus__container--icon:hover {
+  background-color: #85c7aa;
+  cursor: pointer;
+}
+
+.plus__container__error {
+  color: #ff6767 !important;
+}
+
+.plus__container__parent {
+  display: none;
 }
 
 .tasks__icon {
@@ -872,16 +901,16 @@ body {
 
 .material__group {
   position: relative;
-  margin-bottom: 45px;
+  margin-bottom: 3rem;
 }
 
 .material__input {
-  font-size: 18px;
-  padding: 10px 10px 10px 5px;
+  font-size: 2rem;
+  padding: 1rem 1rem 1rem 0.5rem;
   display: block;
-  width: 300px;
+  width: 20rem;
   border: none;
-  border-bottom: 1px solid #757575;
+  border-bottom: 0.1rem solid #757575;
   background-color: #fbfbf8;
 }
 
@@ -891,32 +920,32 @@ body {
 
 .material__label {
   color: #999;
-  font-size: 18px;
+  font-size: 2rem;
   font-weight: normal;
   position: absolute;
   pointer-events: none;
-  left: 5px;
-  top: 10px;
+  left: 0.5rem;
+  top: 0.8rem;
   transition: 0.2s ease all;
 }
 
 .material__input:focus ~ .material__label, .material__input:valid ~ .material__label {
-  top: -20px;
-  font-size: 14px;
+  top: -1.5rem;
+  font-size: 1.3rem;
   color: #5264AE;
 }
 
 .material__bar {
   position: relative;
   display: block;
-  width: 300px;
+  width: 20rem;
 }
 
 .material__bar:before, .material__bar:after {
   content: "";
-  height: 2px;
+  height: 0.2rem;
   width: 0;
-  bottom: 1px;
+  bottom: 0.1rem;
   position: absolute;
   background: #5264AE;
   transition: 0.2s ease all;

@@ -1099,9 +1099,9 @@ function updateTasksPages(currentPage, totalPages, totalObjects, tasksArray) {
     }
     
     if (currentPage == totalPages) {
-        setDisplayProperty("plus__container__tasks", "flex")
+        setDisplayProperty("tasks__plus__container", "flex")
     } else {
-        setDisplayProperty("plus__container__tasks", "none")
+        setDisplayProperty("tasks__plus__container", "none")
     }
         
     document.getElementById("tasks__container--icon1").onclick = function() {
@@ -1226,6 +1226,22 @@ async function updateTasks(reqPage) {
     updateTasksPages(currentPage, totalPages, totalObjects, tasksArray)
 }
 
+function initDatePickers() {
+    let timeNow = luxon.DateTime.local()
+    let timeNowFormatted = timeNow.toFormat('LL/dd/yyyy')
+    
+    document.getElementById("tasks__add__date__input").value = timeNowFormatted
+}
+
+function initPlusButtons() {
+    initDatePickers()
+    
+    document.getElementById("tasks__plus__container").onclick = function() {
+        setDisplayProperty("plus__text__tasks", "none")
+        setDisplayProperty("tasks__plus__container__superparent", "flex")
+    }
+}
+
 displayTime.displayMonthAndYear(time.getCurrentMonth(), time.getCurrentYear());
 displayTime.displayDays(time.getCurrentMonth(), time.getCurrentYear());
 displayTime.displayAnalogTime();
@@ -1234,6 +1250,7 @@ eventListeners.calendarNavigation();
 greeting.display();
 
 updateEvents(false)
-//updateTasks(false)
+updateTasks(false)
 
-//revamp:: fix sizing of buttons
+initPlusButtons()
+//revamp:: both pluses have unness padding on left

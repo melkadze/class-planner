@@ -287,33 +287,42 @@
             </div>
             -->
             
-            <div class="tasks__container plus__container" id="plus__container__tasks" style="display: flex">
+            <div class="tasks__container plus__container" id="plus__tasks__container">
               <div class="tasks__text plus__text" id="plus__text__tasks">
                 <h6 class="tasks__title plus__title" id="plus__title__tasks">+</h6>
               </div>
+              <div class="plus__container__back" id="tasks__plus__container__superparent" style="display: flex;">
+                <div class="plus__container__parent" id="tasks__plus__container__parent">
+                  <div class="material__group">      
+                    <input type="text" class="material__input" required>
+                    <span class="material__highlight"></span>
+                    <span class="material__bar"></span>
+                    <label class="material__label">Task name</label>
+                  </div> 
+                  <div class="material__group">      
+                    <input type="text" class="material__input" required>
+                    <span class="material__highlight"></span>
+                    <span class="material__bar"></span>
+                    <label class="material__label">Course (optional)</label>
+                  </div> 
+                  <div class="material__group">      
+                    <input type="text" class="material__input" id="tasks__add__date__input" value="" required>
+                    <span class="material__highlight"></span>
+                    <span class="material__bar"></span>
+                    <label class="material__label">Due date (MM/DD/YYYY)</label>
+                  </div>
+                  <h6 class="tasks__subtitle plus__container__error" id="tasks__plus__container__error"></h6>
+                </div>
+                <div class="plus__container--icon" id="tasks__plus__container--icon">
+                  <img
+                    src="../assets/svg/check.svg"
+                    alt="folder"
+                    class="tasks__icon"
+                  />
+                </div>
+              </div>
             </div>
-            
-            <div class="tasks__container plus__container__back" id="plus__container__tasks" style="display: flex">
-              <div class="material__group">      
-                <input type="text" class="material__input" required>
-                <span class="material__highlight"></span>
-                <span class="material__bar"></span>
-                <label class="material__label">Task</label>
-              </div> 
-              <div class="material__group">      
-                <input type="text" class="material__input" required>
-                <span class="material__highlight"></span>
-                <span class="material__bar"></span>
-                <label class="material__label">Course (optional)</label>
-              </div> 
-              <div class="material__group">      
-                <input type="text" class="material__input" required>
-                <span class="material__highlight"></span>
-                <span class="material__bar"></span>
-                <label class="material__label">Date (MM-DD-YYYY)</label>
-              </div> 
-            </div>
-              
+
             <div class="page__container" id="task__page__container">
               <button class="page__button" id="task__button__prev">
                 <img
@@ -330,7 +339,6 @@
                 />
               </button>
             </div>
-            
             
           </div>
         </div>
