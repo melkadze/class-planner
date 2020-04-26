@@ -1235,3 +1235,5 @@ greeting.display();
 
 updateEvents(false)
 //updateTasks(false)
+
+//revamp:: fix sizing of buttons

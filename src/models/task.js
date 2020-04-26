@@ -5,10 +5,6 @@ const taskSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  completed: { //completed: denotes if item is checked/relevant [set to 0 when creating, 1 when completed]
-    type: Boolean,
-    required: true
-  },
   course: { //relevant course, is user-definable and is only for display purposes
     type: String
   },
