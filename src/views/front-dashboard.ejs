@@ -288,36 +288,43 @@
             -->
             
             <div class="tasks__container plus__container" id="tasks__plus__container">
-              <div class="plus__container__front" id="tasks__plus__container__front">
-                <div class="tasks__text plus__text" id="plus__text__tasks">
-                  <h6 class="tasks__title plus__title" id="plus__title__tasks">+</h6>
-                </div>
+              <div class="tasks__text plus__text" id="plus__text__tasks">
+                <h6 class="tasks__title plus__title" id="plus__title__tasks">+</h6>
               </div>
-              <div class="plus__container__back" id="tasks__plus__container__back">
-                <div class="plus__container__parent" id="tasks__plus__container__parent">
-                  <div class="material__group">      
-                    <input type="text" class="material__input" required>
-                    <span class="material__highlight"></span>
-                    <span class="material__bar"></span>
-                    <label class="material__label">Task name</label>
-                  </div> 
-                  <div class="material__group">      
-                    <input type="text" class="material__input" required>
-                    <span class="material__highlight"></span>
-                    <span class="material__bar"></span>
-                    <label class="material__label">Course (optional)</label>
-                  </div> 
-                  <div class="material__group">      
-                    <input type="text" class="material__input" id="tasks__add__date__input" value="" required>
-                    <span class="material__highlight"></span>
-                    <span class="material__bar"></span>
-                    <label class="material__label">Due date (MM/DD/YYYY)</label>
-                  </div>
-                  <h6 class="tasks__subtitle plus__container__error" id="tasks__plus__container__error"></h6>
+            </div>
+            <div class="tasks__container plus__container__back" id="tasks__plus__container__back">
+              <div class="plus__container__parent" id="tasks__plus__container__parent">
+                <div class="material__group">      
+                  <input type="text" class="material__input" id="tasks__plus__task__input"required>
+                  <span class="material__highlight"></span>
+                  <span class="material__bar"></span>
+                  <label class="material__label">Task name</label>
+                </div> 
+                <div class="material__group">      
+                  <input type="text" class="material__input" id="tasks__plus__course__input" required>
+                  <span class="material__highlight"></span>
+                  <span class="material__bar"></span>
+                  <label class="material__label">Course (optional)</label>
+                </div> 
+                <div class="material__group">      
+                  <input type="text" class="material__input" id="tasks__plus__date__input" value="" required>
+                  <span class="material__highlight"></span>
+                  <span class="material__bar"></span>
+                  <label class="material__label">Due date (mm/dd/yyyy)</label>
                 </div>
+                <h6 class="tasks__subtitle plus__container__error" id="tasks__plus__container__error"></h6>
+              </div>
+              <div class="plus__container--icon__parent">
                 <div class="plus__container--icon" id="tasks__plus__container--icon">
                   <img
                     src="../assets/svg/check.svg"
+                    alt="folder"
+                    class="tasks__icon"
+                  />
+                </div>
+                <div class="plus__container--icon" id="tasks__plus__container--icon--x">
+                  <img
+                    src="../assets/svg/cross.svg"
                     alt="folder"
                     class="tasks__icon"
                   />

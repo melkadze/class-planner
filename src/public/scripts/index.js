@@ -1226,11 +1226,18 @@ async function updateTasks(reqPage) {
     updateTasksPages(currentPage, totalPages, totalObjects, tasksArray)
 }
 
-function initDatePickers() {
+function initDatePickers(givenName) {
     let timeNow = luxon.DateTime.local()
     let timeNowFormatted = timeNow.toFormat('LL/dd/yyyy')
     
-    document.getElementById("tasks__add__date__input").value = timeNowFormatted
+    if (givenName = 'tasks') {
+        document.getElementById("tasks__plus__date__input").value = timeNowFormatted
+    } else if (givenName = 'events') {
+        
+    } else {
+        document.getElementById("tasks__plus__date__input").value = timeNowFormatted
+    }
+    
 }
 
 function abc() {
@@ -1241,15 +1248,33 @@ function abc() {
 function initPlusButtons() {
     initDatePickers()
     
-    document.getElementById("tasks__plus__container").addEventListener("click", function () {
-        setDisplayProperty("tasks__plus__container__front", "none")
+    document.getElementById("tasks__plus__container").onclick = function () {
+        setDisplayProperty("tasks__plus__container", "none")
         setDisplayProperty("tasks__plus__container__back", "flex")
-    })
+    }
     
-    document.getElementById("tasks__plus__container--icon").addEventListener("click", function () {
-        console.log('e')
-        abc()
-    })
+    document.getElementById("tasks__plus__container--icon").onclick = function () {
+        
+        if (document.getElementById("tasks__plus__task__input").value != '' && document.getElementById("tasks__plus__date__input").value) {
+            document.getElementById("tasks__plus__task__input").innerText = ''
+        
+            
+            
+            
+            
+            setDisplayProperty("tasks__plus__container__back", "none")
+            setDisplayProperty("tasks__plus__container", "flex")
+            initDatePickers('tasks')
+        } else if (document.getElementById("tasks__plus__task__input").value == '' && document.getElementById("tasks__plus__date__input").value == '') {
+            document.getElementById("tasks__plus__container__error").innerText = 'Please enter a task name and due date'
+        } else if (document.getElementById("tasks__plus__task__input").value == '') {
+            document.getElementById("tasks__plus__container__error").innerText = 'Please enter a task name'
+        } else if (document.getElementById("tasks__plus__date__input").value == '') {
+            document.getElementById("tasks__plus__container__error").innerText = 'Please enter a due date'
+        } else {
+            document.getElementById("tasks__plus__container__error").innerText = 'Please enter a valid date'
+        }
+    }
 }
 
 displayTime.displayMonthAndYear(time.getCurrentMonth(), time.getCurrentYear());
@@ -1264,3 +1289,4 @@ updateTasks(false)
 
 initPlusButtons()
 //revamp:: both pluses have unness padding on left
+//revamp:: add cancel buttons

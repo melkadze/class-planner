@@ -597,13 +597,7 @@ body {
 }
 .plus__container {
   padding: 0.1vw !important;
-}
-.plus__container__front {
   background-color: color.$green-primary !important;
-  padding: 0.1vw !important;
-  width: 100%;
-  height: 100%;
-  border-radius: 0.5vw;
 }
 .plus__container__back {
   background-color: color.$white !important;
@@ -633,6 +627,9 @@ body {
 .plus__container__parent {
   display: flex;
   flex-direction: column;
+}
+.plus__container--icon--parent {
+  
 }
 .plus__container--icon {
   background-color: color.$green-primary;
@@ -677,7 +674,7 @@ body {
   margin-bottom: 3rem;
 }
 .material__input {
-  font-size: 2rem;
+  font-size: 1.7rem;
   padding: 1rem 1rem 1rem 0.5rem;
   display: block;
   width: 20rem;
@@ -690,7 +687,7 @@ body {
 }
 .material__label {
   color: #999; 
-  font-size: 2rem;
+  font-size: 1.7rem;
   font-weight: normal;
   position: absolute;
   pointer-events: none;
