@@ -142,8 +142,6 @@ const greeting = {
       const greeting__author = DOMStrings.greeting__author;
       greeting__quote.innerText = `"${quotes[randomChoice]}"`;
       greeting__author.innerText = `${authors[randomChoice]}`;
-      DOMStrings.greeting__update__title.innerText = updates.title;
-      DOMStrings.greeting__update__subtitle.innerText = updates.subtitle;
     },
   };
 
@@ -1481,15 +1479,40 @@ function initPlusButtons() {
     }
 }
 
+async function getNewQuote() {
+    return axios.get(`https://quote-garden.herokuapp.com/api/v2/quotes/random`, {timeout: timeouts.net})
+    .then (function (response) {
+        return response.data
+    })
+    .catch(function (error) {
+        greeting.display();
+    })
+}
+
+async function applyNewQuote() {
+    DOMStrings.greeting__update__title.innerText = updates.title;
+    DOMStrings.greeting__update__subtitle.innerText = updates.subtitle;
+    try {
+        const response = await getNewQuote()
+        const quoteAuthor = await response.quote.quoteAuthor
+        const quoteText = await response.quote.quoteText
+        DOMStrings.greeting__quote.innerText = await quoteText
+        DOMStrings.greeting__author.innerText = await quoteAuthor
+        console.log(await quoteText)
+        console.log(await quoteAuthor)
+    } catch {
+        greeting.display();
+    }
+}
+
 displayTime.displayMonthAndYear(time.getCurrentMonth(), time.getCurrentYear());
 displayTime.displayDays(time.getCurrentMonth(), time.getCurrentYear());
 displayTime.displayAnalogTime();
 displayTime.displayDigitalTime();
 eventListeners.calendarNavigation();
-greeting.display();
 
+applyNewQuote()
 updateEvents(false)
 updateTasks(false)
-
 initPlusButtons()
 //revamp:: both pluses may have unness padding on left, same for event add confirms on right
