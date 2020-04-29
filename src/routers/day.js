@@ -5,7 +5,6 @@ const Course = require("../models/course")
 const authCheck = require('../middleware/authCheck')
 const functions = require('../config/functions')
 
-////make everything async?
 //make a new day
 router.post('/upload', authCheck, async (req, res) => {
     try{
@@ -40,7 +39,6 @@ router.get('/:id', authCheck, async (req, res) => {
 })
 
 router.get('/schedule/:id', authCheck, async (req, res) => {
-    //const dayID = Day.findOne({ name: day })
     try {
         const day = req.params.id
         await Day.findOne({ day: day, owner: req.user._id }, function (err, adv) {

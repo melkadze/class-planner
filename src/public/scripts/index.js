@@ -1,7 +1,5 @@
-////welcome to the frontend of class-planner, or loop!
-////check us out at github.com/melkadze/class-planner
-
-
+///welcome to the frontend of class-planner, or loop!
+///check us out at github.com/melkadze/class-planner
 
 //requires made availible in frontend through browserify
 const luxon = require("luxon")
@@ -1503,6 +1501,18 @@ async function applyNewQuote() {
     }
 }
 
+async function isPeriodValidForSchedule(period, schedule) {
+    const scheduleInfo = await getScheduleInfo(schedule)
+    for (let i = 0; i < await scheduleInfo.length; i++) {
+        if (await scheduleInfo[i].period == period) {
+            return true
+        } else {
+            continue
+        }
+    }
+    return false
+}
+
 displayTime.displayMonthAndYear(time.getCurrentMonth(), time.getCurrentYear());
 displayTime.displayDays(time.getCurrentMonth(), time.getCurrentYear());
 displayTime.displayAnalogTime();
@@ -1513,3 +1523,9 @@ applyNewQuote()
 updateEvents(false)
 updateTasks(false)
 initPlusButtons()
+
+/*
+isPeriodValidForSchedule(10, 'Tech 1A').then(function (result) {
+    console.log(result)
+})
+*/

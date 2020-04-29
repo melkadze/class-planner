@@ -15,9 +15,8 @@ app.use(express.static(__dirname + "/public")); //export public folder
 //other dependencies
 const passport = require('passport')
 const cookieSession = require('cookie-session')
-const passportSetup = require('./config/passport-setup') //this is necessary, even though it is greyed out ((consider removing const, and just put require))
+const passportSetup = require('./config/passport-setup') //this is necessary, even though it is greyed out
 require('dotenv').config();
-//import * as sampledb from "./sampledb.json"
 
 //setup cookies for login storage
 app.use(cookieSession({

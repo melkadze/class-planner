@@ -1,7 +1,6 @@
 const mongoose = require("mongoose")
 
 const periodSchema = new mongoose.Schema({
-  //add timestart, timeend
   period: {
     type: Number,
     required: true

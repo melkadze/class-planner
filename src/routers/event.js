@@ -3,7 +3,6 @@ const Event = require("../models/event")
 const authCheck = require('../middleware/authCheck')
 const functions = require('../config/functions')
 
-////make everything async?
 //make a new event
 router.post('/upload', authCheck, async (req, res) => {
     const event = new Event ({
