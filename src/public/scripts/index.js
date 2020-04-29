@@ -1513,4 +1513,3 @@ applyNewQuote()
 updateEvents(false)
 updateTasks(false)
 initPlusButtons()
-//revamp:: both pluses may have unness padding on left, same for event add confirms on right
