@@ -1498,8 +1498,6 @@ async function applyNewQuote() {
         const quoteText = await response.quote.quoteText
         DOMStrings.greeting__quote.innerText = await quoteText
         DOMStrings.greeting__author.innerText = await quoteAuthor
-        console.log(await quoteText)
-        console.log(await quoteAuthor)
     } catch {
         greeting.display();
     }
