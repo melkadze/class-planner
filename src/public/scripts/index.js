@@ -1,3 +1,9 @@
+////welcome to the frontend of class-planner, or loop!
+////check us out at github.com/melkadze/class-planner
+
+
+
+//requires made availible in frontend through browserify
 const luxon = require("luxon")
 const axios = require("axios")
 
@@ -136,8 +142,6 @@ const greeting = {
       const greeting__author = DOMStrings.greeting__author;
       greeting__quote.innerText = `"${quotes[randomChoice]}"`;
       greeting__author.innerText = `${authors[randomChoice]}`;
-      DOMStrings.greeting__update__title.innerText = updates.title;
-      DOMStrings.greeting__update__subtitle.innerText = updates.subtitle;
     },
   };
 
@@ -371,8 +375,6 @@ async displayNextCourseList() {
 };
 
 function convertToTime(hour, minute, isPM) {
-    //const timeNow = luxon.DateTime.local()
-    
     //12hour -> 24hour
     if (isPM && hour != 12) {
         hour = Number(hour) + 12
@@ -386,13 +388,6 @@ function convertToTime(hour, minute, isPM) {
         hour: hour,
         minutes: minute
     })
-    
-    //if time is in the past, make it the next day (a quirk of empty-date time assignment)
-    /*
-    if (Math.sign(convertedTime.diff(timeNow, 'days').values.days) === -1) {
-        convertedTime = convertedTime.plus({ days: 1 })
-    }
-    */
     
     return convertedTime
 }
@@ -517,7 +512,7 @@ async function timeOfNextPeriodStart() {
                 continue
             } else {
                 nextTime = await scheduleInfo[i].timeStart
-                break //new
+                break
             }
         }
         return nextTime
@@ -690,7 +685,7 @@ function insertEvent(position, title, subtitle) {
 }
 
 function getEventIndexFromPage(page) {
-    //return (((page - 1) * 3) - 1) unrem for 3 events
+    //return (((page - 1) * 3) - 1) former code (for three items plus indicators on events page)
     return (((page - 1) * 2) - 1)
 }
 
@@ -1228,8 +1223,9 @@ async function updateTasks(reqPage) {
     const totalTasks = await tasksInfo.length
     const totalObjects = await totalTasks + 1
     
-    //expireOldTasks(await tasksInfo) may be destructive, wait for user OK
-    setTimeout(emphasizeEventDates(await tasksInfo), timeouts.delay) //waits for expires to happen
+    //expireOldTasks(await tasksInfo) may be destructive, wait for user to request this action
+    //setTimeout(emphasizeEventDates(await tasksInfo), timeouts.delay)
+    emphasizeEventDates(await tasksInfo) //waiting for expires not necessary, as we aren't expiring tasks automatically
     
     let currentPage
     let tasksArray = []
@@ -1483,16 +1479,40 @@ function initPlusButtons() {
     }
 }
 
+async function getNewQuote() {
+    return axios.get(`https://quote-garden.herokuapp.com/api/v2/quotes/random`, {timeout: timeouts.net})
+    .then (function (response) {
+        return response.data
+    })
+    .catch(function (error) {
+        greeting.display();
+    })
+}
+
+async function applyNewQuote() {
+    DOMStrings.greeting__update__title.innerText = updates.title;
+    DOMStrings.greeting__update__subtitle.innerText = updates.subtitle;
+    try {
+        const response = await getNewQuote()
+        const quoteAuthor = await response.quote.quoteAuthor
+        const quoteText = await response.quote.quoteText
+        DOMStrings.greeting__quote.innerText = await quoteText
+        DOMStrings.greeting__author.innerText = await quoteAuthor
+        console.log(await quoteText)
+        console.log(await quoteAuthor)
+    } catch {
+        greeting.display();
+    }
+}
+
 displayTime.displayMonthAndYear(time.getCurrentMonth(), time.getCurrentYear());
 displayTime.displayDays(time.getCurrentMonth(), time.getCurrentYear());
 displayTime.displayAnalogTime();
 displayTime.displayDigitalTime();
 eventListeners.calendarNavigation();
-greeting.display();
 
+applyNewQuote()
 updateEvents(false)
 updateTasks(false)
-
 initPlusButtons()
-//revamp:: both pluses have unness padding on left
-//revamp:: add cancel buttons
+//revamp:: both pluses may have unness padding on left, same for event add confirms on right
