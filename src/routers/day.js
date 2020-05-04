@@ -22,6 +22,18 @@ router.post('/upload', authCheck, async (req, res) => {
     }
 })
 
+router.get('/', authCheck, async (req, res) => {
+    try {
+        await Day.find({ owner: req.user._id }, function (err, adv) {
+            if (adv){
+                res.send(adv)
+            }
+        }).sort({ day: 1 })
+    } catch (err) {
+        functions.error(res, 500, err);
+    }
+})
+
 router.get('/:id', authCheck, async (req, res) => {
     try {
         const day = req.params.id
@@ -54,6 +66,15 @@ router.get('/schedule/:id', authCheck, async (req, res) => {
                 functions.error(res, 500, err);
             }
         })
+    } catch (err) {
+        functions.error(res, 500, err);
+    }
+})
+
+router.delete('/:id', authCheck, async (req, res) => {
+    try {
+        await Course.deleteMany({ owner: req.user._id, day: req.params.id })
+        res.status(200).send('OK')
     } catch (err) {
         functions.error(res, 500, err);
     }

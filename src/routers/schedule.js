@@ -19,6 +19,18 @@ router.post('/upload', authCheck, async (req, res) => {
     }
 })
 
+router.get('/', authCheck, async (req, res) => {
+    try {
+        await Schedule.find({ owner: req.user._id }, function (err, adv) {
+            if (adv){
+                res.send(adv)
+            }
+        }).sort({ createdAt: 1 })
+    } catch (err) {
+        functions.error(res, 500, err);
+    }
+})
+
 router.get('/:id', authCheck, async (req, res) => {
     const schedule = req.params.id
     try {
@@ -30,6 +42,15 @@ router.get('/:id', authCheck, async (req, res) => {
                 }).sort({ period: 1 })
             }
         })
+    } catch (err) {
+        functions.error(res, 500, err);
+    }
+})
+
+router.delete('/:id', authCheck, async (req, res) => {
+    try {
+        await Schedule.deleteMany({ owner: req.user._id, name: req.params.id })
+        res.status(200).send('OK')
     } catch (err) {
         functions.error(res, 500, err);
     }

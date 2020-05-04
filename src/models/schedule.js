@@ -21,7 +21,11 @@ const scheduleSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     required: true
   }
-});
+},
+{
+  timestamps: true
+}
+);
 
 scheduleSchema.virtual("period", {
   ref: "Period",
