@@ -33,7 +33,7 @@ const DOMStrings = {
 
 const updates = {
     title: "Stay in the loop:",
-    subtitle: "Loop's dashboard is now complete! We're on track to release within a couple weeks."
+    subtitle: "We've just removed all of the non-essential fragments of the old design."
 }
 
 const timeouts = {

@@ -5,7 +5,15 @@ const functions = require('../config/functions')
 //profile
 router.get('/', authCheck, (req, res) => {
     try{
-        res.render('profile', {user: req.user});
+        res.redirect('/profile/dashboard');
+    } catch(err) {
+        functions.error(res, 500, err);
+    }
+})
+
+router.get('/internals', authCheck, (req, res) => {
+    try{
+        res.render('internals', {user: req.user});
     } catch(err) {
         functions.error(res, 500, err);
     }
@@ -14,22 +22,6 @@ router.get('/', authCheck, (req, res) => {
 router.get('/dashboard', authCheck, (req, res) => {
     try{
         res.render('dashboard', {user: req.user});
-    } catch(err) {
-        functions.error(res, 500, err);
-    }
-})
-
-router.get('/front-dashboard', authCheck, (req, res) => {
-    try{
-        res.render('front-dashboard', {user: req.user});
-    } catch(err) {
-        functions.error(res, 500, err);
-    }
-})
-
-router.post('/test', authCheck, (req, res) => {
-    try{
-        console.log('Front-end test OK!')
     } catch(err) {
         functions.error(res, 500, err);
     }

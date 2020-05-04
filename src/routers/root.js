@@ -4,7 +4,7 @@ const functions = require('../config/functions')
 //homepage
 router.get('/', (req, res) => {
     try{
-        res.render('home', {user: req.user});
+        res.redirect('/profile/dashboard');
     } catch(err) {
         functions.error(res, 500, err);
     }
