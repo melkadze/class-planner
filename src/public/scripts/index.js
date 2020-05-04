@@ -1495,7 +1495,11 @@ async function applyNewQuote() {
         const quoteAuthor = await response.quote.quoteAuthor
         const quoteText = await response.quote.quoteText
         DOMStrings.greeting__quote.innerText = await quoteText
-        DOMStrings.greeting__author.innerText = await quoteAuthor
+        if (await quoteAuthor) {
+            DOMStrings.greeting__author.innerText = await quoteAuthor
+        } else {
+            DOMStrings.greeting__author.innerText = 'Unknown'
+        }
     } catch {
         greeting.display();
     }
@@ -1513,19 +1517,27 @@ async function isPeriodValidForSchedule(period, schedule) {
     return false
 }
 
-displayTime.displayMonthAndYear(time.getCurrentMonth(), time.getCurrentYear());
-displayTime.displayDays(time.getCurrentMonth(), time.getCurrentYear());
-displayTime.displayAnalogTime();
-displayTime.displayDigitalTime();
-eventListeners.calendarNavigation();
+function getDocumentTitle() {
+    return document.title
+}
 
-applyNewQuote()
-updateEvents(false)
-updateTasks(false)
-initPlusButtons()
+function setupDashboardPage() {
+    displayTime.displayMonthAndYear(time.getCurrentMonth(), time.getCurrentYear());
+    displayTime.displayDays(time.getCurrentMonth(), time.getCurrentYear());
+    displayTime.displayAnalogTime();
+    displayTime.displayDigitalTime();
+    eventListeners.calendarNavigation();
+    
+    applyNewQuote()
+    updateEvents(false)
+    updateTasks(false)
+    initPlusButtons()
+}
 
-/*
-isPeriodValidForSchedule(10, 'Tech 1A').then(function (result) {
-    console.log(result)
-})
-*/
+function setupRelevantPage() {
+    if (getDocumentTitle() == 'Loop: Dashboard') {
+        setupDashboardPage()
+    }
+}
+
+setupRelevantPage()
