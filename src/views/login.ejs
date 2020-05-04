@@ -2,28 +2,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" type="text/css" href="../styles/compat.css" />
+    <title>Loop: Login</title>
+    <link rel="stylesheet" type="text/css" href="../styles/main.css" />
+    <link rel="icon" type="image/png" href="../assets/svg/smile.svg">
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a href="/">Homepage</a></li>
-            <% if (!user) { %>
-            <li><a href="/auth/login">Login</a></li>
-            <% } else { %>
-            <li><a href="/auth/logout">Logout</a></li>
-            <% } %>
-            <li><a href="/profile">Profile</a></li>
-            <li><a href="/profile/dashboard">Dashboard</a></li>
-            <li><a href="/profile/front-dashboard">Nova</a></li>
-        </ul>
-    </nav>
-    <header>
-        <h1>Log in with...</h1>
-    </header>
-    <main>
-        <a class="google-auth-btn" href="/auth/google">Google</a>
-    </main>
+    <div class="login__background">
+        <div class="login__parent">
+            <h2 class="header__text">Welcome to Loop!</h2>
+            <h4 class="greeting__headline" id="login__switcher">a complete suite of student organization tools</h4>
+            <form action="/auth/google">
+                <button class="ui button google-auth__button" href="/auth/google">
+                  <img class="google-auth__logo" src="../assets/svg/google.svg" />
+                  Sign in with Google
+                </button>
+            </form>
+        </div>
+    </div>
+    <script type="module" src="../scripts/main.js"></script>
 </body>
 </html>

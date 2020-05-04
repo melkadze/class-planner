@@ -1,277 +1,379 @@
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link rel="stylesheet" type="text/css" href="../styles/compat.css" />
-</head>
-<body>
-    <nav>
-        <ul>
-            <li><a href="/">Homepage</a></li>
-            <% if (!user) { %>
-            <li><a href="/auth/login">Login</a></li>
-            <% } else { %>
-            <li><a href="/auth/logout">Logout</a></li>
-            <% } %>
-            <li><a href="/profile">Profile</a></li>
-            <li><a href="/profile/dashboard">Dashboard</a></li>
-            <li><a href="/profile/front-dashboard">Nova</a></li>
-        </ul>
-    </nav>
-    <header>
-        <h1>Welcome to the Day/Schedule Creation Website!</h1>
-    </header>
-    <main>
-        
-        <h4>First, make a new schedule!</h4>
-        <p>Schedule name</p>
-        <input type="text" id="scheduleInputSchedule"></input>
-        <br>
-        <button id="scheduleInputButton">Upload schedule</button>
-        <p class="error" id="scheduleError"></p>
-        <p class="success" id="scheduleSuccess"></p>
-        
-        <h4>Now, a day.</h4>
-        <p>Day (0 for monday, 1 for tuesday, etc...)</p>
-        <input type="text" id="dayInputDay"></input>
-        <br>
-        <p>For which schedule?</p>
-        <input type="text" id="dayInputSchedule"></input>
-        <br>
-        <button id="dayInputButton">Upload day</button>
-        <p class="error" id="dayError"></p>
-        <p class="success" id="daySuccess"></p>
-        
-        <h4>Add a period to a schedule!!</h4>
-        <p>For which schedule?</p>
-        <input type="text" id="periodInputForSchedule"></input>
-        <br>
-        <p> Period number</p>
-        <input type="text" id="periodInputPeriod"></input>
-        <br>
-        <p>Hour of period start</p>
-        <input type="text" id="periodInputHourStart"></input>
-        <br>
-        <p>Minute of period start</p>
-        <input type="text" id="periodInputMinuteStart"></input>
-        <br>
-        <p>PM? start</p>
-        <input type="checkbox" id="periodInputAPMStart"></input>
-        <br>
-        <p>Hour of period end</p>
-        <input type="text" id="periodInputHourEnd"></input>
-        <br>
-        <p>Minute of period end</p>
-        <input type="text" id="periodInputMinuteEnd"></input>
-        <br>
-        <p>PM? end</p>
-        <input type="checkbox" id="periodInputAPMEnd"></input>
-        <br>
-        <!--
-        <input type="radio" id="inputAM" value="false">
-        <label for="inputAM">AM</label><br>
-        <input type="radio" id="inputPM" value="true">
-        <label for="inputPM">PM</label><br>  
-        -->
-        <button id="periodInputButton">Upload period</button>
-        <p class="error" id="periodError"></p>
-        <p class="success" id="periodSuccess"></p>
-        
-        <h4>What's the course for each of those periods?</h4>
-        <p>On which day?</p>
-        <input type="text" id="courseInputDay"></input>
-        <br>
-        <p>What period?</p>
-        <input type="text" id="courseInputPeriod"></input>
-        <br>
-        <p>What's the course for that period?</p>
-        <input type="text" id="courseInputCourse"></input>
-        <br>
-        <button id="courseInputButton">Upload course</button>
-        <p class="error" id="courseError"></p>
-        <p class="success" id="courseSuccess"></p>
-        
-        <h4>Now retrieve it...</h4>
-        <p>Which schedule?</p>
-        <input type="text" id="scheduleRetrieveSchedule"></input>
-        <br>
-        <button id="scheduleRetrieveButton">Get schedule</button>
-        <p class="error" id="scheduleGetError"></p>
-        <p class="success" id="scheduleGetSuccess"></p>
-        <ul>
-            <p id="periodDisplayPeriod0"></p>
-            <p id="periodDisplayTimeStart0"></p>
-            <p id="periodDisplayEnd0"></p>
-        </ul>
-        <br>
-        <ul>
-            <p id="periodDisplayPeriod1"></p>
-            <p id="periodDisplayTimeStart1"></p>
-            <p id="periodDisplayEnd1"></p>
-        </ul>
-        <br>
-        <ul>
-            <p id="periodDisplayPeriod2"></p>
-            <p id="periodDisplayTimeStart2"></p>
-            <p id="periodDisplayEnd2"></p>
-        </ul>
-        <br>
-        <ul>
-            <p id="periodDisplayPeriod3"></p>
-            <p id="periodDisplayTimeStart3"></p>
-            <p id="periodDisplayEnd3"></p>
-        </ul>
-        <br>
-        <ul>
-            <p id="periodDisplayPeriod4"></p>
-            <p id="periodDisplayTimeStart4"></p>
-            <p id="periodDisplayEnd4"></p>
-        </ul>
-        <br>
-        <ul>
-            <p id="periodDisplayPeriod5"></p>
-            <p id="periodDisplayTimeStart5"></p>
-            <p id="periodDisplayEnd5"></p>
-        </ul>
-        <br>
-        <ul>
-            <p id="periodDisplayPeriod6"></p>
-            <p id="periodDisplayTimeStart6"></p>
-            <p id="periodDisplayEnd6"></p>
-        </ul>
-        <br>
-        <ul>
-            <p id="periodDisplayPeriod7"></p>
-            <p id="periodDisplayTimeStart7"></p>
-            <p id="periodDisplayEnd7"></p>
-        </ul>
-        <br>
-        <ul>
-            <p id="periodDisplayPeriod8"></p>
-            <p id="periodDisplayTimeStart8"></p>
-            <p id="periodDisplayEnd8"></p>
-        </ul>
-        <br>
-        <ul>
-            <p id="periodDisplayPeriod9"></p>
-            <p id="periodDisplayTimeStart9"></p>
-            <p id="periodDisplayEnd9"></p>
-        </ul>
-        
-        <h4>Now retrieve the day...</h4>
-        <p>Which day?</p>
-        <input type="text" id="dayRetrieveDay"></input>
-        <br>
-        <button id="dayRetrieveButton">Get day</button>
-        <p class="error" id="dayGetError"></p>
-        <p class="success" id="dayGetSuccess"></p>
-        <ul>
-            <p id="courseDisplayPeriod0"></p>
-            <p id="courseDisplayCourse0"></p>
-            <p id="courseDisplayTimeStart0"></p>
-            <p id="courseDisplayEnd0"></p>
-        </ul>
-        <br>
-        <ul>
-            <p id="courseDisplayPeriod1"></p>
-            <p id="courseDisplayCourse1"></p>
-            <p id="courseDisplayTimeStart1"></p>
-            <p id="courseDisplayEnd1"></p>
-        </ul>
-        <br>
-        <ul>
-            <p id="courseDisplayPeriod2"></p>
-            <p id="courseDisplayCourse2"></p>
-            <p id="courseDisplayTimeStart2"></p>
-            <p id="courseDisplayEnd2"></p>
-        </ul>
-        <br>
-        <ul>
-            <p id="courseDisplayPeriod3"></p>
-            <p id="courseDisplayCourse3"></p>
-            <p id="courseDisplayTimeStart3"></p>
-            <p id="courseDisplayEnd3"></p>
-        </ul>
-        <br>
-        <ul>
-            <p id="courseDisplayPeriod4"></p>
-            <p id="courseDisplayCourse4"></p>
-            <p id="courseDisplayTimeStart4"></p>
-            <p id="courseDisplayEnd4"></p>
-        </ul>
-        <br>
-        <ul>
-            <p id="courseDisplayPeriod5"></p>
-            <p id="courseDisplayCourse5"></p>
-            <p id="courseDisplayTimeStart5"></p>
-            <p id="courseDisplayEnd5"></p>
-        </ul>
-        <br>
-        <ul>
-            <p id="courseDisplayPeriod6"></p>
-            <p id="courseDisplayCourse6"></p>
-            <p id="courseDisplayTimeStart6"></p>
-            <p id="courseDisplayEnd6"></p>
-        </ul>
-        <br>
-        <ul>
-            <p id="courseDisplayPeriod7"></p>
-            <p id="courseDisplayCourse7"></p>
-            <p id="courseDisplayTimeStart7"></p>
-            <p id="courseDisplayEnd7"></p>
-        </ul>
-        <br>
-        <ul>
-            <p id="courseDisplayPeriod8"></p>
-            <p id="courseDisplayCourse8"></p>
-            <p id="courseDisplayTimeStart8"></p>
-            <p id="courseDisplayEnd8"></p>
-        </ul>
-        <br>
-        <ul>
-            <p id="courseDisplayPeriod9"></p>
-            <p id="courseDisplayCourse9"></p>
-            <p id="courseDisplayTimeStart9"></p>
-            <p id="courseDisplayEnd9"></p>
-        </ul>
-        
-        <h4>Now, let's do tasks.</h4>
-        <p>What is the task?</p>
-        <input type="text" id="taskInputTask"></input>
-        <br>
-        <p>What course is it related to, if any? [Optional]</p>
-        <input type="text" id="taskInputCourse"></input>
-        <br>
-        <p>What date is it due?</p>
-        <input type="date" id="taskInputDate" value="" min=""></input>
-        <br>
-        <button id="taskInputButton">Upload task</button>
-        <p class="error" id="taskError"></p>
-        <p class="success" id="taskSuccess"></p>
-        
-        <h4>Events, too.</h4>
-        <p>What is the event?</p>
-        <input type="text" id="eventInputEvent"></input>
-        <br>
-        <p>What course is it related to, if any? [Optional]</p>
-        <input type="text" id="eventInputCourse"></input>
-        <br>
-        <p>What date is it due?</p>
-        <input type="date" id="eventInputDate" value="" min=""></input>
-        <br>
-        <button id="eventInputButton">Upload event</button>
-        <p class="error" id="eventError"></p>
-        <p class="success" id="eventSuccess"></p>
-        
-        <br><br><br><br><br><br><br>
-        <br><br><br><br><br><br><br>
-        <br><br><br><br><br><br><br>
-        <br><br><br><br><br><br><br>
-        <br><br><br><br><br><br><br>
-        <br><br><br><br><br><br><br>
-        <br><br><br><br><br><br><br>
-    </main>
-</body>
-<script type="text/javascript" src="../main.js"></script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Loop: Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="../styles/main.css" />
+    <link rel="icon" type="image/png" href="../assets/svg/smile.svg">
+  </head>
+  <body>
+    <div class="global--dashboard">
+      <nav class="navigation--side">
+        <a class="navigation__logo" href="#"> </a>
+        <div class="navigation__container">
+          <a class="navigation__button navigation__button--active" href="#">
+            <span class="navigation__icon navigation__icon--dashboard"> </span>
+            <p class="navigation__text navigation__text--active">
+              Your Dashboard
+            </p>
+          </a>
+          <a class="navigation__button" href="#">
+            <span class="navigation__icon navigation__icon--courses"></span>
+            <p class="navigation__text">Your Courses</p>
+          </a>
+        </div>
+        <a class="navigation__button" href="/profile/internals">
+          <span class="navigation__icon navigation__icon--settings"></span>
+          <p class="navigation__text">Your Settings</p>
+        </a>
+      </nav>
+      <header class="header">
+        <h2 class="header__text">Your Dashboard</h2>
+        <div class="header__profile">
+          <a class="header__button" href="/auth/logout">
+            <span class="header__icon header__icon--profile"></span>
+          </a>
+        </div>
+      </header>
+      <main class="dashboard">
+        <div class="greeting">
+          <div class="greeting_text">
+            <h4 class="greeting__headline">Welcome Back, <% if (!user) { %>Person<% } else { %><%= user.username %><% } %>.</h4>
+            <p class="greeting__subtitle" id="greeting__quote"></p>
+            <p
+              class="greeting__subtitle--alternative"
+              id="greeting__author"
+            ></p>
+            <p class="greeting__subtitle--alternative" id="greeting__update__title"></p>
+            <p class="greeting__subtitle" id="greeting__update"></p>
+          </div>
+          <img class="greeting__image" src="../assets/svg/books.svg" alt="books" />
+        </div>
+        <div class="calendar" id="calendar">
+          <h5 class="calendar__headline" id="calendar__headline"></h5>
+          <button class="calendar__button" id="calendar__buttonPrevious">
+            <img
+              src="../assets/svg/arrow-left.svg"
+              alt="left arrow"
+              class="calendar__icon"
+            />
+          </button>
+          <button class="calendar__button" id="calendar__buttonNext">
+            <img
+              src="../assets/svg/arrow-right.svg"
+              alt="right arrow"
+              class="calendar__icon"
+            />
+          </button>
+          <h6 class="calendar__weekdays">Sun</h6>
+          <h6 class="calendar__weekdays">Mon</h6>
+          <h6 class="calendar__weekdays">Tue</h6>
+          <h6 class="calendar__weekdays">Wed</h6>
+          <h6 class="calendar__weekdays">Thu</h6>
+          <h6 class="calendar__weekdays">Fri</h6>
+          <h6 class="calendar__weekdays">Sat</h6>
+        </div>
+        <div class="alarms">
+          <h5 class="alarms__headline">Your Events</h5>
+          <div class="alarms__container">
+            <div class="alarms__time">
+              <div class="clock">
+                <div class="clock__container clock__container--hour">
+                  <div id="clock__hour" class="clock__hour"></div>
+                </div>
+                <div class="clock__container clock__container--minute">
+                  <div id="clock__minute" class="clock__minute"></div>
+                </div>
+                <div class="clock__container clock__container--second">
+                  <div id="clock__second" class="clock__second"></div>
+                </div>
+              </div>
+              <h6 id="alarms__digital" class="alarms__digital"></h6>
+            </div>
+            <div class="alarms__grid">
+              <div class="alarms__module" id="alarms__module1">
+                <div id="alarms__container--icon1" class="alarms__container--icon alarms__container--green">
+                  <img
+                    src="../assets/svg/clock--white.svg"
+                    alt="clock"
+                    class="alarms__icon"
+                  />
+                </div>
+                <div class="alarms__text">
+                  <h6 id="alarms__timer1" class="alarms__timer"></h6>
+                  <p id="alarms__title1" class="alarms__title"></p>
+                </div>
+              </div>
+              <div class="alarms__module" id="alarms__module2">
+                <div id="alarms__container--icon2" class="alarms__container--icon alarms__container--cyan">
+                  <img
+                    src="../assets/svg/clock--white.svg"
+                    alt="clock"
+                    class="alarms__icon"
+                  />
+                </div>
+                <div class="alarms__text">
+                  <h6 id="alarms__timer2"  class="alarms__timer"></h6>
+                  <p id="alarms__title2" class="alarms__title"></p>
+                </div>
+              </div>
+              <div class="alarms__module" id="alarms__module3">
+                <div id="alarms__container--icon3" class="alarms__container--icon alarms__container--blue">
+                  <img
+                    src="../assets/svg/clock--white.svg"
+                    alt="clock"
+                    class="alarms__icon"
+                  />
+                </div>
+                <div class="alarms__text">
+                  <h6 id="alarms__timer3"  class="alarms__timer"></h6>
+                  <p id="alarms__title3" class="alarms__title"></p>
+                </div>
+              </div>
+              
+              <div class="alarms__module plus__container" id="plus__container__event">
+                <div class="alarms__text plus__text" id="plus__text__events">
+                  <h6 class="alarms__timer plus__title" id="plus__title__event">+</h6>
+                </div>
+              </div>
+              <div class="events__container plus__container__back" id="events__plus__container__back">
+                <div class="plus__container__parent" id="events__plus__container__parent">
+                  <div class="material__group" id="material__group1">      
+                    <input type="text" class="material__input" id="events__plus__event__input"required>
+                    <span class="material__highlight"></span>
+                    <span class="material__bar"></span>
+                    <label class="material__label">Event name</label>
+                  </div> 
+                  <div class="material__group" id="material__group2">      
+                    <input type="text" class="material__input" id="events__plus__course__input" required>
+                    <span class="material__highlight"></span>
+                    <span class="material__bar"></span>
+                    <label class="material__label">Course (optional)</label>
+                  </div> 
+                  <div class="material__group" id="material__group3">      
+                    <input type="text" class="material__input" id="events__plus__date__input" value="" required>
+                    <span class="material__highlight"></span>
+                    <span class="material__bar"></span>
+                    <label class="material__label">Due date (mm/dd/yyyy)</label>
+                  </div>
+                  <div class="page__container" id="events__page__container__plus">
+                    <button class="page__button" id="page__button__prev__plus">
+                      <img
+                        src="../assets/svg/arrow-left.svg"
+                        alt="left arrow"
+                        class="page__icon"
+                      />
+                    </button>
+                    <button class="page__button" id="page__button__next__plus">
+                      <img
+                        src="../assets/svg/arrow-right.svg"
+                        alt="right arrow"
+                        class="page__icon"
+                      />
+                    </button>
+                  </div>
+                  <h6 class="events__subtitle plus__container__error" id="events__plus__container__error"></h6>
+                </div>
+                <div class="plus__container--icon__parent">
+                  <div class="plus__container--icon plus__container--icon__check" id="events__plus__container--icon">
+                    <img
+                      src="../assets/svg/check.svg"
+                      alt="folder"
+                      class="events__icon"
+                    />
+                  </div>
+                  <div class="plus__container--icon plus__container--icon__cross" id="events__plus__container--icon--cross">
+                    <img
+                      src="../assets/svg/cross.svg"
+                      alt="folder"
+                      class="events__icon"
+                    />
+                  </div>
+                </div>
+              </div>
+              
+              <div class="page__container" id="events__page__container">
+                <button class="page__button" id="page__button__prev">
+                  <img
+                    src="../assets/svg/arrow-left.svg"
+                    alt="left arrow"
+                    class="page__icon"
+                  />
+                </button>
+                <button class="page__button" id="page__button__next">
+                  <img
+                    src="../assets/svg/arrow-right.svg"
+                    alt="right arrow"
+                    class="page__icon"
+                  />
+                </button>
+              </div>
+            
+            </div>
+          </div>
+        </div>
+        <h5 id="course__headline" class="course__headline">Your Upcoming Courses</h5>
+        <div id="course__container--first" class="course__container course__container--first">
+          <div class="course__container--icon course__container--green">
+            <img
+              src="../assets/svg/folder.svg"
+              alt="folder"
+              class="course__icon"
+            />
+          </div>
+          <div class="course__text">
+            <h6 id="course__title1" class="course__title"></h6>
+            <p id="course__subtitle1" class="course__subtitle"></p>
+          </div>
+        </div>
+        <div id="course__container--second" class="course__container course__container--second">
+          <div class="course__container--icon course__container--cyan">
+            <img
+              src="../assets/svg/folder.svg"
+              alt="folder"
+              class="course__icon"
+            />
+          </div>
+          <div class="course__text">
+            <h6 id="course__title2" class="course__title"></h6>
+            <p id="course__subtitle2" class="course__subtitle"></p>
+          </div>
+        </div>
+        <div id="course__container--third" class="course__container course__container--third">
+          <div class="course__container--icon course__container--blue">
+            <img
+              src="../assets/svg/folder.svg"
+              alt="folder"
+              class="course__icon"
+            />
+          </div>
+          <div class="course__text">
+            <h6 id="course__title3" class="course__title"></h6>
+            <p id="course__subtitle3" class="course__subtitle"></p>
+          </div>
+        </div>
+        <div class="tasks">
+          <h5 class="tasks__headline">Your Tasks</h5>
+          <div class="tasks__grid">
+            <div class="tasks__container" id="tasks__container1">
+              <div class="tasks__container--icon tasks__container--green" id="tasks__container--icon1">
+                <img
+                  src="../assets/svg/event.svg"
+                  alt="folder"
+                  class="tasks__icon"
+                />
+              </div>
+              <div class="tasks__text">
+                <h6 class="tasks__title" id="tasks__title1"></h6>
+                <p class="tasks__subtitle" id="tasks__subtitle1"></p>
+              </div>
+            </div>
+            <div class="tasks__container" id="tasks__container2">
+              <div class="tasks__container--icon tasks__container--cyan" id="tasks__container--icon2">
+                <img
+                  src="../assets/svg/event.svg"
+                  alt="folder"
+                  class="tasks__icon"
+                />
+              </div>
+              <div class="tasks__text">
+                <h6 class="tasks__title" id="tasks__title2"></h6>
+                <p class="tasks__subtitle" id="tasks__subtitle2"></p>
+              </div>
+            </div>
+            <div class="tasks__container" id="tasks__container3">
+              <div class="tasks__container--icon tasks__container--blue" id="tasks__container--icon3">
+                <img
+                  src="../assets/svg/event.svg"
+                  alt="folder"
+                  class="tasks__icon"
+                />
+              </div>
+              <div class="tasks__text">
+                <h6 class="tasks__title" id="tasks__title3"></h6>
+                <p class="tasks__subtitle" id="tasks__subtitle3"></p>
+              </div>
+            </div>
+            <div class="tasks__container" id="tasks__container4">
+              <div class="tasks__container--icon tasks__container--violet" id="tasks__container--icon4">
+                <img
+                  src="../assets/svg/event.svg"
+                  alt="folder"
+                  class="tasks__icon"
+                />
+              </div>
+              <div class="tasks__text">
+                <h6 class="tasks__title" id="tasks__title4"></h6>
+                <p class="tasks__subtitle" id="tasks__subtitle4"></p>
+              </div>
+            </div>
+            
+            <div class="tasks__container plus__container" id="tasks__plus__container">
+              <div class="tasks__text plus__text" id="plus__text__tasks">
+                <h6 class="tasks__title plus__title" id="plus__title__tasks">+</h6>
+              </div>
+            </div>
+            <div class="tasks__container plus__container__back" id="tasks__plus__container__back">
+              <div class="plus__container__parent" id="tasks__plus__container__parent">
+                <div class="material__group">      
+                  <input type="text" class="material__input" id="tasks__plus__task__input"required>
+                  <span class="material__highlight"></span>
+                  <span class="material__bar"></span>
+                  <label class="material__label">Task name</label>
+                </div> 
+                <div class="material__group">      
+                  <input type="text" class="material__input" id="tasks__plus__course__input" required>
+                  <span class="material__highlight"></span>
+                  <span class="material__bar"></span>
+                  <label class="material__label">Course (optional)</label>
+                </div> 
+                <div class="material__group">      
+                  <input type="text" class="material__input" id="tasks__plus__date__input" value="" required>
+                  <span class="material__highlight"></span>
+                  <span class="material__bar"></span>
+                  <label class="material__label">Due date (mm/dd/yyyy)</label>
+                </div>
+                <h6 class="tasks__subtitle plus__container__error" id="tasks__plus__container__error"></h6>
+              </div>
+              <div class="plus__container--icon__parent">
+                <div class="plus__container--icon plus__container--icon__check" id="tasks__plus__container--icon">
+                  <img
+                    src="../assets/svg/check.svg"
+                    alt="folder"
+                    class="tasks__icon"
+                  />
+                </div>
+                <div class="plus__container--icon plus__container--icon__cross" id="tasks__plus__container--icon--cross">
+                  <img
+                    src="../assets/svg/cross.svg"
+                    alt="folder"
+                    class="tasks__icon"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="page__container" id="task__page__container">
+              <button class="page__button" id="task__button__prev">
+                <img
+                  src="../assets/svg/arrow-left.svg"
+                  alt="left arrow"
+                  class="page__icon"
+                />
+              </button>
+              <button class="page__button" id="task__button__next">
+                <img
+                  src="../assets/svg/arrow-right.svg"
+                  alt="right arrow"
+                  class="page__icon"
+                />
+              </button>
+            </div>
+            
+          </div>
+        </div>
+      </main>
+    </div>
+    <script type="module" src="../scripts/main.js"></script>
+  </body>
 </html>

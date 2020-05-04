@@ -38,6 +38,36 @@ a {
     transform: translate3d(0.4rem, 0, 0);
   }
 }
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes backgroundColor {
+  0% {
+    background-color: #aabbff;
+  }
+  33% {
+    background-color: #b8abf5;
+  }
+  66% {
+    background-color: #abe9f5;
+  }
+  100% {
+    background-color: #aabbff;
+  }
+}
 body {
   overflow-x: hidden;
 }
@@ -74,6 +104,7 @@ body {
 
 .navigation__logo:hover {
   background-color: #aabbff;
+  cursor: grab;
 }
 
 .navigation__button--active .navigation__icon {
@@ -168,7 +199,7 @@ body {
   margin-left: 1.25vw;
   margin-right: 1.25vw;
   display: block;
-  cursor: grab;
+  cursor: pointer;
 }
 
 .header__icon:hover {
@@ -182,8 +213,8 @@ body {
 }
 
 .header__icon--profile {
-  -webkit-mask-image: url(../assets/svg/user.svg);
-  mask-image: url(../assets/svg/user.svg);
+  -webkit-mask-image: url(../assets/svg/exit.svg);
+  mask-image: url(../assets/svg/exit.svg);
   background-color: #33384d;
 }
 
@@ -301,7 +332,7 @@ body {
 
 .calendar__button:hover {
   background-color: #33384d;
-  cursor: grab;
+  cursor: pointer;
 }
 
 .page__container {
@@ -323,7 +354,7 @@ body {
 
 .page__button:hover {
   background-color: #33384d;
-  cursor: grab;
+  cursor: pointer;
 }
 
 .calendar__icon {
@@ -1034,6 +1065,48 @@ body {
 
 #events__plus__container__back .events__icon {
   margin: auto 1rem auto 1rem;
+}
+
+.login__background {
+  animation: backgroundColor 20s infinite;
+  width: 100vw;
+  height: 100vh;
+}
+
+.login__parent {
+  position: fixed;
+  top: 20vh;
+  width: 100vw;
+  text-align: center;
+}
+
+.ui.button {
+  box-shadow: 0 5px 10px rgba(168, 168, 168, 0.15);
+}
+.ui.button.google-auth__button {
+  margin-top: 2vh;
+  padding: 1rem 1.5rem;
+  background: #f5f5f5;
+  border-radius: 1rem;
+  font-size: 2rem;
+  line-height: 1.5em;
+  letter-spacing: 0.02rem;
+  color: rgba(0, 0, 0, 0.54);
+  transition: 0.1s ease-out;
+  outline: none;
+  border: 0;
+}
+.ui.button.google-auth__button:hover {
+  cursor: pointer;
+  background: #a8a8a8;
+}
+.ui.button.google-auth__button .google-auth__logo {
+  display: inline-block;
+  margin-right: 1rem;
+  height: 3rem;
+  width: 3rem;
+  line-height: 3rem;
+  vertical-align: top;
 }
 
 /*# sourceMappingURL=main.css.map */

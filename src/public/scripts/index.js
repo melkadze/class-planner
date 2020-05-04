@@ -33,7 +33,7 @@ const DOMStrings = {
 
 const updates = {
     title: "Stay in the loop:",
-    subtitle: "Loop's dashboard is now complete! We're on track to release within a couple weeks."
+    subtitle: "We've just removed all of the non-essential fragments of the old design."
 }
 
 const timeouts = {
@@ -1517,6 +1517,47 @@ async function isPeriodValidForSchedule(period, schedule) {
     return false
 }
 
+function loginSwitchTo(page) {
+    document.getElementById("login__switcher").style.animation = ''
+    document.getElementById("login__switcher").style.animation = 'fadeOut 0.6s ease-in-out'
+    setTimeout(() => {
+        document.getElementById("login__switcher").style.animation = ''
+        let newMessage
+        switch (page) {
+            case 1:
+                newMessage = 'a complete suite of student organization tools'
+                break
+            case 2:
+                newMessage = 'a planner to keep track of your events and tasks'
+                break
+            case 3:
+                newMessage = 'a dashboard to monitor the time you spend in class'
+                break
+            case 4:
+                newMessage = 'a look into the rest of your day'
+                break
+            case 5:
+                newMessage = 'a versatile tool to help you manage your school life'
+                break
+        }
+        document.getElementById("login__switcher").innerText = newMessage
+        document.getElementById("login__switcher").style.animation = 'fadeIn 0.6s ease-in-out'
+    }, 500)
+}
+
+function loginSwitcher() {
+    let page = 2
+    
+    setInterval(() => {
+        loginSwitchTo(page)
+        if (page >= 5) {
+            page = 1
+        } else {
+            page++
+        }
+    }, timeouts.second * 3)
+}
+
 function getDocumentTitle() {
     return document.title
 }
@@ -1534,9 +1575,18 @@ function setupDashboardPage() {
     initPlusButtons()
 }
 
+function setupLoginPage() {
+    loginSwitcher()
+}
+
 function setupRelevantPage() {
-    if (getDocumentTitle() == 'Loop: Dashboard') {
-        setupDashboardPage()
+    const docTitle = getDocumentTitle()
+    switch (docTitle) {
+        case 'Loop: Dashboard':
+            setupDashboardPage()
+            break
+        case 'Loop: Login':
+            setupLoginPage()
     }
 }
 
