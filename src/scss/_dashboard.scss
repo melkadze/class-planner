@@ -78,6 +78,7 @@ body {
 }
 .navigation__logo:hover {
   background-color: color.$blue-primary;
+  cursor: grab;
 }
 .navigation__button--active {
   .navigation__icon {
@@ -156,7 +157,7 @@ body {
   margin-left: 1.25vw;
   margin-right: 1.25vw;
   display: block;
-  cursor: grab;
+  cursor: pointer;
 }
 .header__icon:hover {
   background-color: color.$blue-primary;
@@ -167,8 +168,8 @@ body {
   background-color: color.$blue-dark-shade;
 }
 .header__icon--profile {
-  -webkit-mask-image: url(../assets/svg/user.svg);
-  mask-image: url(../assets/svg/user.svg);
+  -webkit-mask-image: url(../assets/svg/exit.svg);
+  mask-image: url(../assets/svg/exit.svg);
   background-color: color.$blue-dark-shade;
 }
 .dashboard {
@@ -245,7 +246,7 @@ body {
 }
 .calendar__button:hover {
   background-color: color.$blue-dark-shade;
-  cursor: grab;
+  cursor: pointer;
 }
 .page__container {
   display: none; //flex
@@ -264,7 +265,7 @@ body {
 }
 .page__button:hover {
   background-color: color.$blue-dark-shade;
-  cursor: grab;
+  cursor: pointer;
 }
 .calendar__icon {
   height: 75%;
