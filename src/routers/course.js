@@ -1,11 +1,9 @@
 const router = require('express').Router();
 const Course = require("../models/course")
 const Day = require("../models/day")
-const Schedule = require("../models/schedule")
 const authCheck = require('../middleware/authCheck')
 const functions = require('../config/functions')
 
-////make everything async?
 //make a new schedule
 router.post('/upload', authCheck, async (req, res) => {
     try {

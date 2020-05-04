@@ -4,7 +4,6 @@ const Period = require("../models/period")
 const authCheck = require('../middleware/authCheck')
 const functions = require('../config/functions')
 
-////make everything async?
 //make a new schedule
 router.post('/upload', authCheck, async (req, res) => {
     const schedule = new Schedule ({
@@ -22,7 +21,6 @@ router.post('/upload', authCheck, async (req, res) => {
 
 router.get('/:id', authCheck, async (req, res) => {
     const schedule = req.params.id
-    //const scheduleID = Schedule.findOne({ name: schedule })
     try {
         await Schedule.findOne({ name: schedule, owner: req.user._id }, function (err, adv) {
             if (adv) {

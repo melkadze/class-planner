@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema(
   {
-    //the user's full name; e.g. Nick Melkadze
+    //the user's full name
     username: {
       type: String
     },

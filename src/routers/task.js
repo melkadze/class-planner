@@ -3,7 +3,6 @@ const Task = require("../models/task")
 const authCheck = require('../middleware/authCheck')
 const functions = require('../config/functions')
 
-////make everything async?
 //make a new task
 router.post('/upload', authCheck, async (req, res) => {
     const task = new Task ({

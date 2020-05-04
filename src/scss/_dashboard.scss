@@ -4,19 +4,19 @@
 @use 'typography';
 @keyframes shake {
   10%, 90% {
-    transform: translate3d(-1px, 0, 0);
+    transform: translate3d(-0.2rem, 0, 0);
   }
   
   20%, 80% {
-    transform: translate3d(2px, 0, 0);
+    transform: translate3d(0.4rem, 0, 0);
   }
 
   30%, 50%, 70% {
-    transform: translate3d(-4px, 0, 0);
+    transform: translate3d(-0.8rem, 0, 0);
   }
 
   40%, 60% {
-    transform: translate3d(4px, 0, 0);
+    transform: translate3d(0.4rem, 0, 0);
   }
 }
 body {
@@ -42,8 +42,8 @@ body {
 .navigation__logo {
   height: 5vw;
   width: 5vw;
-  -webkit-mask-image: url(../assets/svg/logo.svg);
-  mask-image: url(../assets/svg/logo.svg);
+  -webkit-mask-image: url(../assets/svg/smile.svg);
+  mask-image: url(../assets/svg/smile.svg);
   background-color: color.$blue-accent-tint;
 }
 .navigation__logo:hover {
@@ -402,7 +402,7 @@ body {
   justify-content: center;
   align-items: center;
   border: 0.75vw solid color.$white;
-  box-shadow: inset 0 0 30px rgba(color.$dark-gray, 10%);
+  box-shadow: inset 0 0 2rem rgba(color.$dark-gray, 10%);
 }
 .clock::before {
   content: "";
@@ -411,7 +411,7 @@ body {
   width: 0.75vw;
   background-color: color.$dark-gray;
   border-radius: 50%;
-  border: 2px solid color.$white;
+  border: 0.4rem solid color.$white;
   z-index: 4;
 }
 .clock__container {
