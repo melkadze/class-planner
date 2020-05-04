@@ -67,8 +67,8 @@ body {
 .navigation__logo {
   height: 5vw;
   width: 5vw;
-  -webkit-mask-image: url(../assets/svg/logo.svg);
-  mask-image: url(../assets/svg/logo.svg);
+  -webkit-mask-image: url(../assets/svg/smile.svg);
+  mask-image: url(../assets/svg/smile.svg);
   background-color: #dee4ff;
 }
 
