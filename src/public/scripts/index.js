@@ -29,6 +29,14 @@ const DOMStrings = {
   course__subtitle3: document.getElementById("course__subtitle3"),
   alarms__timer1: document.getElementById("alarms__timer1"),
   alarms__title1: document.getElementById("alarms__title1"),
+  dropdown__schedule: document.getElementById("dropdown__schedule"),
+  options__schedule: document.getElementById("options__schedule"),
+  icon__schedule: document.getElementById("icon__schedule"),
+  text__schedule: document.getElementById("text__schedule"),
+  dropdown__weekday: document.getElementById("dropdown__weekday"),
+  options__weekday: document.getElementById("options__weekday"),
+  icon__weekday: document.getElementById("icon__weekday"),
+  text__weekday: document.getElementById("text__weekday"),
 };
 
 const updates = {
@@ -49,6 +57,17 @@ let pages = {
     eventsPlus: 1,
     tasks: 1
 }
+
+const menu = {
+    open(options, icon) {
+        options.dataset.visibility = "visible";
+        icon.src = "assets/svg/caret--up.svg";
+    },
+    close(options, icon) {
+        options.dataset.visibility = "hidden";
+        icon.src = "assets/svg/caret--down.svg";
+    },
+};
 
 const eventListeners = {
   calendarNavigation() {
@@ -86,6 +105,42 @@ const eventListeners = {
       displayTime.displayMonthAndYear(month, year);
       displayTime.displayDays(month, year);
     });
+  },
+  dropdown() {
+    const dropdown__schedule = DOMStrings.dropdown__schedule;
+    const options__schedule = DOMStrings.options__schedule;
+    const icon__schedule = DOMStrings.icon__schedule;
+    const text__schedule = DOMStrings.text__schedule;
+    const dropdown__weekday = DOMStrings.dropdown__weekday;
+    const options__weekday = DOMStrings.options__weekday;
+    const icon__weekday = DOMStrings.icon__weekday;
+    const text__weekday = DOMStrings.text__weekday;
+    function initializeDropdown(dropdown, options, icon, text) {
+      dropdown.addEventListener("click", () => {
+        options.dataset.visibility == "hidden"
+          ? menu.open(options, icon)
+          : menu.close(options, icon);
+      });
+      Array.from(options.children).forEach((option) => {
+        option.addEventListener("click", () => {
+          text.innerText = option.innerText;
+          text.dataset.text = "active";
+          menu.close(options, icon);
+        });
+      });
+    }
+    initializeDropdown(
+      dropdown__schedule,
+      options__schedule,
+      icon__schedule,
+      text__schedule
+    );
+    initializeDropdown(
+      dropdown__weekday,
+      options__weekday,
+      icon__weekday,
+      text__weekday
+    );
   },
 };
 
@@ -1563,7 +1618,7 @@ function getDocumentTitle() {
 }
 
 function setupDashboardPage() {
-    displayTime.displayMonthAndYear(time.getCurrentMonth(), time.getCurrentYear());
+    displayTime.displayMonthAndYear(time.getCurrentMonth(), time.getCurrentYear()); 
     displayTime.displayDays(time.getCurrentMonth(), time.getCurrentYear());
     displayTime.displayAnalogTime();
     displayTime.displayDigitalTime();
@@ -1579,6 +1634,10 @@ function setupLoginPage() {
     loginSwitcher()
 }
 
+function setupCoursesPage() {
+    eventListeners.dropdown();
+}
+
 function setupRelevantPage() {
     const docTitle = getDocumentTitle()
     switch (docTitle) {
@@ -1587,6 +1646,10 @@ function setupRelevantPage() {
             break
         case 'Loop: Login':
             setupLoginPage()
+            break
+        case 'Loop: Courses':
+            setupCoursesPage()
+            break
     }
 }
 

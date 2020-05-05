@@ -135,6 +135,7 @@ body {
   margin-bottom: 2.5vw;
 }
 .header {
+  @include grid.grid-position(2, 1, 1, 1);
   justify-items: center;
   align-items: center;
   margin-left: 2.5vw;
@@ -308,6 +309,7 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  color: color.$white;
 }
 .calendar__day--container--emphasized {
   position: relative;
