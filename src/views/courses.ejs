@@ -1,0 +1,136 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Loop Courses</title>
+    <link rel="stylesheet" type="text/css" href="styles/main.css" />
+  </head>
+  <body>
+    <div class="global--dashboard">
+      <nav class="navigation--side">
+        <a class="navigation__logo" href="front-dashboard.html"> </a>
+        <div class="navigation__container">
+          <a class="navigation__button" href="front-dashboard.html">
+            <span class="navigation__icon navigation__icon--dashboard"> </span>
+            <p class="navigation__text">
+              Dashboard
+            </p>
+          </a>
+          <a class="navigation__button" href="calendar.html">
+            <span class="navigation__icon navigation__icon--calendar"></span>
+            <p class="navigation__text">Calendar</p>
+          </a>
+          <a
+            class="navigation__button navigation__button--active"
+            href="courses.html"
+          >
+            <span class="navigation__icon navigation__icon--courses"></span>
+            <p class="navigation__text navigation__text--active">Courses</p>
+          </a>
+          <a class="navigation__button" href="#">
+            <span class="navigation__icon navigation__icon--clock"></span>
+            <p class="navigation__text">Clock</p>
+          </a>
+        </div>
+        <a class="navigation__button" href="#">
+          <span class="navigation__icon navigation__icon--settings"></span>
+          <p class="navigation__text">Settings</p>
+        </a>
+      </nav>
+      <header class="header">
+        <h2 class="header__text" id="header__text">Courses</h2>
+        <div class="header__profile">
+          <a class="header__button">
+            <span class="header__icon header__icon--notifications"></span>
+          </a>
+          <a class="header__button">
+            <span class="header__icon header__icon--profile"></span>
+          </a>
+        </div>
+      </header>
+      <main class="courses">
+        <div class="courses__scheduleApply">
+          <h6 class="courses__headline">Schedule Times</h6>
+          <p class="courses__text">
+            Select a schedule and its respective weekday to indicate when your
+            schedule occurs throughout the week.
+          </p>
+          <label class="courses__label">Schedule</label>
+          <div class="courses__container--dropdown">
+            <div class="courses__dropdown" id="dropdown__schedule">
+              <p
+                class="courses__text--alternative"
+                id="text__schedule"
+                data-text="placeholder"
+              >
+                Schedule Name
+              </p>
+              <img
+                src="assets/svg/caret--down.svg"
+                class="courses__icon"
+                id="icon__schedule"
+              />
+            </div>
+            <div
+              class="courses__options"
+              id="options__schedule"
+              data-visibility="hidden"
+            >
+              <div class="courses__option">
+                <p class="courses__text--alternative">Schedule 1A</p>
+              </div>
+              <div class="courses__option">
+                <p class="courses__text--alternative">Schedule 2A</p>
+              </div>
+            </div>
+          </div>
+          <label class="courses__label">Weekday</label>
+          <div class="courses__container--dropdown">
+            <div class="courses__dropdown" id="dropdown__weekday">
+              <p
+                class="courses__text--alternative"
+                id="text__weekday"
+                data-text="placeholder"
+              >
+                Weekday
+              </p>
+              <img
+                src="assets/svg/caret--down.svg"
+                class="courses__icon"
+                id="icon__weekday"
+              />
+            </div>
+            <div
+              class="courses__options"
+              id="options__weekday"
+              data-visibility="hidden"
+            >
+              <div class="courses__option">
+                <p class="courses__text--alternative">Monday</p>
+              </div>
+              <div class="courses__option">
+                <p class="courses__text--alternative">Tuesday</p>
+              </div>
+              <div class="courses__option">
+                <p class="courses__text--alternative">Wednesday</p>
+              </div>
+              <div class="courses__option">
+                <p class="courses__text--alternative">Thursday</p>
+              </div>
+              <div class="courses__option">
+                <p class="courses__text--alternative">Friday</p>
+              </div>
+            </div>
+          </div>
+          <button class="courses__button">
+            <p class="courses__text--button">Apply</p>
+          </button>
+        </div>
+        <div class="courses__scheduleCreate"></div>
+        <div class="courses__scheduleDisplay"></div>
+        <div class="courses__coursesDisplay"></div>
+      </main>
+    </div>
+    <script type="module" src="scripts/index.js"></script>
+  </body>
+</html>

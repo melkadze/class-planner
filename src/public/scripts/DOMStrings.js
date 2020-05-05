@@ -1,4 +1,5 @@
 const DOMStrings = {
+  header__text: document.getElementById("header__text"),
   greeting__quote: document.getElementById("greeting__quote"),
   greeting__author: document.getElementById("greeting__author"),
   calendar: document.getElementById("calendar"),
@@ -9,5 +10,13 @@ const DOMStrings = {
   clock__minute: document.getElementById("clock__minute"),
   clock__second: document.getElementById("clock__second"),
   alarms__digital: document.getElementById("alarms__digital"),
+  dropdown__schedule: document.getElementById("dropdown__schedule"),
+  options__schedule: document.getElementById("options__schedule"),
+  icon__schedule: document.getElementById("icon__schedule"),
+  text__schedule: document.getElementById("text__schedule"),
+  dropdown__weekday: document.getElementById("dropdown__weekday"),
+  options__weekday: document.getElementById("options__weekday"),
+  icon__weekday: document.getElementById("icon__weekday"),
+  text__weekday: document.getElementById("text__weekday"),
 };
 export { DOMStrings };
