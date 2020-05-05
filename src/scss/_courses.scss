@@ -8,20 +8,32 @@
   padding: 2.5vw;
 }
 .courses__scheduleApply {
-  @include grid.grid-position(1, 3, 1, 6);
+  @include grid.grid-position(2, 3, 1, 6);
   border-radius: 0.5vw;
   padding: 1.25vw;
   background-color: color.$light-gray;
   @include effects.drop-shadow();
 }
 .courses__scheduleCreate {
-  @include grid.grid-position(1, 3, 7, 6);
+  @include grid.grid-position(2, 3, 7, 6);
+  border-radius: 0.5vw;
+  padding: 1.25vw;
+  background-color: color.$light-gray;
+  @include effects.drop-shadow();
 }
 .courses__scheduleDisplay {
-  @include grid.grid-position(4, 3, 1, 12);
+  @include grid.grid-position(5, 3, 1, 12);
+  border-radius: 0.5vw;
+  padding: 1.25vw;
+  background-color: color.$light-gray;
+  @include effects.drop-shadow();
 }
 .courses__coursesDisplay {
-  @include grid.grid-position(7, 3, 1, 12);
+  @include grid.grid-position(8, 4, 1, 12);
+  border-radius: 0.5vw;
+  padding: 1.25vw;
+  background-color: color.$light-gray;
+  @include effects.drop-shadow();
 }
 .courses__headline {
   padding-bottom: 0.5vw;
@@ -36,7 +48,6 @@
 .courses__text--alternative {
   color: color.$blue-dark-shade;
   @include typography.body-2();
-  list-style-type: none;
 }
 .courses__text--alternative[data-text="placeholder"] {
   color: color.$dark-gray;
@@ -107,4 +118,128 @@
   margin: auto;
   color: color.$white;
   @include typography.button();
+}
+.courses__input--text {
+  width: 16vw;
+  margin-top: 0.5vw;
+  margin-bottom: 0.75vw;
+  border: 2px solid color.$dark-gray;
+  border-radius: 0.25vw;
+  padding: 0.5vw;
+  background-color: color.$light-gray;
+  color: color.$blue-dark-shade;
+  @include typography.body-2();
+}
+.courses__header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.courses__button--minimal {
+  height: 1.5vw;
+  width: 1.5vw;
+  margin: 0 0.5vw;
+  border: none;
+  border-radius: 0.75vw;
+  text-decoration: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+.courses__button--minimal[data-active="false"] {
+  background-color: color.$dark-gray;
+}
+.courses__button--minimal[data-active="true"] {
+  background-color: color.$blue-primary;
+  @include effects.drop-shadow();
+  cursor: pointer;
+}
+.courses__button--minimal[data-active="true"]:hover {
+  background-color: color.$blue-dark-shade;
+}
+.courses__container--items {
+  @include grid.grid(1, 0, 9, 0.5vw);
+  height: calc(100% - 2vw);
+  width: 100%;
+}
+.courses__container--text {
+  padding: 0.25vw;
+}
+.courses__container--item {
+  display: flex;
+  flex-direction: row;
+  border-radius: 0.5vw;
+  padding: 0.5vw;
+  @include effects.drop-shadow();
+}
+.courses__container--item:nth-child(1) {
+  .courses__container--icon {
+    background-color: color.$blue-accent-shade;
+  }
+  background-color: color.$blue-primary;
+}
+.courses__container--item:nth-child(2) {
+  .courses__container--icon {
+    background-color: color.$blue-primary;
+  }
+  background-color: color.$blue-accent-tint;
+}
+.courses__container--item:nth-child(3) {
+  .courses__container--icon {
+    background-color: color.$blue-accent-shade;
+  }
+  background-color: color.$blue-primary;
+}
+.courses__container--item:nth-child(4) {
+  .courses__container--icon {
+    background-color: color.$blue-primary;
+  }
+  background-color: color.$blue-accent-tint;
+}
+.courses__container--item:nth-child(5) {
+  .courses__container--icon {
+    background-color: color.$blue-accent-shade;
+  }
+  background-color: color.$blue-primary;
+}
+.courses__container--item:nth-child(6) {
+  .courses__container--icon {
+    background-color: color.$blue-primary;
+  }
+  background-color: color.$blue-accent-tint;
+}
+.courses__container--item:nth-child(7) {
+  .courses__container--icon {
+    background-color: color.$blue-accent-shade;
+  }
+  background-color: color.$blue-primary;
+}
+.courses__container--item:nth-child(8) {
+  .courses__container--icon {
+    background-color: color.$blue-primary;
+  }
+  background-color: color.$blue-accent-tint;
+}
+.courses__container--item:nth-child(9) {
+  .courses__container--icon {
+    background-color: color.$blue-accent-shade;
+  }
+  background-color: color.$blue-primary;
+}
+
+.courses__container--icon {
+  height: 3vw;
+  width: 3vw;
+  margin: auto 1vw auto 0;
+  border-radius: 0.5vw;
+  padding: 0.5vw;
+}
+
+.courses__subtitle {
+  margin-top: 0.25vw;
+  color: color.$blue-dark-shade;
+  @include typography.subtitle-2();
+}
+.courses__item--icon {
+  height: 100%;
+  width: 100%;
 }
