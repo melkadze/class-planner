@@ -51,6 +51,7 @@
 }
 .courses__text--alternative[data-text="placeholder"] {
   color: color.$dark-gray;
+  margin: auto 0;
 }
 .courses__label {
   color: color.$blue-dark-shade;
@@ -105,6 +106,7 @@
   padding: 1rem 2rem;
   background-color: color.$blue-primary;
   border: none;
+  outline: 0;
   border-radius: 1.25vw;
   text-decoration: none;
   cursor: pointer;

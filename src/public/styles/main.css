@@ -1112,6 +1112,8 @@ body {
   width: 3rem;
   line-height: 3rem;
   vertical-align: top;
+}
+
 .courses {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
@@ -1193,6 +1195,7 @@ body {
 
 .courses__text--alternative[data-text=placeholder] {
   color: #a8a8a8;
+  margin: auto 0;
 }
 
 .courses__label {
@@ -1260,6 +1263,7 @@ body {
   padding: 1rem 2rem;
   background-color: #aabbff;
   border: none;
+  outline: 0;
   border-radius: 1.25vw;
   text-decoration: none;
   cursor: pointer;

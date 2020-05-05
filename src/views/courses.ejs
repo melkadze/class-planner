@@ -3,14 +3,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Loop: Courses</title>
-    <link rel="stylesheet" type="text/css" href="styles/main.css" />
+    <link rel="stylesheet" type="text/css" href="../styles/main.css" />
+    <link rel="icon" type="image/png" href="../assets/svg/smile.svg">
   </head>
   <body>
     <div class="global--dashboard">
       <nav class="navigation--side">
-        <a class="navigation__logo" href="front-dashboard.html"> </a>
+        <a class="navigation__logo" href="/profile/dashboard"> </a>
         <div class="navigation__container">
-          <a class="navigation__button" href="front-dashboard.html">
+          <a class="navigation__button" href="/profile/dashboard">
             <span class="navigation__icon navigation__icon--dashboard"> </span>
             <p class="navigation__text">
               Your Dashboard
@@ -32,10 +33,7 @@
       <header class="header">
         <h2 class="header__text" id="header__text">Your Courses</h2>
         <div class="header__profile">
-          <a class="header__button">
-            <span class="header__icon header__icon--notifications"></span>
-          </a>
-          <a class="header__button">
+          <a class="header__button" href="/auth/logout">
             <span class="header__icon header__icon--profile"></span>
           </a>
         </div>
@@ -58,7 +56,7 @@
                 Schedule Name
               </p>
               <img
-                src="assets/svg/caret--down.svg"
+                src="../assets/svg/caret--down.svg"
                 class="courses__icon"
                 id="icon__schedule"
               />
@@ -87,7 +85,7 @@
                 Weekday
               </p>
               <img
-                src="assets/svg/caret--down.svg"
+                src="../assets/svg/caret--down.svg"
                 class="courses__icon"
                 id="icon__weekday"
               />
@@ -111,6 +109,12 @@
               </div>
               <div class="courses__option">
                 <p class="courses__text--alternative">Friday</p>
+              </div>
+              <div class="courses__option">
+                <p class="courses__text--alternative">Saturday</p>
+              </div>
+              <div class="courses__option">
+                <p class="courses__text--alternative">Sunday</p>
               </div>
             </div>
           </div>
@@ -140,7 +144,7 @@
                 data-active="false"
               >
                 <img
-                  src="assets/svg/arrow-left.svg"
+                  src="../assets/svg/arrow-left.svg"
                   class="courses__icon--button"
                 />
               </button>
@@ -150,7 +154,7 @@
                 data-active="false"
               >
                 <img
-                  src="assets/svg/arrow-right.svg"
+                  src="../assets/svg/arrow-right.svg"
                   class="courses__icon--button"
                 />
               </button>
@@ -159,7 +163,7 @@
           <div class="courses__container--items">
             <div class="courses__container--item">
               <div class="courses__container--icon">
-                <img src="assets/svg/alarm.svg" class="courses__item--icon" />
+                <img src="../assets/svg/alarm.svg" class="courses__item--icon" />
               </div>
               <div class="courses__container--text">
                 <p class="courses__text--alternative">Period 1</p>
@@ -168,7 +172,7 @@
             </div>
             <div class="courses__container--item">
               <div class="courses__container--icon">
-                <img src="assets/svg/alarm.svg" class="courses__item--icon" />
+                <img src="../assets/svg/alarm.svg" class="courses__item--icon" />
               </div>
               <div class="courses__container--text">
                 <p class="courses__text--alternative">Period 2</p>
@@ -177,7 +181,7 @@
             </div>
             <div class="courses__container--item">
               <div class="courses__container--icon">
-                <img src="assets/svg/alarm.svg" class="courses__item--icon" />
+                <img src="../assets/svg/alarm.svg" class="courses__item--icon" />
               </div>
               <div class="courses__container--text">
                 <p class="courses__text--alternative">Period 3</p>
@@ -186,7 +190,7 @@
             </div>
             <div class="courses__container--item">
               <div class="courses__container--icon">
-                <img src="assets/svg/alarm.svg" class="courses__item--icon" />
+                <img src="../assets/svg/alarm.svg" class="courses__item--icon" />
               </div>
               <div class="courses__container--text">
                 <p class="courses__text--alternative">Period 4</p>
@@ -195,7 +199,7 @@
             </div>
             <div class="courses__container--item">
               <div class="courses__container--icon">
-                <img src="assets/svg/alarm.svg" class="courses__item--icon" />
+                <img src="../assets/svg/alarm.svg" class="courses__item--icon" />
               </div>
               <div class="courses__container--text">
                 <p class="courses__text--alternative">Period 5</p>
@@ -204,7 +208,7 @@
             </div>
             <div class="courses__container--item">
               <div class="courses__container--icon">
-                <img src="assets/svg/alarm.svg" class="courses__item--icon" />
+                <img src="../assets/svg/alarm.svg" class="courses__item--icon" />
               </div>
               <div class="courses__container--text">
                 <p class="courses__text--alternative">Period 6</p>
@@ -213,7 +217,7 @@
             </div>
             <div class="courses__container--item">
               <div class="courses__container--icon">
-                <img src="assets/svg/alarm.svg" class="courses__item--icon" />
+                <img src="../assets/svg/alarm.svg" class="courses__item--icon" />
               </div>
               <div class="courses__container--text">
                 <p class="courses__text--alternative">Period 7</p>
@@ -222,7 +226,7 @@
             </div>
             <div class="courses__container--item">
               <div class="courses__container--icon">
-                <img src="assets/svg/alarm.svg" class="courses__item--icon" />
+                <img src="../assets/svg/alarm.svg" class="courses__item--icon" />
               </div>
               <div class="courses__container--text">
                 <p class="courses__text--alternative">Period 8</p>
@@ -231,7 +235,7 @@
             </div>
             <div class="courses__container--item">
               <div class="courses__container--icon">
-                <img src="assets/svg/alarm.svg" class="courses__item--icon" />
+                <img src="../assets/svg/alarm.svg" class="courses__item--icon" />
               </div>
               <div class="courses__container--text">
                 <p class="courses__text--alternative">Period 9</p>
@@ -250,7 +254,7 @@
                 data-active="true"
               >
                 <img
-                  src="assets/svg/arrow-left.svg"
+                  src="../assets/svg/arrow-left.svg"
                   class="courses__icon--button"
                 />
               </button>
@@ -260,7 +264,7 @@
                 data-active="true"
               >
                 <img
-                  src="assets/svg/arrow-right.svg"
+                  src="../assets/svg/arrow-right.svg"
                   class="courses__icon--button"
                 />
               </button>
@@ -270,7 +274,7 @@
             <div class="courses__container--item">
               <div class="courses__container--icon">
                 <img
-                  src="assets/svg/book--light.svg"
+                  src="../assets/svg/book--light.svg"
                   class="courses__item--icon"
                 />
               </div>
@@ -282,7 +286,7 @@
             <div class="courses__container--item">
               <div class="courses__container--icon">
                 <img
-                  src="assets/svg/book--light.svg"
+                  src="../assets/svg/book--light.svg"
                   class="courses__item--icon"
                 />
               </div>
@@ -294,7 +298,7 @@
             <div class="courses__container--item">
               <div class="courses__container--icon">
                 <img
-                  src="assets/svg/book--light.svg"
+                  src="../assets/svg/book--light.svg"
                   class="courses__item--icon"
                 />
               </div>
@@ -306,7 +310,7 @@
             <div class="courses__container--item">
               <div class="courses__container--icon">
                 <img
-                  src="assets/svg/book--light.svg"
+                  src="../assets/svg/book--light.svg"
                   class="courses__item--icon"
                 />
               </div>
@@ -318,7 +322,7 @@
             <div class="courses__container--item">
               <div class="courses__container--icon">
                 <img
-                  src="assets/svg/book--light.svg"
+                  src="../assets/svg/book--light.svg"
                   class="courses__item--icon"
                 />
               </div>
@@ -332,7 +336,7 @@
             <div class="courses__container--item">
               <div class="courses__container--icon">
                 <img
-                  src="assets/svg/book--light.svg"
+                  src="../assets/svg/book--light.svg"
                   class="courses__item--icon"
                 />
               </div>
@@ -344,7 +348,7 @@
             <div class="courses__container--item">
               <div class="courses__container--icon">
                 <img
-                  src="assets/svg/book--light.svg"
+                  src="../assets/svg/book--light.svg"
                   class="courses__item--icon"
                 />
               </div>
@@ -356,7 +360,7 @@
             <div class="courses__container--item">
               <div class="courses__container--icon">
                 <img
-                  src="assets/svg/book--light.svg"
+                  src="../assets/svg/book--light.svg"
                   class="courses__item--icon"
                 />
               </div>
@@ -370,7 +374,7 @@
             <div class="courses__container--item">
               <div class="courses__container--icon">
                 <img
-                  src="assets/svg/book--light.svg"
+                  src="../assets/svg/book--light.svg"
                   class="courses__item--icon"
                 />
               </div>
@@ -383,6 +387,6 @@
         </div>
       </main>
     </div>
-    <script type="module" src="scripts/index.js"></script>
+    <script type="module" src="../scripts/main.js"></script>
   </body>
 </html>

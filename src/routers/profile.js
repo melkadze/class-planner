@@ -27,5 +27,12 @@ router.get('/dashboard', authCheck, (req, res) => {
     }
 })
 
-module.exports = router;
+router.get('/courses', authCheck, (req, res) => {
+    try{
+        res.render('courses', {user: req.user});
+    } catch(err) {
+        functions.error(res, 500, err);
+    }
+})
 
+module.exports = router;

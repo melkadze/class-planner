@@ -61,11 +61,11 @@ let pages = {
 const menu = {
     open(options, icon) {
         options.dataset.visibility = "visible";
-        icon.src = "assets/svg/caret--up.svg";
+        icon.src = "../assets/svg/caret--up.svg";
     },
     close(options, icon) {
         options.dataset.visibility = "hidden";
-        icon.src = "assets/svg/caret--down.svg";
+        icon.src = "../assets/svg/caret--down.svg";
     },
 };
 
