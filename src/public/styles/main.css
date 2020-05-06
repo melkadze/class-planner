@@ -1311,6 +1311,7 @@ body {
   width: 1.5vw;
   margin: 0 0.5vw;
   border: none;
+  outline: 0;
   border-radius: 0.75vw;
   text-decoration: none;
   -webkit-appearance: none;
@@ -1343,6 +1344,7 @@ body {
 
 .courses__container--text {
   padding: 0.25vw;
+  margin: auto 0;
 }
 
 .courses__container--item {

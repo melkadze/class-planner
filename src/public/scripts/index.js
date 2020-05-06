@@ -58,6 +58,11 @@ let pages = {
     tasks: 1
 }
 
+let selections = {
+    weekday: '',
+    schedule: 'Tech 1A'
+}
+
 const menu = {
     open(options, icon) {
         options.dataset.visibility = "visible";
@@ -106,7 +111,7 @@ const eventListeners = {
       displayTime.displayDays(month, year);
     });
   },
-  dropdown() {
+  dropdown() { //@note dropdown
     const dropdown__schedule = DOMStrings.dropdown__schedule;
     const options__schedule = DOMStrings.options__schedule;
     const icon__schedule = DOMStrings.icon__schedule;
@@ -124,6 +129,11 @@ const eventListeners = {
       Array.from(options.children).forEach((option) => {
         option.addEventListener("click", () => {
           text.innerText = option.innerText;
+          if (isWeekday(text.innerText)) {
+              selections.weekday = text.innerText
+          } else {
+              selections.schedule = text.innerText
+          }
           text.dataset.text = "active";
           menu.close(options, icon);
         });
@@ -615,6 +625,16 @@ function getDayInfo() {
     })
 }
 
+function getFullDayInfo() {
+    return axios.get(`/day`, {timeout: timeouts.net})
+    .then (function (response) {
+        return response.data
+    })
+    .catch(function (error) {
+        //console.log(error)
+    })
+}
+
 function getAllEvents() {
     return axios.get(`/event`, {timeout: timeouts.net})
     .then (function (response) {
@@ -654,6 +674,16 @@ function getScheduleInfo(scheduleName) {
     })
     .catch(function (error) {
         noFurtherClasses(error)
+    })
+}
+
+function getFullScheduleInfo() {
+    return axios.get(`/schedule`, {timeout: timeouts.net})
+    .then(async function(response) {
+        return response.data
+    })
+    .catch(function (error) {
+        //console.log(error)
     })
 }
 
@@ -1634,8 +1664,127 @@ function setupLoginPage() {
     loginSwitcher()
 }
 
-function setupCoursesPage() {
+function createSchedule(scheduleName, elementID) {
+    axios.post(`/schedule/upload`, {
+        name: scheduleName
+    })
+    .then (function (response) {
+        document.getElementById(elementID).innerText = 'Schedule created.'
+    })
+    .catch(function (error) {
+        document.getElementById(elementID).innerText = 'Please enter a name under 32 characters.'
+    })
+}
+
+function isWeekday(input) {
+    if (input == 'Monday' || input == 'Tuesday' || input == 'Wednesday' || input == 'Thursday' || input == 'Friday' || input == 'Saturday' || input == 'Sunday') {
+        return true
+    } else {
+        return false
+    }
+}
+
+function dayNameToNumber(input) {
+    switch (input) {
+        case 'Monday':
+            return 0
+        case 'Tuesday':
+            return 1
+        case 'Wednesday':
+            return 2
+        case 'Thursday':
+            return 3
+        case 'Friday':
+            return 4
+        case 'Saturday':
+            return 5
+        case 'Sunday':
+            return 6
+        default:
+            throw new Error('Not a valid weekday')
+    }
+}
+
+function createDay(dayNumber, schedule, elementID) {
+    axios.post(`/day/upload`, {
+        day: dayNumber,
+        schedule: schedule
+    })
+    .then (function (response) {
+        document.getElementById(elementID).innerText = 'Schedule applied.'
+    })
+    .catch(function (error) {
+        document.getElementById(elementID).innerText = 'Schedule not applied due to a network error.'
+        console.log(error)
+    })
+}
+
+function insertAfter(el, referenceNode) {
+    referenceNode.parentNode.insertBefore(el, referenceNode.nextSibling);
+}
+
+function createElementFromHTML(htmlString) {
+    var div = document.createElement('div');
+    div.innerHTML = htmlString.trim();
+  
+    // Change this to div.childNodes to support multiple top-level nodes
+    return div.firstChild; 
+  }
+
+async function initCourseMainButtons() { //@note buttons
+    let fullScheduleInfo = await getFullScheduleInfo()
+    
+    for (let i = 0; i < await fullScheduleInfo.length; i++) {
+        document.getElementById("options__schedule").appendChild(
+            createElementFromHTML(`<div class="courses__option"> <p class="courses__text--alternative">${await fullScheduleInfo[i].name}</p> </div>`)
+        )
+    }
+    
     eventListeners.dropdown();
+    
+    document.getElementById("courses__button__apply").onclick = async function () {
+        if (selections.schedule != '' && selections.weekday != '') {
+            let day = dayNameToNumber(selections.weekday)
+            let schedule = selections.schedule
+            let dayInfo = await getFullDayInfo()
+            
+            let doesDayExist = false
+            
+            for (let i = 0; i < await dayInfo.length; i++) {
+                if (await dayInfo[i].day == day) {
+                    doesDayExist = true
+                    break
+                } else {
+                    continue
+                }
+            }
+            
+            if (doesDayExist) {
+                axios.delete(`/day/${day}`)
+                .then(async function(response) {
+                    createDay(day, schedule, 'courses__text__apply')
+                })
+                .catch(function (error) {
+                    //console.log(error)
+                })
+            } else {
+                createDay(day, schedule, 'courses__text__apply')
+            }
+            
+        }
+    }
+    
+    document.getElementById("courses__button__create").onclick = function () {
+        const scheduleName = document.getElementById("course__input__create").value
+        
+        if (scheduleName) {
+            createSchedule(scheduleName, 'courses__text__create')
+        }
+    }
+}
+
+function setupCoursesPage() {
+    initCourseMainButtons()
 }
 
 function setupRelevantPage() {

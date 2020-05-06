@@ -9,6 +9,7 @@ const functions = require('../config/functions')
 router.post('/upload', authCheck, async (req, res) => {
     try{
         const scheduleRef = await Schedule.findOne({ name: req.body.schedule, owner: req.user._id });
+        console.log(req.body)
         const day = new Day ({
             ...req.body,
             schedule: scheduleRef._id,
@@ -73,7 +74,7 @@ router.get('/schedule/:id', authCheck, async (req, res) => {
 
 router.delete('/:id', authCheck, async (req, res) => {
     try {
-        await Course.deleteMany({ owner: req.user._id, day: req.params.id })
+        await Day.deleteMany({ owner: req.user._id, day: req.params.id })
         res.status(200).send('OK')
     } catch (err) {
         functions.error(res, 500, err);
