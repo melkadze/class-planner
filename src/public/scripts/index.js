@@ -552,7 +552,7 @@ function getDayOfWeek(offset) {
 
 function noFurtherClasses(error) {
     //console.log(error)
-    if (pages.events == 1) {
+    if ((DOMStrings.alarms__title) && pages.events == 1) {
         DOMStrings.alarms__title1.innerText = `No further classes scheduled for today`
     }
 }
@@ -1960,6 +1960,20 @@ function insertToScheduleDisplay(position, info) {
     }
 }
 
+function getTotalScheduleSubpages(itemCount) {
+    let subpages = 1
+    
+    if (itemCount > 9) {
+        return subpages
+    }
+    
+    while (((subpages * 9) - 2) < itemCount) {
+        subpages++
+    }
+    
+    return subpages
+}
+
 function clearScheduleDisplay() {
     for (let i = 1; i < 10; i++) {
         setDisplayProperty(`courses__container${i}`, 'none')
@@ -1981,16 +1995,16 @@ async function updateScheduleDisplay(schName, reqPage) {
     document.getElementById("schedule__headline").innerText = `Schedule ${schName}`
     selections.scheduleTitle = schName
     
-    console.log(scheduleInfo)
-    
     if (!(reqPage)) {
-        reqPage = 2
+        reqPage = 1
     }
     
-    if (scheduleInfo.length > 8) {
+    const totalPages = getTotalScheduleSubpages(await scheduleInfo.length)
+    
+    if (await scheduleInfo.length > 8) {
         let currentWorkID = 1
         
-        for (let i = (((reqPage * 9) - 9) - (reqPage - 1)); i < ((reqPage * 9) - 1); i++) {
+        for (let i = (((reqPage * 9) - 9) - (reqPage - 1)); i < ((reqPage * 9) - reqPage); i++) {
             if (await scheduleInfo[i]) {
                 insertToScheduleDisplay((currentWorkID), await scheduleInfo[i])
                 currentWorkID++
@@ -2000,7 +2014,7 @@ async function updateScheduleDisplay(schName, reqPage) {
             setDisplayProperty("plus__container__schedule", "flex")
         }
         
-        if (await scheduleInfo.length <= ((reqPage * 9) - 1)) {
+        if (await scheduleInfo.length <= ((reqPage * 9) - (1+ reqPage))) { //1+
             setDisplayProperty("schedules__plus__container__front", "flex")
         }
     } else {
@@ -2008,6 +2022,18 @@ async function updateScheduleDisplay(schName, reqPage) {
             insertToScheduleDisplay((i + 1), await scheduleInfo[i])
         }
         setDisplayProperty("schedules__plus__container__front", "flex")
+    }
+    
+    if (reqPage == 1) {
+        document.getElementById("plus__container__schedule__left").style = 'background-color: silver'
+    } else {
+        document.getElementById("plus__container__schedule__left").style -= 'background-color: silver'
+    }
+    
+    if (reqPage == totalPages) {
+        document.getElementById("plus__container__schedule__right").style = 'background-color: silver'
+    } else {
+        document.getElementById("plus__container__schedule__right").style -= 'background-color: silver'
     }
 }
 
@@ -2067,6 +2093,13 @@ async function initScheduleDisplay() {
         }
     } else if (await scheduleFullInfo.length == 0) {
         document.getElementById("schedule__headline").innerText = 'No schedules'
+    }
+    
+    document.getElementById("plus__container__schedule__left").onlick = function () {
+        pages.schedulesCurrent--
+        if (pages.schedulesCurrent == 1) {
+            document.getElementById("plus__container__schedule__left")
+        }
     }
     
     document.getElementById("courses__container1__button").onclick = function () {
