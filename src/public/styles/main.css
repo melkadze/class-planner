@@ -1353,7 +1353,7 @@ body {
 }
 
 .courses__container--item {
-  display: flex;
+  display: none;
   flex-direction: row;
   border-radius: 0.5vw;
   padding: 0.5vw;
@@ -1443,6 +1443,79 @@ body {
 .courses__item--icon {
   height: 100%;
   width: 100%;
+}
+
+.courses__container--plus {
+  padding: 0;
+  transform: scale(1.5);
+  background-color: inherit !important;
+}
+
+#page__container__schedule {
+  display: flex;
+}
+
+.plus__container--icon__parent .plus__container--icon {
+  padding-top: 10%;
+}
+
+.plus__container--icon img {
+  margin: auto;
+  display: block;
+}
+
+.courses__container--items .plus__container__back {
+  padding: 1vw !important;
+  margin-bottom: 0;
+}
+
+.courses__container--items .plus__container__parent {
+  height: 0;
+}
+
+.plus__container__back .material__group {
+  margin-bottom: 0;
+}
+
+.page__button__schedule {
+  transform: scale(0.6);
+  position: relative;
+  top: -1.4vh;
+}
+
+.page__container__schedule {
+  position: relative;
+  top: -1.5vh;
+  height: 0;
+}
+
+#nav__scheduleDelete {
+  border: 0;
+  border-radius: 0;
+  background-color: #f5f5f5;
+}
+
+#nav__scheduleDelete:hover {
+  cursor: pointer;
+  background-color: #b14242;
+  border-radius: 50%;
+}
+
+#plus__container__schedule {
+  display: none;
+}
+
+#courses__container__schedule .courses__container--icon:hover {
+  background-color: #ff6767;
+  cursor: pointer;
+}
+
+#courses__container__schedule .courses__container--icon:hover .courses__item--icon {
+  content: url("../assets/svg/trash.svg");
+}
+
+#schedules__plus__container__front .courses__container--plus:hover .courses__item--icon {
+  content: url("../assets/svg/plus--light.svg");
 }
 
 /*# sourceMappingURL=main.css.map */

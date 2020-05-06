@@ -517,7 +517,7 @@ body {
   @include grid.grid-position(1, 9, 10, 1);
   @include typography.headline-5();
   color: color.$blue-dark-shade;
-  align-self: center;
+  align-self: center; //@audit add margin: auto and display: block to center the checks/xs in the plus sections
   display: none; //grid
 }
 .course__container {

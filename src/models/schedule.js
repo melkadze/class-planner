@@ -4,6 +4,7 @@ const validator = require("validator");
 const scheduleSchema = new mongoose.Schema({
   name: {
     type: String,
+    trim: true,
     required: true,
     validate(value) {
       //check if name is above 32 char

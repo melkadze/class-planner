@@ -6,6 +6,7 @@ const functions = require('../config/functions')
 
 //create a new period
 router.post('/upload', authCheck, async (req, res) => {
+    console.log(req.body.forSchedule)
     const periodID = await Schedule.findOne({ name: req.body.forSchedule, owner: req.user._id });
     const period = new Period ({
         ...req.body,
@@ -22,7 +23,7 @@ router.post('/upload', authCheck, async (req, res) => {
 
 router.delete('/byID/:id', authCheck, async (req, res) => {
     try {
-        await Period.deleteMany({ owner: req.user._id, _id: req.params.id })
+        await Period.deleteOne({ _id: req.params.id })
         res.status(200).send('OK')
     } catch (err) {
         functions.error(res, 500, err);

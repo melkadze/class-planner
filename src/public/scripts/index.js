@@ -57,12 +57,29 @@ let pages = {
     eventsPlus: 1,
     tasks: 1,
     schedules: 1,
-    courses: 1
+    scheduleStore: [],
+    schedulesPlus: 1,
+    courses: 1,
+    coursesPlus: 1
+}
+
+let store = {
+    period1: '',
+    period2: '',
+    period3: '',
+    period4: '',
+    period5: '',
+    period6: '',
+    period7: '',
+    period8: '',
+    period9: '',
 }
 
 let selections = {
     weekday: '',
-    schedule: ''
+    schedule: '',
+    scheduleTitle: '',
+    dayTitle: ''
 }
 
 const menu = {
@@ -1666,12 +1683,17 @@ function setupLoginPage() {
     loginSwitcher()
 }
 
+function refreshDocument() {
+    location.reload()
+}
+
 function createSchedule(scheduleName, elementID) {
     axios.post(`/schedule/upload`, {
         name: scheduleName
     })
     .then (function (response) {
         document.getElementById(elementID).innerText = 'Schedule created.'
+        refreshDocument()
     })
     .catch(function (error) {
         document.getElementById(elementID).innerText = 'Please enter a name under 32 characters.'
@@ -1714,6 +1736,7 @@ function createDay(dayNumber, schedule, elementID) {
     })
     .then (function (response) {
         document.getElementById(elementID).innerText = 'Schedule applied.'
+        refreshDocument()
     })
     .catch(function (error) {
         console.log(schedule)
@@ -1722,19 +1745,123 @@ function createDay(dayNumber, schedule, elementID) {
     })
 }
 
-function insertAfter(el, referenceNode) {
-    referenceNode.parentNode.insertBefore(el, referenceNode.nextSibling);
-}
-
 function createElementFromHTML(htmlString) {
     var div = document.createElement('div');
     div.innerHTML = htmlString.trim();
-  
-    // Change this to div.childNodes to support multiple top-level nodes
     return div.firstChild; 
-  }
+}
 
-async function initCourseMainButtons() { //@note buttons
+function updateSchedulesPlusPages() {
+    let currentPage = pages.schedulesPlus
+    let totalPages = 3
+    
+    if (currentPage == 1) {
+        document.getElementById("page__button__prev__plus__schedule").style = 'background-color: silver'
+    } else {
+        document.getElementById("page__button__prev__plus__schedule").style -= 'background-color: silver'
+    }
+    
+    if (currentPage == totalPages) {
+        document.getElementById("page__button__next__plus__schedule").style = 'background-color: silver'
+    } else {
+        document.getElementById("page__button__next__plus__schedule").style -= 'background-color: silver'
+    }
+    
+    switch (currentPage) {
+        case 1:
+            setDisplayProperty("material__group1__schedule", "block")
+            setDisplayProperty("material__group2__schedule", "none")
+            setDisplayProperty("material__group3__schedule", "none")
+            break
+        case 2:
+            setDisplayProperty("material__group1__schedule", "none")
+            setDisplayProperty("material__group2__schedule", "block")
+            setDisplayProperty("material__group3__schedule", "none")
+            break
+        case 3:
+            setDisplayProperty("material__group1__schedule", "none")
+            setDisplayProperty("material__group2__schedule", "none")
+            setDisplayProperty("material__group3__schedule", "block")
+            break
+    }
+}
+
+function validateSchedulePlus() {
+    if (document.getElementById("material__group1__schedule__input").value != '' && document.getElementById("material__group2__schedule__input").value != '' && document.getElementById("material__group3__schedule__input").value != '') {
+        return true
+    } else {
+        return false
+    }
+}
+
+function clearSchedulePlusButtons() {
+    document.getElementById("material__group1__schedule__input").value = ''
+    document.getElementById('material__group2__schedule__input').value = ''
+    document.getElementById('material__group3__schedule__input').value = ''
+}
+
+function initCoursesPlusButtons() {
+    updateSchedulesPlusPages()
+    
+    document.getElementById("page__button__prev__plus__schedule").onclick = function () {
+        if (pages.schedulesPlus != 1) {
+            pages.schedulesPlus--
+            updateSchedulesPlusPages()
+        }
+    }
+    
+    document.getElementById("page__button__next__plus__schedule").onclick = function () {
+        if (pages.schedulesPlus != 3) {
+            pages.schedulesPlus++
+            updateSchedulesPlusPages()
+        }
+    }
+    
+    document.getElementById("schedules__plus__container__front").onclick = function () {
+        setDisplayProperty("schedules__plus__container__front", "none")
+        setDisplayProperty("schedules__plus__container__back", "flex")
+        updateSchedulesPlusPages()
+    }
+    
+    document.getElementById("schedules__plus__container--icon--cross").onclick = function () {
+        setDisplayProperty("schedules__plus__container__back", "none")
+        setDisplayProperty("schedules__plus__container__front", "flex")
+        clearSchedulePlusButtons()
+        pages.schedulesPlus = 1
+        updateSchedulesPlusPages()
+    }
+    
+    document.getElementById("schedules__plus__container--icon").onclick = function () {
+        
+        if (validateSchedulePlus()) {
+            axios.post(`/schedule/period/upload`, {
+                forSchedule: selections.scheduleTitle,
+                period: document.getElementById("material__group1__schedule__input").value,
+                timeStart: document.getElementById('material__group2__schedule__input').value,
+                timeEnd: document.getElementById('material__group3__schedule__input').value
+            })
+            .then (function (response) {
+                setDisplayProperty("schedules__plus__container__back", "none")
+                setDisplayProperty("schedules__plus__container__front", "flex")
+                clearSchedulePlusButtons()
+                updateScheduleDisplay(selections.scheduleTitle)
+                pages.schedulesPlus = 1
+                updateSchedulesPlusPages()
+            })
+            .catch(function (error) {
+                console.log(error)
+            })
+        } else {
+            throw new Error('Please fill out all fields properly') //@audit add validation
+        }
+    }
+}
+
+
+
+
+
+async function initCourseMainButtons() {
     let fullScheduleInfo = await getFullScheduleInfo()
     
     for (let i = 0; i < await fullScheduleInfo.length; i++) {
@@ -1744,6 +1871,7 @@ async function initCourseMainButtons() { //@note buttons
     }
     
     eventListeners.dropdown();
+    initCoursesPlusButtons()
     
     document.getElementById("courses__button__apply").onclick = async function () {
         if (selections.schedule != '' && selections.weekday != '') {
@@ -1782,12 +1910,205 @@ async function initCourseMainButtons() { //@note buttons
         
         if (scheduleName) {
             createSchedule(scheduleName, 'courses__text__create')
+            initScheduleDisplay()
         }
+    }
+}
+
+function deletePeriod(input) {
+    axios.delete(`/schedule/period/byID/${input}`)
+    .then(async function(response) {
+        updateScheduleDisplay(selections.scheduleTitle)
+    })
+    .catch(function (error) {
+        //console.log(error)
+    })
+}
+
+function insertToScheduleDisplay(position, info) {
+    setDisplayProperty(`courses__container${position}`, 'flex')
+    document.getElementById(`courses__title${position}`).innerText = `Period ${info.period}`
+    document.getElementById(`courses__subtitle${position}`).innerText = `${info.timeStart} - ${info.timeEnd}`
+    switch(position) {
+        case 1:
+            store.period1 = info._id
+            break
+        case 2:
+            store.period2 = info._id
+            break
+        case 3:
+            store.period3 = info._id
+            break
+        case 4:
+            store.period4 = info._id
+            break
+        case 5:
+            store.period5 = info._id
+            break
+        case 6:
+            store.period6 = info._id
+            break
+        case 7:
+            store.period7 = info._id
+            break
+        case 8:
+            store.period8 = info._id
+            break
+        case 9:
+            store.period9 = info._id
+            break
+    }
+}
+
+function clearScheduleDisplay() {
+    for (let i = 1; i < 10; i++) {
+        setDisplayProperty(`courses__container${i}`, 'none')
+        document.getElementById(`courses__subtitle${i}`).innerText = ''
+        document.getElementById(`courses__title${i}`).innerText = ''
+    }
+    setDisplayProperty("schedules__plus__container__back", "none")
+    setDisplayProperty("schedules__plus__container__front", "none")
+    setDisplayProperty("plus__container__schedule", "none")
+}
+
+//@note buttons
+
+async function updateScheduleDisplay(schName, reqPage) {
+    clearScheduleDisplay()
+    
+    const scheduleInfo = await getScheduleInfo(schName)
+    
+    document.getElementById("schedule__headline").innerText = `Schedule ${schName}`
+    selections.scheduleTitle = schName
+    
+    console.log(scheduleInfo)
+    
+    if (!(reqPage)) {
+        reqPage = 2
+    }
+    
+    if (scheduleInfo.length > 8) {
+        let currentWorkID = 1
+        
+        for (let i = (((reqPage * 9) - 9) - (reqPage - 1)); i < ((reqPage * 9) - 1); i++) {
+            if (await scheduleInfo[i]) {
+                insertToScheduleDisplay((currentWorkID), await scheduleInfo[i])
+                currentWorkID++
+            }
+            setDisplayProperty("schedules__plus__container__front", "none")
+            setDisplayProperty("schedules__plus__container__back", "none")
+            setDisplayProperty("plus__container__schedule", "flex")
+        }
+        
+        if (await scheduleInfo.length <= ((reqPage * 9) - 1)) {
+            setDisplayProperty("schedules__plus__container__front", "flex")
+        }
+    } else {
+        for (let i = 0; i < await scheduleInfo.length; i++) {
+            insertToScheduleDisplay((i + 1), await scheduleInfo[i])
+        }
+        setDisplayProperty("schedules__plus__container__front", "flex")
+    }
+}
+
+function deleteCurrentSchedule() {
+    if (document.getElementById("schedule__headline").innerText == 'No schedules') {
+        document.getElementById("nav__scheduleDelete").style.animation = 'shake 0.82s cubic-bezier(.36,.07,.19,.97) both'
+        setTimeout(function() {
+            document.getElementById("nav__scheduleDelete").style.animation -= 'shake 0.82s cubic-bezier(.36,.07,.19,.97) both'
+        }, timeouts.animation)
+        return
+    }
+    
+    const nameToDelete = pages.scheduleStore[(pages.schedules - 1)]
+    
+    axios.delete(`/schedule/${nameToDelete}`)
+    .then(async function(response) {
+        refreshDocument()
+    })
+    .catch(function (error) {
+        //console.log(error)
+    })
+}
+
+async function initScheduleDisplay() {
+    const scheduleFullInfo = await getFullScheduleInfo()
+    
+    for (let i = 0; i < await scheduleFullInfo.length; i++) {
+        pages.scheduleStore.push(await scheduleFullInfo[i].name)
+    }
+    
+    updateScheduleDisplay(pages.scheduleStore[0])
+    
+    //@audit make sure that the name and the buttons indicate no schedules
+    
+    document.getElementById("nav__scheduleDelete").onclick = function () {
+        deleteCurrentSchedule()
+    }
+    
+    if (await scheduleFullInfo.length > 1) {
+        document.getElementById("nav__scheduleRight").dataset.active = true
+        document.getElementById("nav__scheduleLeft").dataset.active = true
+    
+        document.getElementById("nav__scheduleLeft").onclick = async function () {
+            pages.schedules--
+            if (pages.schedules < 1) {
+                pages.schedules = await scheduleFullInfo.length
+            }
+            updateScheduleDisplay(pages.scheduleStore[(pages.schedules - 1)])
+        }
+        
+        document.getElementById("nav__scheduleRight").onclick = async function () {
+            pages.schedules++
+            if (pages.schedules > await scheduleFullInfo.length) {
+                pages.schedules = 1
+            }
+            updateScheduleDisplay(pages.scheduleStore[(pages.schedules - 1)])
+        }
+    } else if (await scheduleFullInfo.length == 0) {
+        document.getElementById("schedule__headline").innerText = 'No schedules'
+    }
+    
+    document.getElementById("courses__container1__button").onclick = function () {
+        deletePeriod(store.period1)
+    }
+    
+    document.getElementById("courses__container2__button").onclick = function () {
+        deletePeriod(store.period2)
+    }
+    
+    document.getElementById("courses__container3__button").onclick = function () {
+        deletePeriod(store.period3)
+    }
+    
+    document.getElementById("courses__container4__button").onclick = function () {
+        deletePeriod(store.period4)
+    }
+    
+    document.getElementById("courses__container5__button").onclick = function () {
+        deletePeriod(store.period5)
+    }
+    
+    document.getElementById("courses__container6__button").onclick = function () {
+        deletePeriod(store.period6)
+    }
+    
+    document.getElementById("courses__container7__button").onclick = function () {
+        deletePeriod(store.period7)
+    }
+    
+    document.getElementById("courses__container8__button").onclick = function () {
+        deletePeriod(store.period8)
+    }
+    
+    document.getElementById("courses__container9__button").onclick = function () {
+        deletePeriod(store.period9)
     }
 }
 
 function setupCoursesPage() {
     initCourseMainButtons()
+    initScheduleDisplay()
 }
 
 function setupRelevantPage() {
