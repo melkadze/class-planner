@@ -60,7 +60,7 @@ let pages = {
 
 let selections = {
     weekday: '',
-    schedule: 'Tech 1A'
+    schedule: ''
 }
 
 const menu = {
@@ -1714,6 +1714,7 @@ function createDay(dayNumber, schedule, elementID) {
         document.getElementById(elementID).innerText = 'Schedule applied.'
     })
     .catch(function (error) {
+        console.log(schedule)
         document.getElementById(elementID).innerText = 'Schedule not applied due to a network error.'
         console.log(error)
     })
