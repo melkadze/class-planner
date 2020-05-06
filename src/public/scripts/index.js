@@ -55,7 +55,9 @@ const timeouts = {
 let pages = {
     events: 1,
     eventsPlus: 1,
-    tasks: 1
+    tasks: 1,
+    schedules: 1,
+    courses: 1
 }
 
 let selections = {

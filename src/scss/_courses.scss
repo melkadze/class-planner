@@ -48,6 +48,7 @@
 .courses__text--alternative {
   color: color.$blue-dark-shade;
   @include typography.body-2();
+  margin: auto 0;
 }
 .courses__text--alternative[data-text="placeholder"] {
   color: color.$dark-gray;
@@ -69,6 +70,9 @@
   border-radius: 0.25vw;
   padding: 0.5vw;
   cursor: pointer;
+}
+#options__schedule{
+  z-index: 10;
 }
 .courses__options {
   position: absolute;
