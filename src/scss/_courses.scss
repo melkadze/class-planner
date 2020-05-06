@@ -267,8 +267,9 @@
   display: block;
 }
 .courses__container--items .plus__container__back {
-  padding: 1.0vw !important;
+  padding: 0.5vw !important; //1.0vw
   margin-bottom: 0;
+  justify-content: center;
 }
 .courses__container--items .plus__container__parent {
   height: 0; //makes height minimum
