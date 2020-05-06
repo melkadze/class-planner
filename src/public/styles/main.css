@@ -1069,7 +1069,7 @@ body {
 }
 
 #events__plus__container__back .events__icon {
-  margin: auto 1rem auto 1rem;
+  margin: 0 auto;
 }
 
 .login__background {
@@ -1455,7 +1455,7 @@ body {
   display: flex;
 }
 
-.plus__container--icon__parent .plus__container--icon {
+.courses__container--items .plus__container--icon__parent .plus__container--icon {
   padding-top: 10%;
 }
 
@@ -1473,7 +1473,7 @@ body {
   height: 0;
 }
 
-.plus__container__back .material__group {
+.courses__container--items .plus__container__back .material__group {
   margin-bottom: 0;
 }
 

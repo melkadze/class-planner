@@ -259,7 +259,7 @@
 #page__container__schedule{
   display: flex;
 }
-.plus__container--icon__parent .plus__container--icon{
+.courses__container--items .plus__container--icon__parent .plus__container--icon{
   padding-top: 10%;
 }
 .plus__container--icon img{
@@ -273,7 +273,7 @@
 .courses__container--items .plus__container__parent {
   height: 0; //makes height minimum
 }
-.plus__container__back .material__group{
+.courses__container--items .plus__container__back .material__group{
   margin-bottom: 0;
 }
 .page__button__schedule{

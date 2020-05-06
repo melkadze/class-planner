@@ -45,7 +45,7 @@ const updates = {
 }
 
 const timeouts = {
-    net: 1000, //for network calls
+    net: 2000, //for network calls
     time: 1000, //for clock/time updates
     second: 1000, //for value of a second (do not change)
     animation: 1500, //for delay until allowing second animation
@@ -57,6 +57,7 @@ let pages = {
     eventsPlus: 1,
     tasks: 1,
     schedules: 1,
+    scheduleSubmenu: 1,
     scheduleStore: [],
     schedulesPlus: 1,
     courses: 1,
@@ -486,7 +487,7 @@ function truncatedTimeToDT(time) {
     
     let isPM
     
-    if (apm == 'PM') {
+    if (apm == 'PM' || apm == 'pm' || apm == 'pM' || apm == 'Pm') {
         isPM = true
     } else {
         isPM = false
@@ -1788,6 +1789,21 @@ function updateSchedulesPlusPages() {
 
 function validateSchedulePlus() {
     if (document.getElementById("material__group1__schedule__input").value != '' && document.getElementById("material__group2__schedule__input").value != '' && document.getElementById("material__group3__schedule__input").value != '') {
+        
+        const startTime = truncatedTimeToDT(document.getElementById("material__group2__schedule__input").value)
+        if (!(startTime.isValid)) {
+            return false
+        }
+        
+        const endTime = truncatedTimeToDT(document.getElementById("material__group3__schedule__input").value)
+        if (!(endTime.isValid)) {
+            return false
+        }
+        
+        if (startTime.diff(endTime, 'minutes').values.minutes >= 0) {
+            return false
+        }
+        
         return true
     } else {
         return false
@@ -1856,10 +1872,6 @@ function initCoursesPlusButtons() {
         }
     }
 }
-
-
-
-
 
 async function initCourseMainButtons() {
     let fullScheduleInfo = await getFullScheduleInfo()
@@ -1963,11 +1975,11 @@ function insertToScheduleDisplay(position, info) {
 function getTotalScheduleSubpages(itemCount) {
     let subpages = 1
     
-    if (itemCount > 9) {
+    if (itemCount < 9) {
         return subpages
     }
     
-    while (((subpages * 9) - 2) < itemCount) {
+    while (((subpages * 9) - 2) <= itemCount) {
         subpages++
     }
     
@@ -2001,6 +2013,8 @@ async function updateScheduleDisplay(schName, reqPage) {
     
     const totalPages = getTotalScheduleSubpages(await scheduleInfo.length)
     
+    pages.scheduleSubmenu = reqPage
+    
     if (await scheduleInfo.length > 8) {
         let currentWorkID = 1
         
@@ -2014,7 +2028,7 @@ async function updateScheduleDisplay(schName, reqPage) {
             setDisplayProperty("plus__container__schedule", "flex")
         }
         
-        if (await scheduleInfo.length <= ((reqPage * 9) - (1+ reqPage))) { //1+
+        if (reqPage == totalPages) { //1+
             setDisplayProperty("schedules__plus__container__front", "flex")
         }
     } else {
@@ -2034,6 +2048,19 @@ async function updateScheduleDisplay(schName, reqPage) {
         document.getElementById("plus__container__schedule__right").style = 'background-color: silver'
     } else {
         document.getElementById("plus__container__schedule__right").style -= 'background-color: silver'
+    }
+    
+    document.getElementById("plus__container__schedule__left").onclick = function () {
+        if (reqPage != 1) {
+            updateScheduleDisplay(schName, (reqPage - 1))
+        }
+    }
+    
+    document.getElementById("plus__container__schedule__right").onclick = function () {
+        if (reqPage < totalPages) {
+            console.log(reqPage)
+            updateScheduleDisplay(schName, (reqPage + 1))
+        }
     }
 }
 
@@ -2066,8 +2093,6 @@ async function initScheduleDisplay() {
     
     updateScheduleDisplay(pages.scheduleStore[0])
     
-    //@audit make sure that the name and the buttons indicate no schedules
-    
     document.getElementById("nav__scheduleDelete").onclick = function () {
         deleteCurrentSchedule()
     }
@@ -2093,13 +2118,6 @@ async function initScheduleDisplay() {
         }
     } else if (await scheduleFullInfo.length == 0) {
         document.getElementById("schedule__headline").innerText = 'No schedules'
-    }
-    
-    document.getElementById("plus__container__schedule__left").onlick = function () {
-        pages.schedulesCurrent--
-        if (pages.schedulesCurrent == 1) {
-            document.getElementById("plus__container__schedule__left")
-        }
     }
     
     document.getElementById("courses__container1__button").onclick = function () {
