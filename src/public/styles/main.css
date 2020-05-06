@@ -1456,7 +1456,7 @@ body {
 }
 
 .courses__container--items .plus__container--icon__parent .plus__container--icon {
-  padding-top: 10%;
+  padding: 5%;
 }
 
 .plus__container--icon img {
@@ -1475,6 +1475,10 @@ body {
 
 .courses__container--items .plus__container__back .material__group {
   margin-bottom: 0;
+}
+
+.courses__container--items .plus__container__back .material__input:focus ~ .material__label, .material__input:valid ~ .material__label {
+  top: -1.5rem !important;
 }
 
 .page__button__schedule {

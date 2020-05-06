@@ -25,7 +25,7 @@ router.get('/', authCheck, async (req, res) => {
             if (adv){
                 res.send(adv)
             }
-        }).sort({ createdAt: 1 })
+        }).sort({ createdAt: -1 })
     } catch (err) {
         functions.error(res, 500, err);
     }

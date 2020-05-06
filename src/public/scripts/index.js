@@ -131,7 +131,7 @@ const eventListeners = {
       displayTime.displayDays(month, year);
     });
   },
-  dropdown() { //@note dropdown
+  dropdown() {
     const dropdown__schedule = DOMStrings.dropdown__schedule;
     const options__schedule = DOMStrings.options__schedule;
     const icon__schedule = DOMStrings.icon__schedule;
@@ -1193,8 +1193,6 @@ function updateTasksPages(currentPage, totalPages, totalObjects, tasksArray) {
         document.getElementById("task__button__next").style -= 'background-color: silver'
     }
     
-    //revamp:: resize buttons (force square, for both sets)
-    
     let id1
     let id2
     let id3
@@ -1787,21 +1785,58 @@ function updateSchedulesPlusPages() {
     }
 }
 
-function validateSchedulePlus() {
+function validateTimeAPM(apm) {
+    if (apm == 'am' || apm == 'Am' || apm == 'aM' || apm == 'AM') {
+        return true
+    } else if (apm == 'pm' || apm == 'Pm' || apm == 'pM' || apm == 'PM') {
+        return true
+    } else {
+        return false
+    }
+}
+
+async function validateSchedulePlus() {
     if (document.getElementById("material__group1__schedule__input").value != '' && document.getElementById("material__group2__schedule__input").value != '' && document.getElementById("material__group3__schedule__input").value != '') {
+        
+        if (!(validateTimeAPM(document.getElementById("material__group2__schedule__input").value.split(':')[1].split(' ')[0]))) {
+            console.log('Error: given bad AM/PM for start time')
+            return false
+        } else if (!(validateTimeAPM(document.getElementById("material__group3__schedule__input").value.split(':')[1].split(' ')[0]))) {
+            console.log('Error: given bad AM/PM for end time')
+            return false
+        }
         
         const startTime = truncatedTimeToDT(document.getElementById("material__group2__schedule__input").value)
         if (!(startTime.isValid)) {
+            console.log('Error: given invalid start time value')
             return false
         }
         
         const endTime = truncatedTimeToDT(document.getElementById("material__group3__schedule__input").value)
         if (!(endTime.isValid)) {
+            console.log('Error: given invalid end time value')
             return false
         }
         
         if (startTime.diff(endTime, 'minutes').values.minutes >= 0) {
+            console.log('Error: end time is before start time')
             return false
+        }
+        
+        const scheduleInfo = await getScheduleInfo(selections.scheduleTitle)
+        
+        for (let i = 0; i < await scheduleInfo.length; i++) {
+            if (startTime.diff(truncatedTimeToDT(await scheduleInfo[i].timeEnd), 'minutes').values.minutes < 0 && await scheduleInfo[i].period < document.getElementById("material__group1__schedule__input").value ) {
+                console.log('Error: given bad start time. Periods are not allowed to start earlier than later periods.')
+                return false
+            }
+        }
+        
+        for (let i = 0; i < await scheduleInfo.length; i++) {
+            if (endTime.diff(truncatedTimeToDT(await scheduleInfo[i].timeStart), 'minutes').values.minutes > 0 && await scheduleInfo[i].period > document.getElementById("material__group1__schedule__input").value ) {
+                console.log('Error: given bad end time. Periods are not allowed to end later than earlier periods.')
+                return false
+            }
         }
         
         return true
@@ -1847,9 +1882,9 @@ function initCoursesPlusButtons() {
         updateSchedulesPlusPages()
     }
     
-    document.getElementById("schedules__plus__container--icon").onclick = function () {
+    document.getElementById("schedules__plus__container--icon").onclick = async function () {
         
-        if (validateSchedulePlus()) {
+        if (await validateSchedulePlus()) {
             axios.post(`/schedule/period/upload`, {
                 forSchedule: selections.scheduleTitle,
                 period: document.getElementById("material__group1__schedule__input").value,
@@ -1868,7 +1903,7 @@ function initCoursesPlusButtons() {
                 console.log(error)
             })
         } else {
-            throw new Error('Please fill out all fields properly') //@audit add validation
+            throw new Error('Please fill out all fields properly')
         }
     }
 }
@@ -1997,8 +2032,6 @@ function clearScheduleDisplay() {
     setDisplayProperty("plus__container__schedule", "none")
 }
 
-//@note buttons
-
 async function updateScheduleDisplay(schName, reqPage) {
     clearScheduleDisplay()
     
@@ -2058,7 +2091,6 @@ async function updateScheduleDisplay(schName, reqPage) {
     
     document.getElementById("plus__container__schedule__right").onclick = function () {
         if (reqPage < totalPages) {
-            console.log(reqPage)
             updateScheduleDisplay(schName, (reqPage + 1))
         }
     }
