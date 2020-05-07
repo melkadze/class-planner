@@ -135,6 +135,7 @@ body {
   margin-bottom: 2.5vw;
 }
 .header {
+  @include grid.grid-position(2, 1, 1, 1);
   justify-items: center;
   align-items: center;
   margin-left: 2.5vw;
@@ -202,6 +203,11 @@ body {
   @include typography.subtitle-2();
   color: color.$blue-dark-shade;
 }
+.greeting__link {
+  @include typography.subtitle-1();
+  font-size: 1.4rem;
+  color: color.$violet-accent-shade;
+}
 #greeting__update__title {
   font-size: 1.6rem;
   position: absolute;
@@ -216,6 +222,20 @@ body {
   height: 10vw;
   right: 0;
   bottom: 0;
+}
+#settings__dashboard .greeting {
+  grid-column-end: span 12;
+}
+#settings__dashboard .courses__input--text {
+  width: 30vw;
+}
+#settings__dashboard #settings__settings {
+  background-color: color.$light-gray;
+  grid-column-end: span 12;
+  grid-row-start: 4;
+  grid-row-end: 13;
+  display: grid;
+  @include grid.grid(2, 4vw, 1, 0.5vw);
 }
 .calendar {
   @include effects.drop-shadow();
@@ -308,6 +328,7 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  color: color.$white;
 }
 .calendar__day--container--emphasized {
   position: relative;
@@ -647,6 +668,7 @@ body {
   height: 100%;
   width: 100%;
   border-radius: 0.5vw;
+  justify-content: center;
 }
 .plus__text {
   margin: auto !important;
@@ -808,7 +830,7 @@ body {
   margin: auto;
 }
 #events__plus__container__back .events__icon {
-  margin: auto 1rem auto 1rem;
+  margin: 0 auto;
 }
 .login__background{
   animation: backgroundColor 20s infinite;

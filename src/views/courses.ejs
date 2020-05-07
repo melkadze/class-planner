@@ -1,0 +1,550 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Loop: Courses</title>
+    <link rel="stylesheet" type="text/css" href="../styles/main.css" />
+    <link rel="icon" type="image/png" href="../assets/svg/smile.svg">
+  </head>
+  <body>
+    <div class="global--dashboard">
+      <nav class="navigation--side">
+        <a class="navigation__logo" href="/profile/dashboard"> </a>
+        <div class="navigation__container">
+          <a class="navigation__button" href="/profile/dashboard">
+            <span class="navigation__icon navigation__icon--dashboard"> </span>
+            <p class="navigation__text">
+              Your Dashboard
+            </p>
+          </a>
+          <a
+            class="navigation__button navigation__button--active"
+            href="#"
+          >
+            <span class="navigation__icon navigation__icon--courses"></span>
+            <p class="navigation__text navigation__text--active">Your Courses</p>
+          </a>
+        </div>
+        <a class="navigation__button" href="/profile/settings">
+          <span class="navigation__icon navigation__icon--settings"></span>
+          <p class="navigation__text">Your Settings</p>
+        </a>
+      </nav>
+      <header class="header">
+        <h2 class="header__text" id="header__text">Your Courses</h2>
+        <div class="header__profile">
+          <a class="header__button" href="/auth/logout">
+            <span class="header__icon header__icon--profile"></span>
+          </a>
+        </div>
+      </header>
+      <main class="courses">
+        <div class="courses__scheduleApply">
+          <h6 class="courses__headline">Schedule Times</h6>
+          <p class="courses__text">
+            Select a schedule and its respective weekday to indicate when your
+            schedule occurs throughout the week.
+          </p>
+          <label class="courses__label">Schedule</label>
+          <div class="courses__container--dropdown">
+            <div class="courses__dropdown" id="dropdown__schedule">
+              <p 
+                class="courses__text--alternative"
+                id="text__schedule"
+                data-text="placeholder"
+              >
+                Schedule Name
+              </p>
+              <img
+                src="../assets/svg/caret--down.svg"
+                class="courses__icon"
+                id="icon__schedule"
+              />
+            </div>
+            <div
+              class="courses__options"
+              id="options__schedule"
+              data-visibility="hidden"
+            >
+            </div>
+          </div>
+          <label class="courses__label">Weekday</label>
+          <div class="courses__container--dropdown">
+            <div class="courses__dropdown" id="dropdown__weekday">
+              <p
+                class="courses__text--alternative"
+                id="text__weekday"
+                data-text="placeholder"
+              >
+                Weekday
+              </p>
+              <img
+                src="../assets/svg/caret--down.svg"
+                class="courses__icon"
+                id="icon__weekday"
+              />
+            </div>
+            <div
+              class="courses__options"
+              id="options__weekday"
+              data-visibility="hidden"
+            >
+              <div class="courses__option">
+                <p class="courses__text--alternative">Monday</p>
+              </div>
+              <div class="courses__option">
+                <p class="courses__text--alternative">Tuesday</p>
+              </div>
+              <div class="courses__option">
+                <p class="courses__text--alternative">Wednesday</p>
+              </div>
+              <div class="courses__option">
+                <p class="courses__text--alternative">Thursday</p>
+              </div>
+              <div class="courses__option">
+                <p class="courses__text--alternative">Friday</p>
+              </div>
+              <div class="courses__option">
+                <p class="courses__text--alternative">Saturday</p>
+              </div>
+              <div class="courses__option">
+                <p class="courses__text--alternative">Sunday</p>
+              </div>
+            </div>
+          </div>
+          <p class="courses__text" id="courses__text__apply"></p>
+          <button class="courses__button" id="courses__button__apply">
+            <p class="courses__text--button">Apply</p>
+          </button>
+        </div>
+        <div class="courses__scheduleCreate">
+          <h6 class="courses__headline">New Schedules</h6>
+          <p class="courses__text">
+            Create a new schedule to indicate the starting and ending times of
+            periods within a day.
+          </p>
+          <label class="courses__label">Schedule Name</label>
+          <input class="courses__input--text" id="course__input__create" placeholder="Schedule Name" />
+          <p class="courses__text" id="courses__text__create"></p>
+          <button class="courses__button" id="courses__button__create">
+            <p class="courses__text--button">Create</p>
+          </button>
+        </div>
+        <div class="courses__scheduleDisplay">
+          <div class="courses__header">
+            <h6 class="courses__headline" id="schedule__headline"></h6>
+            <div class="courses__container--navigation">
+              <button
+                class="courses__button--minimal"
+                id="nav__scheduleLeft"
+                data-active="false"
+              >
+                <img
+                  src="../assets/svg/arrow-left.svg"
+                  class="courses__icon--button"
+                />
+              </button>
+              <button
+                class="courses__button--minimal"
+                id="nav__scheduleRight"
+                data-active="false"
+              >
+                <img
+                  src="../assets/svg/arrow-right.svg"
+                  class="courses__icon--button"
+                />
+              </button>
+              <button
+                class="courses__button--minimal nav__delete"
+                id="nav__scheduleDelete"
+              >
+                <img
+                  src="../assets/svg/trash--red.svg"
+                  class="courses__icon--button"
+                />
+              </button>
+            </div>
+          </div>
+          <div class="courses__container--items" id="courses__container__schedule">
+            <div class="courses__container--item" id="courses__container1">
+              <div class="courses__container--icon" id="courses__container1__button">
+                <img src="../assets/svg/alarm.svg" class="courses__item--icon" />
+              </div>
+              <div class="courses__container--text">
+                <p class="courses__text--alternative" id="courses__title1"></p>
+                <p class="courses__subtitle" id="courses__subtitle1"></p>
+              </div>
+            </div>
+            <div class="courses__container--item" id="courses__container2">
+              <div class="courses__container--icon" id="courses__container2__button">
+                <img src="../assets/svg/alarm.svg" class="courses__item--icon" />
+              </div>
+              <div class="courses__container--text">
+                <p class="courses__text--alternative" id="courses__title2"></p>
+                <p class="courses__subtitle" id="courses__subtitle2"></p>
+              </div>
+            </div>
+            <div class="courses__container--item" id="courses__container3">
+              <div class="courses__container--icon" id="courses__container3__button">
+                <img src="../assets/svg/alarm.svg" class="courses__item--icon" />
+              </div>
+              <div class="courses__container--text">
+                <p class="courses__text--alternative" id="courses__title3"></p>
+                <p class="courses__subtitle" id="courses__subtitle3"></p>
+              </div>
+            </div>
+            <div class="courses__container--item" id="courses__container4">
+              <div class="courses__container--icon" id="courses__container4__button">
+                <img src="../assets/svg/alarm.svg" class="courses__item--icon" />
+              </div>
+              <div class="courses__container--text">
+                <p class="courses__text--alternative" id="courses__title4"></p>
+                <p class="courses__subtitle" id="courses__subtitle4"></p>
+              </div>
+            </div>
+            <div class="courses__container--item" id="courses__container5">
+              <div class="courses__container--icon" id="courses__container5__button">
+                <img src="../assets/svg/alarm.svg" class="courses__item--icon" />
+              </div>
+              <div class="courses__container--text">
+                <p class="courses__text--alternative" id="courses__title5"></p>
+                <p class="courses__subtitle" id="courses__subtitle5"></p>
+              </div>
+            </div>
+            <div class="courses__container--item" id="courses__container6">
+              <div class="courses__container--icon" id="courses__container6__button">
+                <img src="../assets/svg/alarm.svg" class="courses__item--icon" />
+              </div>
+              <div class="courses__container--text">
+                <p class="courses__text--alternative" id="courses__title6"></p>
+                <p class="courses__subtitle" id="courses__subtitle6"></p>
+              </div>
+            </div>
+            <div class="courses__container--item" id="courses__container7">
+              <div class="courses__container--icon" id="courses__container7__button">
+                <img src="../assets/svg/alarm.svg" class="courses__item--icon" />
+              </div>
+              <div class="courses__container--text">
+                <p class="courses__text--alternative" id="courses__title7"></p>
+                <p class="courses__subtitle" id="courses__subtitle7"></p>
+              </div>
+            </div>
+            <div class="courses__container--item" id="courses__container8">
+              <div class="courses__container--icon" id="courses__container8__button">
+                <img src="../assets/svg/alarm.svg" class="courses__item--icon" />
+              </div>
+              <div class="courses__container--text">
+                <p class="courses__text--alternative" id="courses__title8"></p>
+                <p class="courses__subtitle" id="courses__subtitle8"></p>
+              </div>
+            </div>
+            <div class="courses__container--item" id="courses__container9">
+              <div class="courses__container--icon" id="courses__container9__button">
+                <img src="../assets/svg/alarm.svg" class="courses__item--icon" />
+              </div>
+              <div class="courses__container--text">
+                <p class="courses__text--alternative" id="courses__title9"></p>
+                <p class="courses__subtitle" id="courses__subtitle9"></p>
+              </div>
+            </div>
+            <div class="courses__container--item plus__container" id="schedules__plus__container__front">
+              <div class="courses__container--text plus__text">
+                <div class="courses__container--icon courses__container--plus">
+                  <img src="../assets/svg/plus--light.svg" class="courses__item--icon" />
+                </div>
+              </div>
+            </div>
+            <div class="events__container plus__container__back" id="schedules__plus__container__back">
+              <div class="plus__container__parent" id="schedules__plus__container__parent"> <!--events-->
+                <div class="material__group" id="material__group1__schedule">      
+                  <input type="text" class="material__input" id="material__group1__schedule__input" required>
+                  <span class="material__highlight"></span>
+                  <span class="material__bar"></span>
+                  <label class="material__label">Period number</label>
+                </div> 
+                <div class="material__group" id="material__group2__schedule">      
+                  <input type="text" class="material__input" id="material__group2__schedule__input" required>
+                  <span class="material__highlight"></span>
+                  <span class="material__bar"></span>
+                  <label class="material__label">Start time (hh:mm AM)</label>
+                </div> 
+                <div class="material__group" id="material__group3__schedule">      
+                  <input type="text" class="material__input" id="material__group3__schedule__input" value="" required>
+                  <span class="material__highlight"></span>
+                  <span class="material__bar"></span>
+                  <label class="material__label">End time (hh:mm PM)</label>
+                </div>
+                <div class="page__container page__button__schedule" id="page__container__schedule">
+                  <button class="page__button page__button__schedule" id="page__button__prev__plus__schedule">
+                    <img
+                      src="../assets/svg/arrow-left.svg"
+                      alt="left arrow"
+                      class="page__icon"
+                    />
+                  </button>
+                  <button class="page__button page__button__schedule" id="page__button__next__plus__schedule">
+                    <img
+                      src="../assets/svg/arrow-right.svg"
+                      alt="right arrow"
+                      class="page__icon"
+                    />
+                  </button>
+                </div>
+              </div>
+              <div class="plus__container--icon__parent" id="plus__container__schedule__internal">
+                <div class="plus__container--icon plus__container--icon__check" id="schedules__plus__container--icon">
+                  <img
+                    src="../assets/svg/check.svg"
+                    alt="folder"
+                    class="events__icon"
+                  />
+                </div>
+                <div class="plus__container--icon plus__container--icon__cross" id="schedules__plus__container--icon--cross">
+                  <img
+                    src="../assets/svg/cross.svg"
+                    alt="folder"
+                    class="events__icon"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="page__container page__container__schedule" id="plus__container__schedule">
+              <button class="page__button" id="plus__container__schedule__left">
+                <img
+                  src="../assets/svg/arrow-left.svg"
+                  alt="left arrow"
+                  class="page__icon"
+                />
+              </button>
+              <button class="page__button" id="plus__container__schedule__right">
+                <img
+                  src="../assets/svg/arrow-right.svg"
+                  alt="right arrow"
+                  class="page__icon"
+                />
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="courses__coursesDisplay" id="courses__container__day">
+          <div class="courses__header">
+            <h6 class="courses__headline" id="course__headline"></h6>
+            <div class="courses__container--navigation">
+              <button
+                class="courses__button--minimal"
+                id="nav__courseLeft"
+                data-active="false"
+              >
+                <img
+                  src="../assets/svg/arrow-left.svg"
+                  class="courses__icon--button"
+                />
+              </button>
+              <button
+                class="courses__button--minimal"
+                id="nav__courseRight"
+                data-active="false"
+              >
+                <img
+                  src="../assets/svg/arrow-right.svg"
+                  class="courses__icon--button"
+                />
+              </button>
+              <button
+                class="courses__button--minimal nav__delete"
+                id="nav__courseDelete"
+              >
+                <img
+                  src="../assets/svg/trash--red.svg"
+                  class="courses__icon--button"
+                />
+              </button>
+            </div>
+          </div>
+          <div class="courses__container--items">
+            <div class="courses__container--item" id="days__container1">
+              <div class="courses__container--icon" id="days__container1__button">
+                <img
+                  src="../assets/svg/book--light.svg"
+                  class="courses__item--icon"
+                />
+              </div>
+              <div class="courses__container--text">
+                <p class="courses__text--alternative" id="days__title1"></p>
+                <p class="courses__subtitle" id="days__subtitle1"></p>
+              </div>
+            </div>
+            <div class="courses__container--item" id="days__container2">
+              <div class="courses__container--icon" id="days__container2__button">
+                <img
+                  src="../assets/svg/book--light.svg"
+                  class="courses__item--icon"
+                />
+              </div>
+              <div class="courses__container--text">
+                <p class="courses__text--alternative" id="days__title2"></p>
+                <p class="courses__subtitle" id="days__subtitle2"></p>
+              </div>
+            </div>
+            <div class="courses__container--item" id="days__container3">
+              <div class="courses__container--icon" id="days__container3__button">
+                <img
+                  src="../assets/svg/book--light.svg"
+                  class="courses__item--icon"
+                />
+              </div>
+              <div class="courses__container--text">
+                <p class="courses__text--alternative" id="days__title3"></p>
+                <p class="courses__subtitle" id="days__subtitle3"></p>
+              </div>
+            </div>
+            <div class="courses__container--item" id="days__container4">
+              <div class="courses__container--icon" id="days__container4__button">
+                <img
+                  src="../assets/svg/book--light.svg"
+                  class="courses__item--icon"
+                />
+              </div>
+              <div class="courses__container--text">
+                <p class="courses__text--alternative" id="days__title4"></p>
+                <p class="courses__subtitle" id="days__subtitle4"></p>
+              </div>
+            </div>
+            <div class="courses__container--item" id="days__container5">
+              <div class="courses__container--icon" id="days__container5__button">
+                <img
+                  src="../assets/svg/book--light.svg"
+                  class="courses__item--icon"
+                />
+              </div>
+              <div class="courses__container--text">
+                <p class="courses__text--alternative" id="days__title5"></p>
+                <p class="courses__subtitle" id="days__subtitle5"></p>
+              </div>
+            </div>
+            <div class="courses__container--item" id="days__container6">
+              <div class="courses__container--icon" id="days__container6__button">
+                <img
+                  src="../assets/svg/book--light.svg"
+                  class="courses__item--icon"
+                />
+              </div>
+              <div class="courses__container--text">
+                <p class="courses__text--alternative" id="days__title6"></p>
+                <p class="courses__subtitle" id="days__subtitle6"></p>
+              </div>
+            </div>
+            <div class="courses__container--item" id="days__container7">
+              <div class="courses__container--icon" id="days__container7__button">
+                <img
+                  src="../assets/svg/book--light.svg"
+                  class="courses__item--icon"
+                />
+              </div>
+              <div class="courses__container--text">
+                <p class="courses__text--alternative" id="days__title7"></p>
+                <p class="courses__subtitle" id="days__subtitle7"></p>
+              </div>
+            </div>
+            <div class="courses__container--item" id="days__container8">
+              <div class="courses__container--icon" id="days__container8__button">
+                <img
+                  src="../assets/svg/book--light.svg"
+                  class="courses__item--icon"
+                />
+              </div>
+              <div class="courses__container--text">
+                <p class="courses__text--alternative" id="days__title8"></p>
+                <p class="courses__subtitle" id="days__subtitle8"></p>
+              </div>
+            </div>
+            <div class="courses__container--item" id="days__container9">
+              <div class="courses__container--icon" id="days__container9__button">
+                <img
+                  src="../assets/svg/book--light.svg"
+                  class="courses__item--icon"
+                />
+              </div>
+              <div class="courses__container--text">
+                <p class="courses__text--alternative" id="days__title9"></p>
+                <p class="courses__subtitle" id="days__subtitle9"></p>
+              </div>
+            </div>
+            <div class="courses__container--item plus__container" id="courses__plus__container__front">
+              <div class="courses__container--text plus__text">
+                <div class="courses__container--icon courses__container--plus">
+                  <img src="../assets/svg/plus--light.svg" class="courses__item--icon" />
+                </div>
+              </div>
+            </div>
+            <div class="events__container plus__container__back" id="courses__plus__container__back">
+              <div class="plus__container__parent" id="courses__plus__container__parent">
+                <div class="material__group" id="material__group1__course">      
+                  <input type="text" class="material__input" id="material__group1__course__input" required>
+                  <span class="material__highlight"></span>
+                  <span class="material__bar"></span>
+                  <label class="material__label">Period number</label>
+                </div> 
+                <div class="material__group" id="material__group2__course">      
+                  <input type="text" class="material__input" id="material__group2__course__input" required>
+                  <span class="material__highlight"></span>
+                  <span class="material__bar"></span>
+                  <label class="material__label">Course title</label>
+                </div>
+                <div class="page__container page__button__schedule" id="page__container__course">
+                  <button class="page__button page__button__schedule" id="page__button__prev__plus__course">
+                    <img
+                      src="../assets/svg/arrow-left.svg"
+                      alt="left arrow"
+                      class="page__icon"
+                    />
+                  </button>
+                  <button class="page__button page__button__schedule" id="page__button__next__plus__course">
+                    <img
+                      src="../assets/svg/arrow-right.svg"
+                      alt="right arrow"
+                      class="page__icon"
+                    />
+                  </button>
+                </div>
+              </div>
+              <div class="plus__container--icon__parent" id="plus__container__course__internal">
+                <div class="plus__container--icon plus__container--icon__check" id="courses__plus__container--icon">
+                  <img
+                    src="../assets/svg/check.svg"
+                    alt="folder"
+                    class="events__icon"
+                  />
+                </div>
+                <div class="plus__container--icon plus__container--icon__cross" id="courses__plus__container--icon--cross">
+                  <img
+                    src="../assets/svg/cross.svg"
+                    alt="folder"
+                    class="events__icon"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="page__container page__container__schedule" id="plus__container__day">
+              <button class="page__button" id="plus__container__course__left">
+                <img
+                  src="../assets/svg/arrow-left.svg"
+                  alt="left arrow"
+                  class="page__icon"
+                />
+              </button>
+              <button class="page__button" id="plus__container__course__right">
+                <img
+                  src="../assets/svg/arrow-right.svg"
+                  alt="right arrow"
+                  class="page__icon"
+                />
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+    <script type="module" src="../scripts/main.js"></script>
+  </body>
+</html>
