@@ -41,7 +41,7 @@ const DOMStrings = {
 
 const updates = {
     title: "Stay in the loop:",
-    subtitle: "Keep up to date with the project by checking out melkadze/class-planner on GitHub."
+    subtitle: "Welcome to our first full public release!"
 }
 
 const timeouts = {
@@ -2426,10 +2426,6 @@ async function initScheduleDisplay() {
     }
 }
 
-
-//@todo : use a prefixer
-//@todo : fix spacing here and everywhere
-
 function insertToCourseDisplay(position, info) {
     setDisplayProperty(`days__container${position}`, 'flex')
     document.getElementById(`days__title${position}`).innerText = info.name
@@ -2482,10 +2478,8 @@ async function updateCourseDisplay(dayName, reqPage) {
     
     const dayInfo = await getDayInfoStatic(dayNameToNumber(dayName))
     
-    
     document.getElementById("course__headline").innerText = `${dayName}'s Courses`
     selections.dayTitle = dayName
-    
     
     if (!(reqPage)) {
         reqPage = 1
@@ -2542,8 +2536,6 @@ async function updateCourseDisplay(dayName, reqPage) {
         }
     }
 }
-
-
 
 async function initCourseDisplay() {
     const dayFullInfo = await getFullDayInfo()
@@ -2674,8 +2666,9 @@ function setupRelevantPage() {
 
 setupRelevantPage()
 
-//@todo remove timing js, browserify timing setup, internals ejs, and settings link (likely icon too)
-//@todo add options page
 //@todo make deleting delete all relevant
 //@todo check all comments and make basic style changes, such as eslint
 //@todo push to master and record video
+
+//@todo : use a prefixer
+//@todo : fix spacing here and everywhere
