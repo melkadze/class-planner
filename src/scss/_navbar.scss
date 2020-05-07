@@ -3,18 +3,22 @@
 @use "typography";
 nav {
   background-color: color.$white;
-  box-shadow: 0 10px 20px rgba(color.$dark-gray, 0.15);
+  -webkit-box-shadow: 0 10px 20px rgba(color.$dark-gray, 0.15);
+          box-shadow: 0 10px 20px rgba(color.$dark-gray, 0.15);
 }
 .nav {
   @include grid.grid(12, 24px);
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   justify-items: center;
   height: 80px;
   margin: 0 7.5vw;
 }
 .nav__logo-container {
   @include grid.grid-position(1, 2, 1, 1);
-  justify-self: start;
+  -ms-grid-column-align: start;
+      justify-self: start;
 }
 .nav__text-container {
   @include grid.grid-position(3, 5, 1, 1);
@@ -26,7 +30,8 @@ nav {
   @include grid.grid-position(11, 1, 1, 1);
 }
 .nav__icon-container--col-12 {
-  grid-column-start: 12;
+  -ms-grid-column: 12;
+      grid-column-start: 12;
 }
 .nav__text {
   @include typography.headline-6();
