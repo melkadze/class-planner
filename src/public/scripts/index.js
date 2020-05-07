@@ -41,7 +41,7 @@ const DOMStrings = {
 
 const updates = {
     title: "Stay in the loop:",
-    subtitle: "We've just removed all of the non-essential fragments of the old design."
+    subtitle: "Keep up to date with the project by checking out melkadze/class-planner on GitHub."
 }
 
 const timeouts = {
@@ -414,7 +414,12 @@ async displayNextCourse() {
         let timeNext = truncatedTimeToDT(targetReplyNext)
         let timeUntilNext = await timeNext.diff(timeNow, 'seconds').values.seconds
         createTimer(timeUntilNext, displayTime.displayNextCourse, "alarms__timer1", "hh:mm:ss")
-        DOMStrings.alarms__title1.innerText = `Period ${await getCurrentPeriod()} ${await getCurrentCourse()} starts`
+        let currentCourse = await getCurrentCourse()
+        if (!(await currentCourse)) {
+            DOMStrings.alarms__title1.innerText = `Period ${await getCurrentPeriod()} starts`
+        } else {
+            DOMStrings.alarms__title1.innerText = `Period ${await getCurrentPeriod()} ${await currentCourse} starts`
+        }
     } else if (!targetReply) {
         //make a function that can tell if there have been classes today, and change title accordingly
         if (pages.events == 1) {
@@ -426,7 +431,12 @@ async displayNextCourse() {
         let targetTime = truncatedTimeToDT(targetReply)
         let timeUntilTarget = await targetTime.diff(timeNow, 'seconds').values.seconds
         createTimer(timeUntilTarget, displayTime.displayNextCourse, "alarms__timer1", "hh:mm:ss")
-        DOMStrings.alarms__title1.innerText = `Period ${await getCurrentPeriod()} ${await getCurrentCourse()} ends`
+        let currentCourse = await getCurrentCourse()
+        if (!(await currentCourse)) {
+            DOMStrings.alarms__title1.innerText = `Period ${await getCurrentPeriod()} ends`
+        } else {
+            DOMStrings.alarms__title1.innerText = `Period ${await getCurrentPeriod()} ${await currentCourse} ends`
+        }
     }
     
     displayTime.displayNextCourseList()
@@ -704,7 +714,17 @@ function getScheduleName() {
         return response.data
     })
     .catch(function (error) {
-        noFurtherClasses(error)
+        noFurtherClasses(error) //@todo deal with all comments, esp. the noFurtherClasses() ones
+    })
+}
+
+function getScheduleNameStatic(input) {
+    return axios.get(`/day/schedule/${input}`, {timeout: timeouts.net})
+    .then (function (response) {
+        return response.data
+    })
+    .catch(function (error) {
+        //console.log(error)
     })
 }
 
@@ -745,6 +765,7 @@ async function getCurrentPeriod() {
 async function getCurrentCourse() {
     const currentPeriod = await getCurrentPeriod()
     const dayInfo = await getDayInfo()
+    
     let currentCourse
     
     for (let i = 0; i < dayInfo.length; i++) {
@@ -1983,8 +2004,32 @@ function updateDaysPlusPages() {
     }
 }
 
+//@todo make sure dashboard can handle period without course (write NO COURSE INFORMATION)
+
 async function validateDayPlus() {
-    return true //@audit actually validate a matching period exists (but maybe dont)
+    if (document.getElementById("material__group1__course__input").value != '' && document.getElementById("material__group2__course__input").value != '') {
+        
+        const scheduleInfo = await getScheduleInfo(await getScheduleNameStatic(dayNameToNumber(selections.dayTitle)))
+        
+        let hasMatchingPeriod = false
+        
+        for (let i = 0; i < await scheduleInfo.length; i++) {
+            if (await scheduleInfo[i].period == document.getElementById("material__group1__course__input").value) {
+                hasMatchingPeriod = true
+                break
+            } else {
+                continue
+            }
+        }
+        
+        if (!(hasMatchingPeriod)) {
+            console.log('Error: no period information exists in schedule for given course') //@todo either get rid of these errors, obscure them, or move to html
+        }
+        
+        return hasMatchingPeriod
+    } else {
+        return false
+    }
 }
 
 function initDaysPlusButtons() {
@@ -2013,7 +2058,7 @@ function initDaysPlusButtons() {
     document.getElementById("courses__plus__container--icon--cross").onclick = function () {
         setDisplayProperty("courses__plus__container__back", "none")
         setDisplayProperty("courses__plus__container__front", "flex")
-        updateDaysPlusPages()
+        clearDayPlusButtons()
         pages.coursesPlus = 1
         updateDaysPlusPages()
     }
@@ -2111,7 +2156,7 @@ function deletePeriod(input) {
 function insertToScheduleDisplay(position, info) {
     setDisplayProperty(`courses__container${position}`, 'flex')
     document.getElementById(`courses__title${position}`).innerText = `Period ${info.period}`
-    document.getElementById(`courses__subtitle${position}`).innerText = `${info.timeStart} - ${info.timeEnd}`
+    document.getElementById(`courses__subtitle${position}`).innerText = `${info.timeStart} — ${info.timeEnd}`
     switch(position) {
         case 1:
             store.period1 = info._id
@@ -2166,6 +2211,7 @@ function clearScheduleDisplay() {
     setDisplayProperty("schedules__plus__container__back", "none")
     setDisplayProperty("schedules__plus__container__front", "none")
     setDisplayProperty("plus__container__schedule", "none")
+    clearSchedulePlusButtons()
 }
 
 async function updateScheduleDisplay(schName, reqPage) {
@@ -2409,6 +2455,7 @@ function clearCourseDisplay() {
     setDisplayProperty("courses__plus__container__back", "none")
     setDisplayProperty("courses__plus__container__front", "none")
     setDisplayProperty("plus__container__day", "none")
+    clearDayPlusButtons()
 }
 
 async function updateCourseDisplay(dayName, reqPage) {
@@ -2596,8 +2643,8 @@ function setupRelevantPage() {
 
 setupRelevantPage()
 
-//todo remove timing js, browserify timing setup, internals ejs, and settings link (likely icon too)
-//todo add options page
-//todo make deleting delete all relevant
-//todo check all comments and make basic style changes, such as eslint
-//todo push to master and record video
+//@todo remove timing js, browserify timing setup, internals ejs, and settings link (likely icon too)
+//@todo add options page
+//@todo make deleting delete all relevant
+//@todo check all comments and make basic style changes, such as eslint
+//@todo push to master and record video
