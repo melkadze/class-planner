@@ -1750,7 +1750,7 @@ function createSchedule(scheduleName, elementID) {
 			refreshDocument()
 		})
 		.catch(function (error) {
-			document.getElementById(elementID).innerText = "Please enter a name under 32 characters."
+			document.getElementById(elementID).innerText = "Please enter an unused name under 32 characters."
 		})
 }
 
