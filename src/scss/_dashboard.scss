@@ -203,6 +203,11 @@ body {
   @include typography.subtitle-2();
   color: color.$blue-dark-shade;
 }
+.greeting__link {
+  @include typography.subtitle-1();
+  font-size: 1.4rem;
+  color: color.$violet-accent-shade;
+}
 #greeting__update__title {
   font-size: 1.6rem;
   position: absolute;
@@ -217,6 +222,20 @@ body {
   height: 10vw;
   right: 0;
   bottom: 0;
+}
+#settings__dashboard .greeting {
+  grid-column-end: span 12;
+}
+#settings__dashboard .courses__input--text {
+  width: 30vw;
+}
+#settings__dashboard #settings__settings {
+  background-color: color.$light-gray;
+  grid-column-end: span 12;
+  grid-row-start: 4;
+  grid-row-end: 13;
+  display: grid;
+  @include grid.grid(2, 4vw, 1, 0.5vw);
 }
 .calendar {
   @include effects.drop-shadow();

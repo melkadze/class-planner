@@ -26,7 +26,7 @@ router.post('/upload', authCheck, async (req, res) => {
 
 router.delete('/byID/:id', authCheck, async (req, res) => {
     try {
-        await Course.deleteOne({ _id: req.params.id }) //@todo change other deleteManys into deleteOnes
+        await Course.deleteOne({ _id: req.params.id })
         res.status(200).send('OK')
     } catch (err) {
         functions.error(res, 500, err);

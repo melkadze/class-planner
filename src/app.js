@@ -15,7 +15,7 @@ app.use(express.static(__dirname + "/public")); //export public folder
 //other dependencies
 const passport = require('passport')
 const cookieSession = require('cookie-session')
-const passportSetup = require('./config/passport-setup') //this is necessary, even though it is greyed out
+require('./config/passport-setup')
 require('dotenv').config();
 
 //setup cookies for login storage
@@ -38,6 +38,7 @@ const courseRouter = require('./routers/course')
 const dayRouter = require('./routers/day')
 const taskRouter = require('./routers/task')
 const eventRouter = require('./routers/event')
+const feedbackRouter = require('./routers/feedback')
 
 //router setup
 app.use('/', rootRouter)
@@ -49,6 +50,7 @@ app.use('/course', courseRouter)
 app.use('/day', dayRouter)
 app.use('/task', taskRouter)
 app.use('/event', eventRouter)
+app.use('/feedback', feedbackRouter)
 
 //finally, open the server
 app.listen(process.env.PORT, () => {

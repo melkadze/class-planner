@@ -49,7 +49,7 @@ router.get('/:id', authCheck, async (req, res) => {
 
 router.delete('/:id', authCheck, async (req, res) => {
     try {
-        await Schedule.deleteMany({ owner: req.user._id, name: req.params.id })
+        await Schedule.deleteOne({ owner: req.user._id, name: req.params.id })
         res.status(200).send('OK')
     } catch (err) {
         functions.error(res, 500, err);

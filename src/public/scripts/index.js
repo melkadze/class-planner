@@ -421,12 +421,12 @@ async displayNextCourse() {
             DOMStrings.alarms__title1.innerText = `Period ${await getCurrentPeriod()} ${await currentCourse} starts`
         }
     } else if (!targetReply) {
-        //make a function that can tell if there have been classes today, and change title accordingly
+        //::make a function that can tell if there have been classes today, and change title accordingly
         if (pages.events == 1) {
             DOMStrings.alarms__timer1.innerText = ''
             DOMStrings.alarms__title1.innerText = `No further classes scheduled for today`
         }
-        //technically, this will fail (classes will not update) at midnight. fixing this is low priority
+        //::classes will not update at midnight 
     } else {
         let targetTime = truncatedTimeToDT(targetReply)
         let timeUntilTarget = await targetTime.diff(timeNow, 'seconds').values.seconds
@@ -714,7 +714,7 @@ function getScheduleName() {
         return response.data
     })
     .catch(function (error) {
-        noFurtherClasses(error) //@todo deal with all comments, esp. the noFurtherClasses() ones
+        noFurtherClasses(error)
     })
 }
 
@@ -978,6 +978,16 @@ function removeEventByID(eventID) {
     })
 }
 
+function deleteAccount() {
+    axios.delete(`/profile/delete/deletemyaccount/confirm`)
+    .then(async function(response) {
+        window.location.href = "/auth/logout"
+    })
+    .catch(function (error) {
+        //console.log(error)
+    })
+}
+
 function expireOldEvents(eventsInfo) {
     for (let i = 0; i < eventsInfo.length; i++) {
         const currentObjDT = truncatedDateToDTUnformatted(eventsInfo[i].dueDate)
@@ -1085,7 +1095,7 @@ function truncatedDateToDTUnformatted(input) {
 }
 
 function refreshEmphasizedEvents(eventsInfo) {
-    //broken? low priority (auto refresh dots)
+    //::auto-refresh calendar dots
     /*
     try {
         
@@ -1501,13 +1511,13 @@ function initPlusButtons() {
                 const inputDateArray = document.getElementById("tasks__plus__date__input").value.split('/')
                 
                 if (!(inputDateArray[0]) || !(inputDateArray[1]) || !(inputDateArray[2])) {
-                    throw new Error("Please enter a valid date") //maybe make this silent
+                    throw new Error("Please enter a valid date")
                 }
                 
                 dateFormatted = `${inputDateArray[2]}-${inputDateArray[0]}-${inputDateArray[1]}`
                 
                 if (truncatedDateToFormattedDT(dateFormatted) == 'Invalid DateTime') {
-                    throw new Error("Please enter a valid date") //maybe make this silent
+                    throw new Error("Please enter a valid date")
                 }
                 
                 try {
@@ -1524,7 +1534,7 @@ function initPlusButtons() {
                         //console.log(err)
                     })
                 } catch (err) {
-                    console.log(err)
+                    //console.log(err)
                 }
                 
                 setDisplayProperty("tasks__plus__container__back", "none")
@@ -1533,7 +1543,7 @@ function initPlusButtons() {
                 
             } catch (err) {
                 document.getElementById("tasks__plus__container__error").innerText = 'Please enter a valid date'
-                console.log(err)
+                //console.log(err)
             }
         } else if (document.getElementById("tasks__plus__task__input").value == '' && document.getElementById("tasks__plus__date__input").value == '') {
             document.getElementById("tasks__plus__container__error").innerText = 'Please enter a task name and due date'
@@ -1557,13 +1567,13 @@ function initPlusButtons() {
                 const inputDateArray = document.getElementById("events__plus__date__input").value.split('/')
                 
                 if (!(inputDateArray[0]) || !(inputDateArray[1]) || !(inputDateArray[2])) {
-                    throw new Error("Please enter a valid date") //maybe make this silent
+                    throw new Error("Please enter a valid date")
                 }
                 
                 dateFormatted = `${inputDateArray[2]}-${inputDateArray[0]}-${inputDateArray[1]}`
                 
                 if (truncatedDateToFormattedDT(dateFormatted) == 'Invalid DateTime') {
-                    throw new Error("Please enter a valid date") //maybe make this silent
+                    throw new Error("Please enter a valid date")
                 }
                 
                 const currentObjDT = truncatedDateToDTUnformatted(dateFormatted)
@@ -1594,7 +1604,7 @@ function initPlusButtons() {
                     initDatePickers('events')
                     
                 } catch (err) {
-                    console.log(err)
+                    //console.log(err)
                     if (pastDate) {
                         document.getElementById("events__plus__container__error").innerText = 'Please enter a future or present date'
                     } else {
@@ -1603,7 +1613,7 @@ function initPlusButtons() {
                 }
                 
             } catch (err) {
-                console.log(err)
+                //console.log(err)
                 if (pastDate) {
                     document.getElementById("events__plus__container__error").innerText = 'Please enter a future or present date'
                 } else {
@@ -1741,6 +1751,18 @@ function createSchedule(scheduleName, elementID) {
     })
 }
 
+function createFeedback(feedback) {
+    axios.post(`/feedback/upload`, {
+        name: feedback
+    })
+    .then (function (response) {
+        document.getElementById("settings__feedback__text").innerText = 'Feedback sent!'
+    })
+    .catch(function (error) {
+        document.getElementById("settings__feedback__text").innerText = 'Network error.'
+    })
+}
+
 function isWeekday(input) {
     if (input == 'Monday' || input == 'Tuesday' || input == 'Wednesday' || input == 'Thursday' || input == 'Friday' || input == 'Saturday' || input == 'Sunday') {
         return true
@@ -1801,9 +1823,8 @@ function createDay(dayNumber, schedule, elementID) {
         refreshDocument()
     })
     .catch(function (error) {
-        console.log(schedule)
         document.getElementById(elementID).innerText = 'Schedule not applied due to a network error.'
-        console.log(error)
+        //console.log(error)
     })
 }
 
@@ -1968,7 +1989,7 @@ function initCoursesPlusButtons() {
                 updateSchedulesPlusPages()
             })
             .catch(function (error) {
-                console.log(error)
+                //console.log(error)
             })
         } else {
             throw new Error('Please fill out all fields properly')
@@ -2004,8 +2025,6 @@ function updateDaysPlusPages() {
     }
 }
 
-//@todo make sure dashboard can handle period without course (write NO COURSE INFORMATION)
-
 async function validateDayPlus() {
     if (document.getElementById("material__group1__course__input").value != '' && document.getElementById("material__group2__course__input").value != '') {
         
@@ -2023,7 +2042,7 @@ async function validateDayPlus() {
         }
         
         if (!(hasMatchingPeriod)) {
-            console.log('Error: no period information exists in schedule for given course') //@todo either get rid of these errors, obscure them, or move to html
+            console.log('Error: no period information exists in schedule for given course')
         }
         
         return hasMatchingPeriod
@@ -2080,7 +2099,7 @@ function initDaysPlusButtons() {
                 updateDaysPlusPages()
             })
             .catch(function (error) {
-                console.log(error)
+                //console.log(error)
             })
         } else {
             throw new Error('Please fill out all fields properly')
@@ -2226,7 +2245,7 @@ async function updateScheduleDisplay(schName, reqPage) {
         reqPage = 1
     }
     
-    const totalPages = getTotalSubpages(await scheduleInfo.length) //@note old progress
+    const totalPages = getTotalSubpages(await scheduleInfo.length)
     
     pages.scheduleSubmenu = reqPage
     
@@ -2408,8 +2427,8 @@ async function initScheduleDisplay() {
 }
 
 
-//todo: use a prefixer
-//todo: fix spacing here and everywhere
+//@todo : use a prefixer
+//@todo : fix spacing here and everywhere
 
 function insertToCourseDisplay(position, info) {
     setDisplayProperty(`days__container${position}`, 'flex')
@@ -2526,7 +2545,7 @@ async function updateCourseDisplay(dayName, reqPage) {
 
 
 
-async function initCourseDisplay() { //@note current progress
+async function initCourseDisplay() {
     const dayFullInfo = await getFullDayInfo()
     
     document.getElementById("nav__courseDelete").onclick = function () {
@@ -2601,29 +2620,38 @@ async function initCourseDisplay() { //@note current progress
     
     document.getElementById("days__container9__button").onclick = function () {
         deleteCourse(store.course9)
-    } //@todo the pluses/validation
-      //@todo the buttons on courses are too big (bottom) (OVERFLOW)
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 function setupCoursesPage() {
     initCourseMainButtons()
     initScheduleDisplay()
     initCourseDisplay()
+}
+
+function setupSettingsPage() {
+    document.getElementById("settings__delete__button").onclick = function () {
+        if (document.getElementById("settings__delete__input").value.trim() == "DELETE MY ACCOUNT") {
+            deleteAccount()
+        } else {
+            document.getElementById("settings__delete__button").style.animation = 'shake 0.82s cubic-bezier(.36,.07,.19,.97) both'
+            setTimeout(function() {
+                document.getElementById("settings__delete__button").style.animation -= 'shake 0.82s cubic-bezier(.36,.07,.19,.97) both'
+            }, timeouts.animation)
+        }
+    }
+    
+    document.getElementById("settings__feedback__button").onclick = function () {
+        if (document.getElementById("settings__feedback__input").value != '') {
+            createFeedback(document.getElementById("settings__feedback__input").value)
+            document.getElementById("settings__feedback__input").value = ''
+        } else {
+            document.getElementById("settings__feedback__button").style.animation = 'shake 0.82s cubic-bezier(.36,.07,.19,.97) both'
+            setTimeout(function() {
+                document.getElementById("settings__feedback__button").style.animation -= 'shake 0.82s cubic-bezier(.36,.07,.19,.97) both'
+            }, timeouts.animation)
+        }
+    }
 }
 
 function setupRelevantPage() {
@@ -2637,6 +2665,9 @@ function setupRelevantPage() {
             break
         case 'Loop: Courses':
             setupCoursesPage()
+            break
+        case 'Loop: Settings':
+            setupSettingsPage()
             break
     }
 }

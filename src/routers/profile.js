@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const User = require("../models/user")
 const authCheck = require('../middleware/authCheck')
 const functions = require('../config/functions')
 
@@ -11,9 +12,9 @@ router.get('/', authCheck, (req, res) => {
     }
 })
 
-router.get('/internals', authCheck, (req, res) => {
+router.get('/settings', authCheck, (req, res) => {
     try{
-        res.render('internals', {user: req.user});
+        res.render('settings', {user: req.user});
     } catch(err) {
         functions.error(res, 500, err);
     }
@@ -31,6 +32,15 @@ router.get('/courses', authCheck, (req, res) => {
     try{
         res.render('courses', {user: req.user});
     } catch(err) {
+        functions.error(res, 500, err);
+    }
+})
+
+router.delete('/delete/deletemyaccount/confirm', authCheck, async (req, res) => {
+    try {
+        await User.deleteOne({ _id: req.user._id })
+        res.status(200).send('OK')
+    } catch (err) {
         functions.error(res, 500, err);
     }
 })
