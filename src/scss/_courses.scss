@@ -280,7 +280,7 @@
 .courses__container--items .plus__container__back .material__group{
   margin-bottom: 0;
 }
-.courses__container--items .plus__container__back .material__input:focus ~ .material__label, .material__input:valid ~ .material__label{
+.courses__container--items .plus__container__back .material__input:focus ~ .material__label, .courses__container--items .material__input:valid ~ .material__label{
   top: -0.5rem !important;
 }
 .page__button__schedule{
