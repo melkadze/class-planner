@@ -2098,7 +2098,7 @@ function initDaysPlusButtons() {
 					setDisplayProperty("courses__plus__container__front", "flex")
 					clearDayPlusButtons()
 					updateCourseDisplay(selections.dayTitle, pages.courseSubmenu)
-					pages.daysPlus = 1
+					pages.coursesPlus = 1
 					updateDaysPlusPages()
 				})
 				.catch(function (error) {
