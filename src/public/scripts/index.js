@@ -61,6 +61,8 @@ let pages = {
     scheduleStore: [],
     schedulesPlus: 1,
     courses: 1,
+    courseSubmenu: 1,
+    courseStore: [],
     coursesPlus: 1
 }
 
@@ -74,6 +76,15 @@ let store = {
     period7: '',
     period8: '',
     period9: '',
+    course1: '',
+    course2: '',
+    course3: '',
+    course4: '',
+    course5: '',
+    course6: '',
+    course7: '',
+    course8: '',
+    course9: ''
 }
 
 let selections = {
@@ -642,6 +653,16 @@ function getDayInfo() {
     .catch(function (error) {
         //phase out these noFurtherClasses, and all error msgs (at least for shipping)
         noFurtherClasses(error)
+    })
+}
+
+function getDayInfoStatic(reqDay) {
+    return axios.get(`/day/${reqDay}`, {timeout: timeouts.net})
+    .then (function (response) {
+        return response.data
+    })
+    .catch(function (error) {
+        //console.log(error)
     })
 }
 
@@ -1728,6 +1749,27 @@ function dayNameToNumber(input) {
     }
 }
 
+function dayNumberToName(input) {
+    switch (input) {
+        case 0:
+            return 'Monday'
+        case 1:
+            return 'Tuesday'
+        case 2:
+            return 'Wednesday'
+        case 3:
+            return 'Thursday'
+        case 4:
+            return 'Friday'
+        case 5:
+            return 'Saturday'
+        case 6:
+            return 'Sunday'
+        default:
+            throw new Error('Not a valid day number')
+    }
+}
+
 function createDay(dayNumber, schedule, elementID) {
     axios.post(`/day/upload`, {
         day: dayNumber,
@@ -1798,10 +1840,10 @@ function validateTimeAPM(apm) {
 async function validateSchedulePlus() {
     if (document.getElementById("material__group1__schedule__input").value != '' && document.getElementById("material__group2__schedule__input").value != '' && document.getElementById("material__group3__schedule__input").value != '') {
         
-        if (!(validateTimeAPM(document.getElementById("material__group2__schedule__input").value.split(':')[1].split(' ')[0]))) {
+        if (!(validateTimeAPM(document.getElementById("material__group2__schedule__input").value.split(':')[1].split(' ')[1]))) {
             console.log('Error: given bad AM/PM for start time')
             return false
-        } else if (!(validateTimeAPM(document.getElementById("material__group3__schedule__input").value.split(':')[1].split(' ')[0]))) {
+        } else if (!(validateTimeAPM(document.getElementById("material__group3__schedule__input").value.split(':')[1].split(' ')[1]))) {
             console.log('Error: given bad AM/PM for end time')
             return false
         }
@@ -1851,6 +1893,11 @@ function clearSchedulePlusButtons() {
     document.getElementById('material__group3__schedule__input').value = ''
 }
 
+function clearDayPlusButtons() {
+    document.getElementById("material__group1__course__input").value = ''
+    document.getElementById('material__group2__course__input').value = ''
+}
+
 function initCoursesPlusButtons() {
     updateSchedulesPlusPages()
     
@@ -1895,9 +1942,97 @@ function initCoursesPlusButtons() {
                 setDisplayProperty("schedules__plus__container__back", "none")
                 setDisplayProperty("schedules__plus__container__front", "flex")
                 clearSchedulePlusButtons()
-                updateScheduleDisplay(selections.scheduleTitle)
+                updateScheduleDisplay(selections.scheduleTitle, pages.scheduleSubmenu)
                 pages.schedulesPlus = 1
                 updateSchedulesPlusPages()
+            })
+            .catch(function (error) {
+                console.log(error)
+            })
+        } else {
+            throw new Error('Please fill out all fields properly')
+        }
+    }
+}
+
+function updateDaysPlusPages() {
+    let currentPage = pages.coursesPlus
+    let totalPages = 2
+    
+    if (currentPage == 1) {
+        document.getElementById("page__button__prev__plus__course").style = 'background-color: silver'
+    } else {
+        document.getElementById("page__button__prev__plus__course").style -= 'background-color: silver'
+    }
+    
+    if (currentPage == totalPages) {
+        document.getElementById("page__button__next__plus__course").style = 'background-color: silver'
+    } else {
+        document.getElementById("page__button__next__plus__course").style -= 'background-color: silver'
+    }
+    
+    switch (currentPage) {
+        case 1:
+            setDisplayProperty("material__group1__course", "block")
+            setDisplayProperty("material__group2__course", "none")
+            break
+        case 2:
+            setDisplayProperty("material__group1__course", "none")
+            setDisplayProperty("material__group2__course", "block")
+            break
+    }
+}
+
+async function validateDayPlus() {
+    return true //@audit actually validate a matching period exists (but maybe dont)
+}
+
+function initDaysPlusButtons() {
+    updateDaysPlusPages()
+    
+    document.getElementById("page__button__prev__plus__course").onclick = function () {
+        if (pages.coursesPlus != 1) {
+            pages.coursesPlus--
+            updateDaysPlusPages()
+        }
+    }
+    
+    document.getElementById("page__button__next__plus__course").onclick = function () {
+        if (pages.coursesPlus != 2) {
+            pages.coursesPlus++
+            updateDaysPlusPages()
+        }
+    }
+    
+    document.getElementById("courses__plus__container__front").onclick = function () {
+        setDisplayProperty("courses__plus__container__front", "none")
+        setDisplayProperty("courses__plus__container__back", "flex")
+        updateDaysPlusPages()
+    }
+    
+    document.getElementById("courses__plus__container--icon--cross").onclick = function () {
+        setDisplayProperty("courses__plus__container__back", "none")
+        setDisplayProperty("courses__plus__container__front", "flex")
+        updateDaysPlusPages()
+        pages.coursesPlus = 1
+        updateDaysPlusPages()
+    }
+    
+    document.getElementById("courses__plus__container--icon").onclick = async function () {
+        
+        if (await validateDayPlus()) {
+            axios.post(`/course/upload`, {
+                forDay: dayNameToNumber(selections.dayTitle),
+                period: document.getElementById("material__group1__course__input").value,
+                name: document.getElementById('material__group2__course__input').value
+            })
+            .then (function (response) {
+                setDisplayProperty("courses__plus__container__back", "none")
+                setDisplayProperty("courses__plus__container__front", "flex")
+                clearDayPlusButtons()
+                updateCourseDisplay(selections.dayTitle, pages.courseSubmenu)
+                pages.daysPlus = 1
+                updateDaysPlusPages()
             })
             .catch(function (error) {
                 console.log(error)
@@ -1919,6 +2054,7 @@ async function initCourseMainButtons() {
     
     eventListeners.dropdown();
     initCoursesPlusButtons()
+    initDaysPlusButtons()
     
     document.getElementById("courses__button__apply").onclick = async function () {
         if (selections.schedule != '' && selections.weekday != '') {
@@ -1965,7 +2101,7 @@ async function initCourseMainButtons() {
 function deletePeriod(input) {
     axios.delete(`/schedule/period/byID/${input}`)
     .then(async function(response) {
-        updateScheduleDisplay(selections.scheduleTitle)
+        updateScheduleDisplay(selections.scheduleTitle, pages.scheduleSubmenu)
     })
     .catch(function (error) {
         //console.log(error)
@@ -2007,7 +2143,7 @@ function insertToScheduleDisplay(position, info) {
     }
 }
 
-function getTotalScheduleSubpages(itemCount) {
+function getTotalSubpages(itemCount) {
     let subpages = 1
     
     if (itemCount < 9) {
@@ -2044,7 +2180,7 @@ async function updateScheduleDisplay(schName, reqPage) {
         reqPage = 1
     }
     
-    const totalPages = getTotalScheduleSubpages(await scheduleInfo.length)
+    const totalPages = getTotalSubpages(await scheduleInfo.length) //@note old progress
     
     pages.scheduleSubmenu = reqPage
     
@@ -2116,8 +2252,47 @@ function deleteCurrentSchedule() {
     })
 }
 
+function deleteCurrentDay() {
+    if (document.getElementById("course__headline").innerText == 'No days configured') {
+        document.getElementById("nav__courseDelete").style.animation = 'shake 0.82s cubic-bezier(.36,.07,.19,.97) both'
+        setTimeout(function() {
+            document.getElementById("nav__courseDelete").style.animation -= 'shake 0.82s cubic-bezier(.36,.07,.19,.97) both'
+        }, timeouts.animation)
+        return
+    }
+    
+    const nameToDelete = dayNameToNumber(pages.courseStore[(pages.courses - 1)])
+    
+    axios.delete(`/day/${nameToDelete}`)
+    .then(async function(response) {
+        refreshDocument()
+    })
+    .catch(function (error) {
+        //console.log(error)
+    })
+}
+
+function deleteCourse(input) {
+    axios.delete(`/course/byID/${input}`)
+    .then(async function(response) {
+        updateCourseDisplay(selections.dayTitle, pages.courseSubmenu)
+    })
+    .catch(function (error) {
+        //console.log(error)
+    })
+}
+
 async function initScheduleDisplay() {
     const scheduleFullInfo = await getFullScheduleInfo()
+    
+    document.getElementById("nav__scheduleDelete").onclick = function () {
+        deleteCurrentSchedule()
+    }
+    
+    if (await scheduleFullInfo.length == 0) {
+        document.getElementById("schedule__headline").innerText = 'No schedules'
+        return
+    }
     
     for (let i = 0; i < await scheduleFullInfo.length; i++) {
         pages.scheduleStore.push(await scheduleFullInfo[i].name)
@@ -2125,9 +2300,6 @@ async function initScheduleDisplay() {
     
     updateScheduleDisplay(pages.scheduleStore[0])
     
-    document.getElementById("nav__scheduleDelete").onclick = function () {
-        deleteCurrentSchedule()
-    }
     
     if (await scheduleFullInfo.length > 1) {
         document.getElementById("nav__scheduleRight").dataset.active = true
@@ -2189,9 +2361,222 @@ async function initScheduleDisplay() {
     }
 }
 
+
+//todo: use a prefixer
+//todo: fix spacing here and everywhere
+
+function insertToCourseDisplay(position, info) {
+    setDisplayProperty(`days__container${position}`, 'flex')
+    document.getElementById(`days__title${position}`).innerText = info.name
+    document.getElementById(`days__subtitle${position}`).innerText = `Period ${info.period}`
+    switch(position) {
+        case 1:
+            store.course1 = info._id
+            break
+        case 2:
+            store.course2 = info._id
+            break
+        case 3:
+            store.course3 = info._id
+            break
+        case 4:
+            store.course4 = info._id
+            break
+        case 5:
+            store.course5 = info._id
+            break
+        case 6:
+            store.course6 = info._id
+            break
+        case 7:
+            store.course7 = info._id
+            break
+        case 8:
+            store.course8 = info._id
+            break
+        case 9:
+            store.course9 = info._id
+            break
+    }
+}
+
+function clearCourseDisplay() {
+    for (let i = 1; i < 10; i++) {
+        setDisplayProperty(`days__container${i}`, 'none')
+        document.getElementById(`days__subtitle${i}`).innerText = ''
+        document.getElementById(`days__title${i}`).innerText = ''
+    }
+    setDisplayProperty("courses__plus__container__back", "none")
+    setDisplayProperty("courses__plus__container__front", "none")
+    setDisplayProperty("plus__container__day", "none")
+}
+
+async function updateCourseDisplay(dayName, reqPage) {
+    clearCourseDisplay()
+    
+    const dayInfo = await getDayInfoStatic(dayNameToNumber(dayName))
+    
+    
+    document.getElementById("course__headline").innerText = `${dayName}'s Courses`
+    selections.dayTitle = dayName
+    
+    
+    if (!(reqPage)) {
+        reqPage = 1
+    }
+    
+    const totalPages = getTotalSubpages(await dayInfo.length)
+    
+    pages.courseSubmenu = reqPage
+    
+    if (await dayInfo.length > 8) {
+        let currentWorkID = 1
+        
+        for (let i = (((reqPage * 9) - 9) - (reqPage - 1)); i < ((reqPage * 9) - reqPage); i++) {
+            if (await dayInfo[i]) {
+                insertToCourseDisplay((currentWorkID), await dayInfo[i])
+                currentWorkID++
+            }
+            setDisplayProperty("courses__plus__container__front", "none")
+            setDisplayProperty("courses__plus__container__back", "none")
+            setDisplayProperty("plus__container__day", "flex")
+        }
+        
+        if (reqPage == totalPages) {
+            setDisplayProperty("courses__plus__container__front", "flex")
+        }
+    } else {
+        for (let i = 0; i < await dayInfo.length; i++) {
+            insertToCourseDisplay((i + 1), await dayInfo[i])
+        }
+        setDisplayProperty("courses__plus__container__front", "flex")
+    }
+    
+    if (reqPage == 1) {
+        document.getElementById("plus__container__course__left").style = 'background-color: silver'
+    } else {
+        document.getElementById("plus__container__course__left").style -= 'background-color: silver'
+    }
+    
+    if (reqPage == totalPages) {
+        document.getElementById("plus__container__course__right").style = 'background-color: silver'
+    } else {
+        document.getElementById("plus__container__course__right").style -= 'background-color: silver'
+    }
+    
+    document.getElementById("plus__container__course__left").onclick = function () {
+        if (reqPage != 1) {
+            updateCourseDisplay(dayName, (reqPage - 1))
+        }
+    }
+    
+    document.getElementById("plus__container__course__right").onclick = function () {
+        if (reqPage < totalPages) {
+            updateCourseDisplay(dayName, (reqPage + 1))
+        }
+    }
+}
+
+
+
+async function initCourseDisplay() { //@note current progress
+    const dayFullInfo = await getFullDayInfo()
+    
+    document.getElementById("nav__courseDelete").onclick = function () {
+        deleteCurrentDay()
+    }
+    
+    if (await dayFullInfo.length == 0) {
+        document.getElementById("course__headline").innerText = 'No days configured'
+        return
+    }
+    
+    for (let i = 0; i < await dayFullInfo.length; i++) {
+        pages.courseStore.push(dayNumberToName(await dayFullInfo[i].day))
+    }
+    
+    updateCourseDisplay(pages.courseStore[0])
+    
+    if (await dayFullInfo.length > 1) {
+        document.getElementById("nav__courseRight").dataset.active = true
+        document.getElementById("nav__courseLeft").dataset.active = true
+    
+        document.getElementById("nav__courseLeft").onclick = async function () {
+            pages.courses--
+            if (pages.courses < 1) {
+                pages.courses = await dayFullInfo.length
+            }
+            updateCourseDisplay(pages.courseStore[(pages.courses - 1)])
+        }
+        
+        document.getElementById("nav__courseRight").onclick = async function () {
+            pages.courses++
+            if (pages.courses > await dayFullInfo.length) {
+                pages.courses = 1
+            }
+            updateCourseDisplay(pages.courseStore[(pages.courses - 1)])
+        }
+    } else if (await dayFullInfo.length == 0) {
+        document.getElementById("course__headline").innerText = 'No days configured'
+    }
+    
+    document.getElementById("days__container1__button").onclick = function () {
+        deleteCourse(store.course1)
+    }
+    
+    document.getElementById("days__container2__button").onclick = function () {
+        deleteCourse(store.course2)
+    }
+    
+    document.getElementById("days__container3__button").onclick = function () {
+        deleteCourse(store.course3)
+    }
+    
+    document.getElementById("days__container4__button").onclick = function () {
+        deleteCourse(store.course4)
+    }
+    
+    document.getElementById("days__container5__button").onclick = function () {
+        deleteCourse(store.course5)
+    }
+    
+    document.getElementById("days__container6__button").onclick = function () {
+        deleteCourse(store.course6)
+    }
+    
+    document.getElementById("days__container7__button").onclick = function () {
+        deleteCourse(store.course7)
+    }
+    
+    document.getElementById("days__container8__button").onclick = function () {
+        deleteCourse(store.course8)
+    }
+    
+    document.getElementById("days__container9__button").onclick = function () {
+        deleteCourse(store.course9)
+    } //@todo the pluses/validation
+      //@todo the buttons on courses are too big (bottom) (OVERFLOW)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function setupCoursesPage() {
     initCourseMainButtons()
     initScheduleDisplay()
+    initCourseDisplay()
 }
 
 function setupRelevantPage() {
@@ -2210,3 +2595,9 @@ function setupRelevantPage() {
 }
 
 setupRelevantPage()
+
+//todo remove timing js, browserify timing setup, internals ejs, and settings link (likely icon too)
+//todo add options page
+//todo make deleting delete all relevant
+//todo check all comments and make basic style changes, such as eslint
+//todo push to master and record video
