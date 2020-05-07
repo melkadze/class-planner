@@ -1655,7 +1655,7 @@ async function applyNewQuote() {
         } else {
             DOMStrings.greeting__author.innerText = 'Unknown'
         }
-    } catch {
+    } catch (err) {
         greeting.display();
     }
 }
@@ -2665,7 +2665,3 @@ function setupRelevantPage() {
 }
 
 setupRelevantPage()
-
-//@todo eslint
-//@todo push to master
-//@todo record video
