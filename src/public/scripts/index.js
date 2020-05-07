@@ -1593,6 +1593,9 @@ function initPlusButtons() {
 					})
 						.then (function (response) {
 							//console.log(response)
+							pages.eventsPlus = 1
+							updateEventsPlusPages()
+							
 							updateEvents(false)
 						})
 						.catch(function (error) {
