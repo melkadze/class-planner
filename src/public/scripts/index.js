@@ -2666,9 +2666,6 @@ function setupRelevantPage() {
 
 setupRelevantPage()
 
-//@todo make deleting delete all relevant
-//@todo check all comments and make basic style changes, such as eslint
-//@todo push to master and record video
-
-//@todo : use a prefixer
-//@todo : fix spacing here and everywhere
+//@todo eslint
+//@todo push to master
+//@todo record video
