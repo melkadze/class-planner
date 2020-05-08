@@ -635,10 +635,26 @@ async function periodInfoByOffset(offset) {
 		const currentPeriod = await getCurrentPeriod()
 		const dayInfo = await getDayInfo()
 		const scheduleInfo = await getScheduleInfo(await getScheduleName())
-        
-		const requestedPeriod = (currentPeriod + offset) - 1
-		const requestedCourse = dayInfo[requestedPeriod]
-		const requestedSchedulePeriod = scheduleInfo[requestedPeriod]
+		
+		const requestedPeriod = (currentPeriod + offset) //-1
+		
+		let requestedIndex
+		
+		for (let i = 0; i < await dayInfo.length; i++) {
+			if (await dayInfo[i].period == requestedPeriod) {
+				requestedIndex = i
+				break
+			} else {
+				continue
+			}
+		}
+		
+		if (!(requestedIndex)) {
+			requestedIndex = requestedPeriod - 1
+		}
+		
+		const requestedCourse = dayInfo[requestedIndex]
+		const requestedSchedulePeriod = scheduleInfo[requestedIndex]
         
 		const requestedTitle = requestedCourse.name
 		const requestedDay = getCurrentDayName()
