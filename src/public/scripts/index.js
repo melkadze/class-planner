@@ -41,7 +41,7 @@ const DOMStrings = {
 
 const updates = {
 	title: "Stay in the loop:",
-	subtitle: "Welcome to our first full public release!"
+	subtitle: "Firefox and general browser compatibility has been improved. Thank you for using Loop!"
 }
 
 const timeouts = {
