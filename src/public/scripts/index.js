@@ -1612,7 +1612,7 @@ function initPlusButtons() {
 							pages.eventsPlus = 1
 							updateEventsPlusPages()
 							
-							updateEvents(false)
+							updateEvents(99999) //putting 99999 essentially forces update to last page
 						})
 						.catch(function (error) {
 							//console.log(err)
