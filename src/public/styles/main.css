@@ -1192,11 +1192,13 @@ body {
 }
 
 .material__group {
+  font-family: "Open Sans", sans-serif;
   position: relative;
   margin-bottom: 3rem;
 }
 
 .material__input {
+  box-shadow: none;
   font-size: 1.7rem;
   padding: 1rem 1rem 0.3rem 0.5rem;
   display: block;

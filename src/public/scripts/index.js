@@ -1544,7 +1544,7 @@ function initPlusButtons() {
 					})
 						.then (function (response) {
 							//console.log(response)
-							updateTasks(false)
+							updateTasks(99999) //putting 99999 essentially forces update to last page
 						})
 						.catch(function (error) {
 							//console.log(err)
