@@ -424,7 +424,7 @@ const displayTime = {
 			//::make a function that can tell if there have been classes today, and change title accordingly
 			if (pages.events == 1) {
 				DOMStrings.alarms__timer1.innerText = ""
-				DOMStrings.alarms__title1.innerText = "No further classes scheduled for today"
+				DOMStrings.alarms__title1.innerText = "No further classes scheduled for today."
 			}
 			//::classes will not update at midnight 
 		} else {
