@@ -26,4 +26,4 @@ PORT=<the port you wish to open your server on; 3000 is recommended>
 
 `dev`: Launches a live backend development server on the port specified in the `.env` file, and builds the necessary js and scss files as they are updated.
 
-`start`: Runs the application, intended for production use online.
+`start`: Runs the application, intended for shipping use online.
