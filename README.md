@@ -1,4 +1,4 @@
-# class-planner
+# class-planner / loop
 An in-progress, collaborative, and expansive Node.js project that provides a convenient, complete suite of student organization tools through its integration with MongoDB and Google's oAuth -- with more to come.
 
 ### Important:
