@@ -41,7 +41,7 @@ const DOMStrings = {
 
 const updates = {
 	title: "Stay in the loop:",
-	subtitle: "[v1.1.1] Overflowing on dashboard pages should be resolved. Thank you for using Loop!"
+	subtitle: "[v1.1.2] Overflowing on dashboard pages should be resolved. Minor bug fixes. Thank you for using Loop!"
 }
 
 const timeouts = {
@@ -798,13 +798,17 @@ async function getCurrentCourse() {
 
 function createTimer(secs, callback, elementID, format) {
 	const intervalID = setInterval(() => {
-		const durObj = luxon.Duration.fromObject({seconds: secs})
-		const timeUntil = durObj.toFormat(format)
-		document.getElementById(elementID).innerText = timeUntil
-		secs--
-		if (secs < 0) {
+		if (!(elementID == "alarms__timer1" && pages.events != 1)) {
+			const durObj = luxon.Duration.fromObject({seconds: secs})
+			const timeUntil = durObj.toFormat(format)
+			document.getElementById(elementID).innerText = timeUntil
+			secs--
+			if (secs < 0) {
+				clearInterval(intervalID)
+				callback()
+			}
+		} else {
 			clearInterval(intervalID)
-			callback()
 		}
 	}, timeouts.second)
 }
