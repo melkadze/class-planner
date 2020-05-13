@@ -422,6 +422,7 @@ body {
   -ms-grid-column-span: 12;
   grid-column-end: span 12;
   -ms-grid-row: 4;
+  grid-row: 4;
   grid-row-start: 4;
   -ms-grid-row-span: 9;
   grid-row-end: 13;
@@ -489,6 +490,7 @@ body {
 
 .page__container {
   display: none;
+  height: 0;
 }
 
 .page__button {
@@ -1273,13 +1275,14 @@ body {
   display: flex !important;
   width: 10rem;
   margin: auto;
+  margin-top: 0;
   -webkit-transform: scale(1.4);
   -ms-transform: scale(1.4);
   transform: scale(1.4);
 }
 
 #events__plus__container__back .material__group {
-  margin: 2rem auto auto 1rem;
+  margin: 2rem auto 0 1rem;
   display: none;
   z-index: 10;
 }

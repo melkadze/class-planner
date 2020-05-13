@@ -41,7 +41,7 @@ const DOMStrings = {
 
 const updates = {
 	title: "Stay in the loop:",
-	subtitle: "[v1.1] Firefox and general browser compatibility has been improved. Thank you for using Loop!"
+	subtitle: "[v1.1.1] Overflowing on dashboard pages should be resolved. Thank you for using Loop!"
 }
 
 const timeouts = {
@@ -350,6 +350,8 @@ const displayTime = {
 				calendar.lastElementChild.innerText = ""
 				calendar.lastElementChild.innerHTML = `<p class="calendar__day calendar__day--today">${i}</p>`
 			}
+			/* @note start by copying the above if statement */
+			/* @note refresh @12pm */
 		}
 		for (let i = 1; functionCounter < 42; i++, functionCounter++) {
 			calendar.insertAdjacentHTML(
@@ -1234,16 +1236,18 @@ function insertTask(position, subtitle, title) {
 		document.getElementById("tasks__subtitle3").innerText = subtitle
 		document.getElementById("tasks__container3").style.display = "flex"
 		break
+		/*
 	case 4:
 		document.getElementById("tasks__title4").innerText = title
 		document.getElementById("tasks__subtitle4").innerText = subtitle
 		document.getElementById("tasks__container4").style.display = "flex"
 		break
+		*/
 	}
 }
 
 function getTaskIndexFromPage(page) {
-	return ((page - 1) * 4)
+	return ((page - 1) * 3)
 }
 
 function updateTasksPages(currentPage, totalPages, totalObjects, tasksArray) {
@@ -1272,7 +1276,7 @@ function updateTasksPages(currentPage, totalPages, totalObjects, tasksArray) {
     
 	if (currentPage == 1) {
 		try {
-			for (let i = 0; i < 4; i++) {
+			for (let i = 0; i < 3; i++) {
 				insertTask((i + 1), tasksArray[i][0], tasksArray[i][1])
 				switch (i) {
 				case 0:
@@ -1284,9 +1288,11 @@ function updateTasksPages(currentPage, totalPages, totalObjects, tasksArray) {
 				case 2:
 					id3 = tasksArray[i][2]
 					break
+					/*
 				case 3:
 					id4 = tasksArray[i][2]
 					break
+					*/
 				}
 			}
 		} catch (err) {
@@ -1298,7 +1304,7 @@ function updateTasksPages(currentPage, totalPages, totalObjects, tasksArray) {
             
 			if (!(currentPage == totalPages && !(tasksArray[getTaskIndexFromPage(currentPage)]))) {
             
-				for (let i = 0; i < 4; i++) {
+				for (let i = 0; i < 3; i++) {
 					let returnedIndex = getTaskIndexFromPage(currentPage)
 					let currentIndex = returnedIndex + i
 					insertTask((i + 1), tasksArray[currentIndex][0], tasksArray[currentIndex][1])
@@ -1312,9 +1318,11 @@ function updateTasksPages(currentPage, totalPages, totalObjects, tasksArray) {
 					case 2:
 						id3 = tasksArray[currentIndex][2]
 						break
+						/*
 					case 3:
 						id4 = tasksArray[currentIndex][2]
 						break
+						*/
 					}
 				}
 			}
@@ -1400,10 +1408,10 @@ async function updateTasks(reqPage) {
 	let tasksArray = []
 	let totalPages
     
-	if (totalObjects == 5) {
+	if (totalObjects == 4) {
 		totalPages = 1
 	} else {
-		totalPages = Math.ceil(totalObjects / 4)
+		totalPages = Math.ceil(totalObjects / 3)
 	}
     
 	if (reqPage) {
@@ -1426,7 +1434,7 @@ async function updateTasks(reqPage) {
 		}
 	}
     
-	if (totalObjects > 5) {
+	if (totalObjects > 4) {
         
 		document.getElementById("task__button__next").onclick = function() {
 			if (currentPage < totalPages) {
