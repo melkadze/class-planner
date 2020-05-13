@@ -422,7 +422,6 @@ body {
   -ms-grid-column-span: 12;
   grid-column-end: span 12;
   -ms-grid-row: 4;
-  grid-row: 4;
   grid-row-start: 4;
   -ms-grid-row-span: 9;
   grid-row-end: 13;
@@ -490,6 +489,9 @@ body {
 
 .page__container {
   display: none;
+}
+
+.dashboard .page__container {
   height: 0;
 }
 
