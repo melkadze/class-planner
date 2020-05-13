@@ -2012,8 +2012,6 @@ function initCoursesPlusButtons() {
 					setDisplayProperty("schedules__plus__container__front", "flex")
 					clearSchedulePlusButtons()
 					updateScheduleDisplay(selections.scheduleTitle, pages.scheduleSubmenu)
-					pages.schedulesPlus = 1
-					updateSchedulesPlusPages()
 				})
 				.catch(function (error) {
 					//console.log(error)
@@ -2122,8 +2120,6 @@ function initDaysPlusButtons() {
 					setDisplayProperty("courses__plus__container__front", "flex")
 					clearDayPlusButtons()
 					updateCourseDisplay(selections.dayTitle, pages.courseSubmenu)
-					pages.coursesPlus = 1
-					updateDaysPlusPages()
 				})
 				.catch(function (error) {
 					//console.log(error)
@@ -2262,6 +2258,8 @@ function clearScheduleDisplay() {
 
 async function updateScheduleDisplay(schName, reqPage) {
 	clearScheduleDisplay()
+	pages.schedulesPlus = 1
+	updateSchedulesPlusPages()
     
 	const scheduleInfo = await getScheduleInfo(schName)
     
@@ -2502,6 +2500,8 @@ function clearCourseDisplay() {
 
 async function updateCourseDisplay(dayName, reqPage) {
 	clearCourseDisplay()
+	pages.coursesPlus = 1
+	updateDaysPlusPages()
     
 	const dayInfo = await getDayInfoStatic(dayNameToNumber(dayName))
     
