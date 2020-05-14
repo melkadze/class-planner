@@ -361,11 +361,6 @@ const displayTime = {
 					calendar.lastElementChild.innerHTML = `<p class="calendar__day calendar__day--emphasized">${i}</p>`
 				}
 			}
-			
-			
-			
-			/* @note start by copying the above if statement */
-			/* @note refresh @12pm */
 		}
 		for (let i = 1; functionCounter < 42; i++, functionCounter++) {
 			calendar.insertAdjacentHTML(
@@ -1630,13 +1625,23 @@ function getDocumentTitle() {
 	return document.title
 }
 
+function setMidnightTimer() {
+	const today = new Date()
+	const tommorow = new Date(today.getFullYear(),today.getMonth(),today.getDate()+1)
+	const timeToMidnight = (tommorow-today)
+	setTimeout(function(){
+		refreshDocument()
+	}, timeToMidnight);
+}
+
 function setupDashboardPage() {
 	displayTime.displayMonthAndYear(time.getCurrentMonth(), time.getCurrentYear()) 
 	displayTime.displayDays(time.getCurrentMonth(), time.getCurrentYear())
 	displayTime.displayAnalogTime()
 	displayTime.displayDigitalTime()
 	eventListeners.calendarNavigation()
-    
+	
+	setMidnightTimer()
 	applyNewQuote()
 	updateEvents(false)
 	updateTasks(false)
