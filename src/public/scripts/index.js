@@ -41,7 +41,7 @@ const DOMStrings = {
 
 const updates = {
 	title: "Stay in the loop:",
-	subtitle: "[v1.1.2] Overflowing on dashboard pages should be resolved. Minor bug fixes. Thank you for using Loop!"
+	subtitle: "[v1.2] Dates of all times are always emphasized now. Thank you for using Loop!"
 }
 
 const timeouts = {
@@ -84,7 +84,8 @@ let store = {
 	course6: "",
 	course7: "",
 	course8: "",
-	course9: ""
+	course9: "",
+	dates: []
 }
 
 let selections = {
@@ -350,6 +351,19 @@ const displayTime = {
 				calendar.lastElementChild.innerText = ""
 				calendar.lastElementChild.innerHTML = `<p class="calendar__day calendar__day--today">${i}</p>`
 			}
+			
+			for (let j = 0; j < store.dates.length; j++) {
+				console.log(store.dates[j].month)
+				console.log(month)
+				if (store.dates[j].year == year && store.dates[j].month == (month + 1) && store.dates[j].day == i) {
+					calendar.lastElementChild.classList = "calendar__day--container--emphasized"
+					calendar.lastElementChild.innerText = ""
+					calendar.lastElementChild.innerHTML = `<p class="calendar__day calendar__day--emphasized">${i}</p>`
+				}
+			}
+			
+			
+			
 			/* @note start by copying the above if statement */
 			/* @note refresh @12pm */
 		}
@@ -498,10 +512,6 @@ function convertToTime(hour, minute, isPM) {
 	return convertedTime
 }
 
-function truncateTime(time) {
-	return luxon.DateTime.fromISO(time).toFormat("h:mm a")
-}
-
 function truncatedTimeToDT(time) {
     
 	let apm = time.split(" ")[1]
@@ -517,50 +527,6 @@ function truncatedTimeToDT(time) {
 	}
     
 	return convertToTime(hour, minute, isPM)
-}
-
-function isInteger(num) {
-	return (!(num % 1))
-}
-
-function countdownFormat(input) {
-	//making these strings still allows numerical manipulation,
-	//but allows us to return 00 in place of 0 later
-	let inputRounded = JSON.stringify(Math.ceil(input))
-	let hoursInInput = "0"
-	let minutesInInput = "0"
-    
-	while (inputRounded > 3599) {
-		inputRounded = inputRounded - 3600
-		hoursInInput++
-	}
-    
-	while (inputRounded > 59) {
-		inputRounded = inputRounded - 60
-		minutesInInput++
-	}
-    
-	//these all add a leading zero if necessary
-	if (inputRounded < 10) {
-		inputRounded = `0${inputRounded}`
-	}
-    
-	if (minutesInInput < 10) {
-		minutesInInput = `0${minutesInInput}`
-	}
-    
-	if (hoursInInput < 10) {
-		hoursInInput = `0${hoursInInput}`
-	}
-    
-	//inputRounded is now the amount of seconds in input
-	if (hoursInInput != 0) {
-		return `${hoursInInput}:${minutesInInput}:${inputRounded}`
-	} else if (minutesInInput != 0) {
-		return `00:${minutesInInput}:${inputRounded}`
-	} else {
-		return `00:00:${inputRounded}`
-	}
 }
 
 function getDayOfWeek(offset) {
@@ -1039,7 +1005,7 @@ async function updateEvents(reqPage) {
 	const totalObjects = await totalEvents + 2
     
 	expireOldEvents(await eventsInfo)
-	setTimeout(refreshEmphasizedEvents(await eventsInfo), timeouts.delay) //waits for expires to happen
+	setTimeout(emphasizeEventDates(await eventsInfo), timeouts.delay) //waits for expires to happen
     
 	let currentPage
 	let eventsArray = []
@@ -1116,96 +1082,22 @@ function truncatedDateToDTUnformatted(input) {
 	return createdDate
 }
 
-function refreshEmphasizedEvents(eventsInfo) {
-	//::auto-refresh calendar dots
-	/*
-    try {
-        
-        for (let i = 0; i < 32; i++) {
-            const aTags = document.getElementsByClassName("calendar__day--emphasized");
-            for (let i = 0; aTags.length > i; i++) {
-                aTags[i].classList.remove("calendar__day--emphasized")
-            }
-            
-            const bTags = document.getElementsByClassName("calendar__day--container--emphasized");
-            for (let i = 0; bTags.length > i; i++) {
-                bTags[i].classList.remove("calendar__day--container--emphasized")
-                bTags[i].classList.add("removed-calendar-day")
-            }
-            
-            if (i == 32) {
-                emphasizeEventDates(eventsInfo)
-            }
-        }
-        
-    } catch (err) {
-        //console.log(err)
-    }
-    */
-    
-	emphasizeEventDates(eventsInfo)
-    
-}
-
-function emphasizeEventOnCalendar(date) {
-	const aTags = document.getElementsByClassName("calendar__day")
-	const searchText = date
-	let found
-    
-	for (let i = 0; i < aTags.length; i++) {
-		if (aTags[i].textContent == searchText) {
-			found = aTags[i]
-			break
-		}
-	}
-    
-	let okToAdd = true
-    
-	for (let i = 0; i < found.classList.length; i++) {
-		if (found.classList[i] == "calendar__day--emphasized") {
-			okToAdd = false
-			break
-		}
-		continue
-	}
-    
-	let okToOverride = true
-    
-	for (let i = 0; i < found.parentNode.classList.length; i++) {
-		if (found.parentNode.classList[i] == "removed-calendar-day") {
-			okToOverride = false
-			break
-		}
-		continue
-	}
-    
-	if (okToAdd) {
-		if (okToOverride) {
-			const wrapper = document.createElement("div")
-			wrapper.setAttribute("class", "calendar__day--container--emphasized")
-			found.setAttribute("class", "calendar__day calendar__day--emphasized")
-			found.parentNode.insertBefore(wrapper, found)
-			wrapper.appendChild(found)
-		} else {
-			found.parentNode.classList.remove("removed-calendar-day")
-			found.parentNode.setAttribute("class", "calendar__day--container--emphasized")
-		}
-	}
-}
-
 function emphasizeEventDates(eventsInfo) {
 	const currentTime = luxon.DateTime.local()
     
 	for (let i = 0; i < eventsInfo.length; i++) {
 		const currentObjDT = truncatedDateToDTUnformatted(eventsInfo[i].dueDate)
-		if (currentObjDT.month == currentTime.month && currentObjDT.year == currentTime.year) {
-			const timeDiff = currentObjDT.diff(currentTime, "days").values.days
-            
-			if (timeDiff > 0) {
-				emphasizeEventOnCalendar(currentObjDT.day)
-			}
+		const timeDiff = currentObjDT.diff(currentTime, "days").values.days
+		
+		if (timeDiff > 0) {
+			store.dates.push(currentObjDT)
 		}
 	}
+	
+	for (let i = 0; i < 42; i++) {
+		calendar.removeChild(calendar.lastChild)
+	}
+	displayTime.displayDays(time.getCurrentMonth(), time.getCurrentYear())
 }
 
 function clearAllTasks() {
@@ -1381,6 +1273,8 @@ function removeTaskByID(taskID) {
 }
 
 function expireOldTasks(tasksInfo) {
+	//this function is not currently used as it may be destructure
+	//left just in case we later wish to reimplement it
 	for (let i = 0; i < tasksInfo.length; i++) {
 		const currentObjDT = truncatedDateToDTUnformatted(tasksInfo[i].dueDate)
 		const currentTime = luxon.DateTime.local()
@@ -1689,18 +1583,6 @@ async function applyNewQuote() {
 	} catch (err) {
 		greeting.display()
 	}
-}
-
-async function isPeriodValidForSchedule(period, schedule) {
-	const scheduleInfo = await getScheduleInfo(schedule)
-	for (let i = 0; i < await scheduleInfo.length; i++) {
-		if (await scheduleInfo[i].period == period) {
-			return true
-		} else {
-			continue
-		}
-	}
-	return false
 }
 
 function loginSwitchTo(page) {
