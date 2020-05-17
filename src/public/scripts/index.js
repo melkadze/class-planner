@@ -353,8 +353,6 @@ const displayTime = {
 			}
 			
 			for (let j = 0; j < store.dates.length; j++) {
-				console.log(store.dates[j].month)
-				console.log(month)
 				if (store.dates[j].year == year && store.dates[j].month == (month + 1) && store.dates[j].day == i) {
 					calendar.lastElementChild.classList = "calendar__day--container--emphasized"
 					calendar.lastElementChild.innerText = ""
@@ -489,12 +487,38 @@ const displayTime = {
 	},
 }
 
-function refreshCalendar() {
+async function refreshCalendar() {
+	const currentTime = luxon.DateTime.local()
+	
+	const eventsInfo = await getAllEvents()
+	const tasksInfo = await getAllTasks()
+	
+	store.dates = []
+    
+	for (let i = 0; i < await eventsInfo.length; i++) {
+		const currentObjDT = truncatedDateToDTUnformatted(await eventsInfo[i].dueDate)
+		const timeDiff = currentObjDT.diff(currentTime, "days").values.days
+		
+		if (timeDiff > 0) {
+			store.dates.push(currentObjDT)
+		}
+	}
+    
+	for (let i = 0; i < await tasksInfo.length; i++) {
+		const currentObjDT = truncatedDateToDTUnformatted(await tasksInfo[i].dueDate)
+		const timeDiff = currentObjDT.diff(currentTime, "days").values.days
+		
+		if (timeDiff > 0) {
+			store.dates.push(currentObjDT)
+		}
+	}
+	
 	let month = parseInt(calendar__headline.getAttribute("data-month"))
 	let year = parseInt(calendar__headline.getAttribute("data-year"))
 	for (let i = 0; i < 42; i++) {
 		calendar.removeChild(calendar.lastChild)
 	}
+	console.log(month, year)
 	displayTime.displayMonthAndYear(month, year)
 	displayTime.displayDays(month, year)
 }
@@ -965,6 +989,7 @@ function removeEventByID(eventID) {
 	axios.delete(`/event/byID/${eventID}`)
 		.then(async function(response) {
 			//console.log(response)
+			refreshCalendar()
 		})
 		.catch(function (error) {
 			//console.log(error)
@@ -1102,7 +1127,8 @@ function emphasizeEventDates(eventsInfo) {
 	for (let i = 0; i < 42; i++) {
 		calendar.removeChild(calendar.lastChild)
 	}
-	displayTime.displayDays(time.getCurrentMonth(), time.getCurrentYear())
+	
+	displayTime.displayDays(parseInt(calendar__headline.getAttribute("data-month")), parseInt(calendar__headline.getAttribute("data-year")))
 }
 
 function clearAllTasks() {
@@ -1271,6 +1297,7 @@ function removeTaskByID(taskID) {
 	axios.delete(`/task/byID/${taskID}`)
 		.then(async function(response) {
 			//console.log(response)
+			refreshCalendar()
 		})
 		.catch(function (error) {
 			//console.log(error)
@@ -1456,7 +1483,7 @@ function initPlusButtons() {
 						.then (function (response) {
 							//console.log(response)
 							updateTasks(99999) //putting 99999 essentially forces update to last page
-							refreshCalendar()
+							
 						})
 						.catch(function (error) {
 							//console.log(err)
@@ -1525,7 +1552,6 @@ function initPlusButtons() {
 							updateEventsPlusPages()
 							
 							updateEvents(99999) //putting 99999 essentially forces update to last page
-							refreshCalendar()
 						})
 						.catch(function (error) {
 							//console.log(err)
