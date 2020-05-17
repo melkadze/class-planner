@@ -489,6 +489,16 @@ const displayTime = {
 	},
 }
 
+function refreshCalendar() {
+	let month = parseInt(calendar__headline.getAttribute("data-month"))
+	let year = parseInt(calendar__headline.getAttribute("data-year"))
+	for (let i = 0; i < 42; i++) {
+		calendar.removeChild(calendar.lastChild)
+	}
+	displayTime.displayMonthAndYear(month, year)
+	displayTime.displayDays(month, year)
+}
+
 function convertToTime(hour, minute, isPM) {
 	//12hour -> 24hour
 	if (isPM && hour != 12) {
@@ -1446,6 +1456,7 @@ function initPlusButtons() {
 						.then (function (response) {
 							//console.log(response)
 							updateTasks(99999) //putting 99999 essentially forces update to last page
+							refreshCalendar()
 						})
 						.catch(function (error) {
 							//console.log(err)
@@ -1514,6 +1525,7 @@ function initPlusButtons() {
 							updateEventsPlusPages()
 							
 							updateEvents(99999) //putting 99999 essentially forces update to last page
+							refreshCalendar()
 						})
 						.catch(function (error) {
 							//console.log(err)
