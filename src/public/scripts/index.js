@@ -41,7 +41,7 @@ const DOMStrings = {
 
 const updates = {
 	title: "Stay in the loop:",
-	subtitle: "[v1.2] Dates of all times are always emphasized now. Thank you for using Loop!"
+	subtitle: "[v1.3] Week numbers, calendar emphasization, proper updating, and more. Thank you for using Loop!"
 }
 
 const timeouts = {
@@ -280,6 +280,7 @@ const displayTime = {
 		let calendar__headline = DOMStrings.calendar__headline
 		calendar__headline.setAttribute("data-month", month)
 		calendar__headline.setAttribute("data-year", year)
+		let monthNumber = month
 		switch (month) {
 		case 0:
 			month = "January"
@@ -318,7 +319,11 @@ const displayTime = {
 			month = "December"
 			break
 		}
-		calendar__headline.innerText = `Your ${month} ${year}`
+		if (monthNumber == time.getCurrentMonth()) {
+			calendar__headline.innerText = `Your ${month} ${year}, Week ${getWeekNumber()}`
+		} else {
+			calendar__headline.innerText = `Your ${month} ${year}`
+		}
 	},
 	displayDays(month, year) {
 		const weekday = time.getFirstWeekDay(month, year)
@@ -518,7 +523,6 @@ async function refreshCalendar() {
 	for (let i = 0; i < 42; i++) {
 		calendar.removeChild(calendar.lastChild)
 	}
-	console.log(month, year)
 	displayTime.displayMonthAndYear(month, year)
 	displayTime.displayDays(month, year)
 }
@@ -556,6 +560,10 @@ function truncatedTimeToDT(time) {
 	}
     
 	return convertToTime(hour, minute, isPM)
+}
+
+function getWeekNumber() {
+	return luxon.DateTime.local().weekNumber
 }
 
 function getDayOfWeek(offset) {
