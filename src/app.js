@@ -15,6 +15,7 @@ app.use(express.static(__dirname + "/public")) //export public folder
 //other dependencies
 const passport = require("passport")
 const cookieSession = require("cookie-session")
+const sslRedirect = require('heroku-ssl-redirect')
 require("./config/passport-setup")
 require("dotenv").config()
 
@@ -27,6 +28,9 @@ app.use(cookieSession({
 //initialize passport
 app.use(passport.initialize())
 app.use(passport.session())
+
+//set up heroku ssl
+app.use(sslRedirect())
 
 //router dependencies
 const rootRouter = require("./routers/root")
