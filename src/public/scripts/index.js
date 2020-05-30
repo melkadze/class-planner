@@ -319,7 +319,7 @@ const displayTime = {
 			month = "December"
 			break
 		}
-		if (monthNumber == time.getCurrentMonth()) {
+		if (monthNumber == time.getCurrentMonth() && year == time.getCurrentYear()) {
 			calendar__headline.innerText = `Your ${month} ${year}, Week ${getWeekNumber()}`
 		} else {
 			calendar__headline.innerText = `Your ${month} ${year}`
