@@ -6,7 +6,7 @@ If you wish to utilize this project for yourself, you must create an `.env` file
 Then, run the the `build` NPM script to download the project's dependencies and build the necessary .js and .scss files.
 Note that this repo doesn't include Node.js itself, which is required to run the command.
 
-### Creating an env.js file
+### Creating an .env file
 1. Make a new file titled `.env` in the root (where package.json lies) directory.
 2. Add the following lines, replacing the `<enclosed text>` with its corresponding keys:
 ```
