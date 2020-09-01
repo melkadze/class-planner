@@ -41,7 +41,7 @@ const DOMStrings = {
 
 const updates = {
 	title: "Stay in the loop:",
-	subtitle: "[v1.3.1] SSL is back, and as is the school year. Good luck!"
+	subtitle: "[v1.3.1] The school year's back! Good luck."
 }
 
 const timeouts = {
