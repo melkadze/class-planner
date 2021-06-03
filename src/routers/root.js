@@ -27,7 +27,7 @@ router.get("/.well-known/acme-challenge/nzQENyRpkRAH6H3ebOoopMo5VED1KJUDpbcN_zWX
 })
 router.get("/.well-known/acme-challenge/rUzFGnjRj6s2gx1fERIxoYFnKveVSodDJf49jhwsbdY", (req, res) => {
 	try{
-		res.send("rUzFGnjRj6s2gx1fERIxoYFnKveVSodDJf49jhwsbdY.-AcrsV2YDI6oOMWRahbO1pcD_tYXvaiPWZRNEb5EKYA)
+		res.send("rUzFGnjRj6s2gx1fERIxoYFnKveVSodDJf49jhwsbdY.-AcrsV2YDI6oOMWRahbO1pcD_tYXvaiPWZRNEb5EKYA")
 	} catch(err) {
 		functions.error(res, 500, err)
 	}
