@@ -17,6 +17,6 @@ router.get("/.well-known/acme-challenge/6n5aqF9Y_otZRV_5xZXzIFL96EFsxqgqjKVV1Krh
 	} catch(err) {
 		functions.error(res, 500, err)
 	}
-}
+})
 
 module.exports = router
