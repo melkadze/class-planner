@@ -10,4 +10,13 @@ router.get("/", (req, res) => {
 	}
 })
 
+//certbot challange (remove for self hosted)
+router.get("/.well-known/acme-challenge/6n5aqF9Y_otZRV_5xZXzIFL96EFsxqgqjKVV1KrhhAs", (req, res) => {
+	try{
+		res.send("6n5aqF9Y_otZRV_5xZXzIFL96EFsxqgqjKVV1KrhhAs.-AcrsV2YDI6oOMWRahbO1pcD_tYXvaiPWZRNEb5EKYA")
+	} catch(err) {
+		functions.error(res, 500, err)
+	}
+}
+
 module.exports = router
