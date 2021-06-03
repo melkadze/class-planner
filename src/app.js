@@ -30,7 +30,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 //set up heroku ssl
-//app.use(sslRedirect())
+app.use(sslRedirect())
 
 //router dependencies
 const rootRouter = require("./routers/root")
