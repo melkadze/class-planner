@@ -18,7 +18,7 @@ passport.deserializeUser((id, done) => {
 //oauth
 passport.use(
 	new GoogleStrategy({
-		callbackURL: "/auth/google/redirect",
+		callbackURL: "https://class-planner.herokuapp.com/auth/google/redirect",
 		clientID: process.env.oAuthID,
 		clientSecret: process.env.oAuthSecret
 	}, (accessToken, refreshToken, profile, done) => {
