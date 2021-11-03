@@ -31,7 +31,7 @@
     "passport": "^0.4.1",
     "passport-google-oauth20": "^2.0.0",
     "path": "^0.12.7",
-    "validator": "^12.2.0"
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "browserify": "^16.5.2",
