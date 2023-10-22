@@ -1,5 +1,5 @@
 # class-planner / loop
-An in-progress, collaborative, and expansive Node.js project that provides a convenient, complete suite of student organization tools through its integration with MongoDB and Google's oAuth -- with more to come.
+A collaborative and expansive Node.js project that provides a convenient, complete suite of student organization tools through its integration with MongoDB and Google's oAuth -- with more to come.
 
 ##### NOTE: Due to Heroku removing the free tier of their services, this app can no longer be accessed online. It can be run locally, however, using the instructions below. We are working on finding a suitable replacement service, to keep Loop accessible to all for free as it has always been.
 
